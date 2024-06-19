@@ -35,22 +35,28 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.casino),
-            label: 'Öner Bana!',
+            icon: Icon(Icons.question_mark_outlined),
+            label: 'Ask Me!',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.fastfood),
-            label: 'Tarifler',
+            icon: Icon(Icons.book_outlined),
+            label: 'Journal',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.smart_toy_outlined),
-            label: 'Yeni Tarif',
+            icon: Icon(Icons.pets_outlined),
+            label: 'My Pets',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_2_outlined),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: pink,
+        unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),
+
     );
   }
 
