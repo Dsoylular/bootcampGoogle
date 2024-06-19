@@ -1,4 +1,7 @@
 import 'package:bootcamp_google/appColors.dart';
+import 'package:bootcamp_google/helperWidgets/infoCards.dart';
+import 'package:bootcamp_google/helperWidgets/petCard.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -9,7 +12,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
-      body: buildMainPage(),
+      body: buildMyPets(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -66,28 +69,81 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  Widget buildMainPage() {
-    return Container(
-      color: cream,
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ElevatedButton(
-            onPressed: () {},
-            child: Text(
-              "Submit",
-              style: TextStyle(color: white),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: brown,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
+  Widget buildMyPets() {
+    return Column(
+      children: [
+        Container(
+          height: 375,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: cream,
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
             ),
           ),
-        ],
-      ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  const SizedBox(width: 30),
+                  const Text(
+                    "My Pets",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Pacifico',
+                    ),
+                  ),
+                  const Spacer(),
+                  ElevatedButton(
+                    onPressed: () {
+                      print("Clicked ADD"); // TODO: Connect with backend
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: darkBlue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: const Text(
+                      "+   ADD",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 30),
+                ],
+              ),
+              const SizedBox(height: 30),
+              PetCard(),
+            ],
+          ),
+        ),
+        const SizedBox(height: 30),
+        Column(
+          children: [
+            const Row(
+              children: [
+                SizedBox(width: 30),
+                Text(
+                  " Situation",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            InfoCard(),
+          ],
+        ),
+      ],
     );
   }
+
 }
