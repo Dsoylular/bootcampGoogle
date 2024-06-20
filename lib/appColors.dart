@@ -12,5 +12,5 @@ Color darkBlue = const Color.fromARGB(255, 99, 105, 209);
 Color brown = const Color.fromARGB(255, 80, 36, 25);
 Color lightBlue = const Color.fromARGB(255, 80, 209, 208);
 
-Color darkRed = const Color.fromARGB(255, 255, 221, 210);
+Color darkCream = const Color.fromARGB(255, 225, 215, 210);
 

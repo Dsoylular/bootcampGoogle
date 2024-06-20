@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../appColors.dart';
+
 Widget InfoCard() {
   return GestureDetector(
     onTap: () {
@@ -19,7 +21,7 @@ Widget InfoCard() {
                 height: 50,
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.brown, width: 3),
+                  border: Border.all(color: brown, width: 3),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Column(
