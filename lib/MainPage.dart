@@ -1,8 +1,20 @@
 import 'package:bootcamp_google/appColors.dart';
 import 'package:bootcamp_google/helperWidgets/infoCards.dart';
 import 'package:bootcamp_google/helperWidgets/petCard.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+// DocumentSnapshot snapshot = await FirebaseFirestore.instance
+//     .collection('users')
+// .doc('users')
+//     .get();
+// if (snapshot.exists) {
+// final curData = snapshot.data() as Map<String, dynamic>;
+// final res = curData['deniz'] ?? '';
+// print(res);
+// }
+
+
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -34,7 +46,13 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
-      body: buildMyPets(),
+      body: _selectedIndex == 0
+          ? _buildAskMe()
+          : _selectedIndex == 1
+          ? _buildJournal()
+          : _selectedIndex == 2
+          ? _buildMyPets()
+          : _buildProfile(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -69,7 +87,7 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  Widget buildMyPets() {
+  Widget _buildMyPets() {
     return Column(
       children: [
         Container(
@@ -98,7 +116,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                   const Spacer(),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async{
                       print("Clicked ADD"); // TODO: Connect with backend
                     },
                     style: ElevatedButton.styleFrom(
@@ -146,4 +164,22 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+
+  Widget _buildAskMe(){
+    return Scaffold(
+
+    );
+  }
+
+  Widget _buildJournal() {
+    return Scaffold(
+
+    );
+  }
+
+  Widget _buildProfile() {
+    return Scaffold(
+
+    );
+  }
 }

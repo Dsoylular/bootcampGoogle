@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1017078231894",
+    "project_id": "pawdi-7b40f",
+    "storage_bucket": "pawdi-7b40f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017078231894:android:31ae43efc865360b5fdcf7",
+        "android_client_info": {
+          "package_name": "com.example.bootcamp_google"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSWWPj1HyObKzcFiX8bxrj8DZKVbwsj20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

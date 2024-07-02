@@ -29,7 +29,7 @@ Widget PetCard() {
                   children: [
                     CircleAvatar(
                       radius: 40,
-                      backgroundImage: NetworkImage('https://i.imgur.com/Jvh1OQm.jpeg'),
+                      backgroundImage: NetworkImage('https://i.imgur.com/9l1A4OS.jpeg'),
                     ),
                     Text(
                       'Fred', // TODO: Connect with backend
