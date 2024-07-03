@@ -6,6 +6,8 @@ import 'package:bootcamp_google/helperWidgets/petCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'helperWidgets/myAppBar.dart';
+
 // DocumentSnapshot snapshot = await FirebaseFirestore.instance
 //     .collection('users')
 // .doc('users')
@@ -31,23 +33,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: pink,
-        title: const Row(
-          children: [
-             SizedBox(width: 20),
-            Expanded(
-              child: Text(
-                "Pawdi",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Pacifico',
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar: appBar(),
       body: _selectedIndex == 0
           ? _buildAskMe()
           : _selectedIndex == 1
@@ -140,7 +126,7 @@ class _MainPageState extends State<MainPage> {
                 ],
               ),
               const SizedBox(height: 30),
-              PetCard(),
+              PetCard(context),
             ],
           ),
         ),
