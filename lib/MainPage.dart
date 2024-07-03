@@ -146,7 +146,7 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
             const SizedBox(height: 20),
-            InfoCard(),
+            InfoCard(context),
           ],
         ),
       ],

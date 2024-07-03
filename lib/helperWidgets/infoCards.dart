@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../appColors.dart';
+import '../petPage.dart';
 
-Widget InfoCard() {
+Widget InfoCard(BuildContext context) {
   return GestureDetector(
     onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const petPage(),
+        ),
+      );
       print("Directing to pet page"); // TODO: Connect to page
     },
     child: SizedBox(
