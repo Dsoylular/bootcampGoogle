@@ -111,7 +111,7 @@ class _MainPageState extends State<MainPage> {
                     "My Pets",
                     style: TextStyle(
                       fontSize: 20,
-                      fontFamily: 'Pacifico',
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const Spacer(),
@@ -179,7 +179,146 @@ class _MainPageState extends State<MainPage> {
 
   Widget _buildProfile() {
     return Scaffold(
-
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // const SizedBox(height: 20),
+            Container(
+              height: 225,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: cream,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+              ),
+              child: const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 20),
+                  CircleAvatar(
+                    radius: 55,
+                    backgroundImage: NetworkImage('https://i.imgur.com/9l1A4OS.jpeg'),
+                  ),
+                  SizedBox(height: 12),
+                  Text(
+                    "Fatmanur Genar",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                      "Pet Owner"
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              height: 1,
+              width: double.infinity,
+              color: pink,
+            ),
+            const SizedBox(height: 20),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    print("Profile Page");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: pink,
+                    fixedSize: const Size(300, 50),
+                  ),
+                  child: const Text(
+                    "Profil Fotoğrafı",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    print("DELETE"); // TODO: Button pressed
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: pink,
+                    fixedSize: const Size(300, 50),
+                  ),
+                  child: const Text(
+                    "İsim",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    print("DELETE");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: pink,
+                    fixedSize: const Size(300, 50),
+                  ),
+                  child: const Text(
+                    "Şifre",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    print("Çıkış Yapıldı");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: darkBlue,
+                    fixedSize: const Size(300, 50),
+                  ),
+                  child: const Text(
+                    "Çıkış Yap",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    print("Çıkış Yapıldı");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: darkBlue,
+                    fixedSize: const Size(300, 50),
+                  ),
+                  child: const Text(
+                    "Hesabı Sil",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
+
 }
