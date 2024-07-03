@@ -229,7 +229,7 @@ class _MainPageState extends State<MainPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.person, color: Colors.white),
+                      Icon(Icons.person_outline_outlined, color: Colors.white),
                       SizedBox(width: 10),
                       Center(
                         child: Column(
@@ -269,7 +269,7 @@ class _MainPageState extends State<MainPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.edit, color: Colors.white),
+                      Icon(Icons.edit_outlined, color: Colors.white),
                       SizedBox(width: 10),
                       Center(
                         child: Column(
@@ -309,7 +309,47 @@ class _MainPageState extends State<MainPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.key, color: Colors.white),
+                      Icon(Icons.info_outlined, color: Colors.white),
+                      SizedBox(width: 10),
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Hakkında",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "Hakkında kısmını değiştir",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    print("Profile Page");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: darkBlue,
+                    fixedSize: const Size(300, 50),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.key_outlined, color: Colors.white),
                       SizedBox(width: 10),
                       Center(
                         child: Column(

@@ -98,7 +98,7 @@ class _petPageState extends State<petPage> {
               children: [
                 SizedBox(width: 30),
                 Text(
-                  "Aşı Durumu",
+                  "Aşı Takip",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18
