@@ -119,6 +119,7 @@ class _MainPageState extends State<MainPage> {
                   const Spacer(),
                   ElevatedButton(
                     onPressed: () async{
+
                       print("Clicked ADD"); // TODO: Connect with backend
                     },
                     style: ElevatedButton.styleFrom(
