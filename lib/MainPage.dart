@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bootcamp_google/appColors.dart';
 import 'package:bootcamp_google/helperWidgets/infoCards.dart';
 import 'package:bootcamp_google/helperWidgets/petCard.dart';
@@ -182,9 +184,8 @@ class _MainPageState extends State<MainPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // const SizedBox(height: 20),
             Container(
-              height: 225,
+              height: 300,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: cream,
@@ -198,7 +199,7 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   SizedBox(height: 20),
                   CircleAvatar(
-                    radius: 55,
+                    radius: 80,
                     backgroundImage: NetworkImage('https://i.imgur.com/9l1A4OS.jpeg'),
                   ),
                   SizedBox(height: 12),
@@ -212,16 +213,17 @@ class _MainPageState extends State<MainPage> {
                   ),
                   SizedBox(height: 8),
                   Text(
+                      "fatmanur.genar1234",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
                       "Pet Owner"
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              height: 1,
-              width: double.infinity,
-              color: pink,
             ),
             const SizedBox(height: 20),
             Column(
@@ -233,83 +235,211 @@ class _MainPageState extends State<MainPage> {
                     print("Profile Page");
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: pink,
+                    backgroundColor: darkBlue,
                     fixedSize: const Size(300, 50),
                   ),
-                  child: const Text(
-                    "Profil Fotoğrafı",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.person, color: Colors.white),
+                      SizedBox(width: 10),
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Profil Fotoğrafı",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "Profil resmini değiştir",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
-                    print("DELETE"); // TODO: Button pressed
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: pink,
-                    fixedSize: const Size(300, 50),
-                  ),
-                  child: const Text(
-                    "İsim",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    print("DELETE");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: pink,
-                    fixedSize: const Size(300, 50),
-                  ),
-                  child: const Text(
-                    "Şifre",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    print("Çıkış Yapıldı");
+                    print("Profile Page");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: darkBlue,
                     fixedSize: const Size(300, 50),
                   ),
-                  child: const Text(
-                    "Çıkış Yap",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.edit, color: Colors.white),
+                      SizedBox(width: 10),
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "İsim",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "Görünür ismini değiştir",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
-                    print("Çıkış Yapıldı");
+                    print("Profile Page");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: darkBlue,
                     fixedSize: const Size(300, 50),
                   ),
-                  child: const Text(
-                    "Hesabı Sil",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.key, color: Colors.white),
+                      SizedBox(width: 10),
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Şifre",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "Şifreyi değiştir",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Row(
+                  children: [
+                    SizedBox(width: 50),
+                    Text(
+                      "Hesap Ayarları",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                ElevatedButton(
+                  onPressed: () {
+                    print("Profile Page");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: pink,
+                    fixedSize: const Size(300, 50),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.exit_to_app, color: Colors.white),
+                      SizedBox(width: 10),
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Çıkış",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "Hesaptan çıkış yap",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    print("Profile Page");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: pink,
+                    fixedSize: const Size(300, 50),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.cancel_presentation_sharp, color: Colors.white),
+                      SizedBox(width: 10),
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Hesabı sil",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "Hesabı kalıcı bir şekilde sil",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 30),

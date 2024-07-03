@@ -21,7 +21,7 @@ Widget PetCard() {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: darkCream,
-                  border: Border.all(color: brown, width: 3),
+                  border: Border.all(color: brown, width: 2),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Column(
