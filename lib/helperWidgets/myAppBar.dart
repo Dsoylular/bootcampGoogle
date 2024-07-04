@@ -14,7 +14,7 @@ PreferredSizeWidget appBar(){
             "Pawdi",
             style: TextStyle(
               color: Colors.white,
-              fontFamily: 'Pacifico',
+              fontFamily: 'Chewy',
             ),
           ),
         ),
