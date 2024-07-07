@@ -58,9 +58,10 @@ Sprint board ekran görüntüleri
   
  Sprint İçinde Beklenen Puan Tamamlama: 200 Puan 
  
-  Puan Tamamlama Mantığı: İlk sprint için 200 puan, ikinci sprint için 180 puan ve üçüncü sprint için 200 puan hedefi vardır. Türkiye'de 15 Temmuz resmi tatil olması nedeniyle ikinci sprint için daha düşük bir puan hedefi belirlenmiştir
+  Puan Tamamlama Mantığı: İlk sprint için 200 puan, ikinci sprint için 180 puan ve üçüncü sprint için 200 puan hedefi vardır. Türkiye'de 15 Temmuz resmi tatil olması nedeniyle ikinci sprint için daha düşük bir puan hedefi belirlenmiştir. İlk sprintte planlanan puana erişilmiştir.
 
-Günlük Toplantılar: Her gün saat 12.00’de günlük daily toplantılarının yapılmasına karar verilmiştir.Toplantılar Google meet ya da zoom üzerinden yaılmaktadır.
+# Günlük Toplantılar (Daily Scrum): 
+Her gün saat 12.00’de günlük daily toplantılarının yapılmasına karar verilmiştir.Toplantılar Google meet ya da zoom üzerinden yaılmaktadır.
 
 ![WhatsApp Image 2024-07-04 at 09 48 14](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/ab35efc3-bf13-4c47-b8da-a61c2106d42b)
 
@@ -79,9 +80,9 @@ Günlük Toplantılar: Her gün saat 12.00’de günlük daily toplantılarını
 <img src="https://github.com/Dsoylular/bootcampGoogle/assets/56278784/4f79ead3-caec-499c-9273-227d1f0ae8ca" width="800"/>
 
 
-Sprint Review:Genel olarak planlandığı şekilde ilk sprint tamamlanmıştır.
+Sprint Review: Genel olarak planlandığı şekilde ilk sprint tamamlanmıştır. Tasarımlar kodun önünde gidecek şekilde devam edilecektir.
 
-Sprint Retrospective: Funda’nın yoğun çalışma temposu olduğu için sprint review ve retrospective toplantılarının sabah erken saaatte yapılmasına karar verilmiştir.
+Sprint Retrospective: Funda’nın yoğun çalışma temposu olduğu için sprint review ve retrospective toplantılarının sabah erken saatte yapılmasına karar verilmiştir.
 
 
 
