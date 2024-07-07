@@ -59,6 +59,7 @@ Borndown chart
 - Giriş sistemi için e-posta girişi kullanılmasına karar verildi.
   
  Sprint İçinde Beklenen Puan Tamamlama: 200 Puan 
+ 
   Puan Tamamlama Mantığı: İlk sprint için 200 puan, ikinci sprint için 180 puan ve üçüncü sprint için 200 puan hedefi vardır. Türkiye'de 15 Temmuz resmi tatil olması nedeniyle ikinci sprint için daha düşük bir puan hedefi belirlenmiştir
 
 Günlük Toplantılar: Her gün saat 12.00’de günlük daily toplantılarının yapılmasına karar verilmiştir.Toplantılar Google meet ya da zoom üzerinden yaılmaktadır.
