@@ -64,20 +64,9 @@ Sprint board ekran görüntüleri
 Her gün saat 12.00’de günlük daily toplantılarının yapılmasına karar verilmiştir.Toplantılar Google meet ya da zoom üzerinden yaılmaktadır.
 
 ![WhatsApp Image 2024-07-04 at 09 48 14](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/ab35efc3-bf13-4c47-b8da-a61c2106d42b)
-
-<img src="https://github.com/Dsoylular/bootcampGoogle/assets/56278784/ab35efc3-bf13-4c47-b8da-a61c2106d42b" width="800"/>
-
 ![daily1](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/10991bf5-8788-4656-aa64-9057e525a26d)
-
-<img src="https://github.com/Dsoylular/bootcampGoogle/assets/56278784/10991bf5-8788-4656-aa64-9057e525a26d" width="800"/>
-
 ![2](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/ef9ffa27-ea3e-462e-831e-c47c41c7aaa3)
-
-<img src="https://github.com/Dsoylular/bootcampGoogle/assets/56278784/ef9ffa27-ea3e-462e-831e-c47c41c7aaa3" width="800"/>
-
 ![4](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/4f79ead3-caec-499c-9273-227d1f0ae8ca)
-
-<img src="https://github.com/Dsoylular/bootcampGoogle/assets/56278784/4f79ead3-caec-499c-9273-227d1f0ae8ca" width="800"/>
 
 
 Sprint Review: Genel olarak planlandığı şekilde ilk sprint tamamlanmıştır. Tasarımlar kodun önünde gidecek şekilde devam edilecektir.
