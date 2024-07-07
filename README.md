@@ -47,7 +47,7 @@ Figa üzerinde ilgili sayfaların tasarımı aşaıdaki gibidir.
 
 
 Sprint board ekran görüntüleri
-![BOARD](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/4168d790-fa9a-40aa-8cd9-1df07fd049ff)
+![board güncel](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/8773a3e8-a1bc-4b49-bb07-af9754dfa51d)
 
 # Sprint Notları:
 
