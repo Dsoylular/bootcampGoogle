@@ -36,8 +36,8 @@ Ask me sayfasındaki sık sorulan sorular kısmında tuvalet-sağlık-beslenme-g
 Journal sayfasında evcil hayvanlarımız hakkında blog yazıları yazabilecek ya da diğer kullanıcıların/veterinerlerin eklemiş olduğu blog yazılarını okuyabileceğiz.
 
 # Hedef Kitle :
-Öncelikli olarak evcil hayvan sahipleri olamk üzere veterinerler, pet shoplar,hayvan barınakları(barınaktaki hayvanların sağlık durumunu izlemek için kullanılabilir—bu aslında uygulamanın sonrai hedeflerinden biri olabilir)
-Aslında sokakta bir hayvanla karlşılaşma ihtimali olan herkes bu uygulamanın hedef kitlesinde bulunmaktadır.
+Öncelikli olarak evcil hayvan sahipleri olmak üzere veterinerler, pet shoplar,hayvan barınakları(barınaktaki hayvanların sağlık durumunu izlemek için kullanılabilir —bu aslında uygulamanın sonraki hedeflerinden biri olabilir)
+Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın hedef kitlesinde bulunmaktadır.
 
 # Sprint 1
 
