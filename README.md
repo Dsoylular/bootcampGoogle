@@ -49,8 +49,6 @@ Figa üzerinde ilgili sayfaların tasarımı aşaıdaki gibidir.
 Sprint board ekran görüntüleri
 ![BOARD](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/4168d790-fa9a-40aa-8cd9-1df07fd049ff)
 
-Borndown chart
-
 # Sprint Notları:
 
 - Proje yönetimi için Trello kullanılmasına karar verildi.
