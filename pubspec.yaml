@@ -30,6 +30,7 @@ flutter:
 
   assets:
     - assets/images/kediIcon.png
+    - assets/images/cuteCat.jpeg
 
   uses-material-design: true
 

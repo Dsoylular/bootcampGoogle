@@ -18,8 +18,6 @@ import 'helperWidgets/myAppBar.dart';
 // print(res);
 // }
 
-
-
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -27,13 +25,39 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
+
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 2;
+  final TextEditingController _messageController = TextEditingController();
+  final List<Map<String, String>> _messages = [];
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  void _sendMessage() {
+    setState(() {
+      final message = _messageController.text.trim();
+      if (message.isNotEmpty) {
+        _messages.clear();
+        _messages.add({'type': 'user', 'message': message});
+        _messages.add({'type': 'response', 'message': _getResponseMessage()});
+        _messageController.clear();
+      }
+    });
+  }
+
+
+  String _getResponseMessage() {
+    return "Thank you for your message";
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      appBar: _selectedIndex == 0 ? null : appBar(),
       body: _selectedIndex == 0
           ? _buildAskMe()
           : _selectedIndex == 1
@@ -65,7 +89,6 @@ class _MainPageState extends State<MainPage> {
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),
-
     );
   }
 
@@ -104,8 +127,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                   const Spacer(),
                   ElevatedButton(
-                    onPressed: () async{
-
+                    onPressed: () async {
                       print("Clicked ADD"); // TODO: Connect with backend
                     },
                     style: ElevatedButton.styleFrom(
@@ -153,17 +175,132 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-
-  Widget _buildAskMe(){
-    return Scaffold(
-
+  Widget _buildAskMe() {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              color: cream,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            width: double.infinity,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/cuteCat.jpeg',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    alignment: Alignment.topCenter,
+                  ),
+                  Positioned(
+                    bottom: 20,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: darkBlue,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Text(
+                        "    Sor Bana    ",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _messages.isEmpty
+                    ? const SizedBox(
+                        height: 130,
+                        child: Center(
+                          child: Text(
+                            'Gönderilmiş mesaj yok.',
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                      ),
+                    )
+                    : ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: _messages.length,
+                  itemBuilder: (context, index) {
+                    final message = _messages[index];
+                    return Align(
+                      alignment: message['type'] == 'user'
+                          ? Alignment.centerRight
+                          : Alignment.centerLeft,
+                      child: ChatBubble(
+                        message: message['message']!,
+                        isUserMessage: message['type'] == 'user',
+                      ),
+                    );
+                  },
+                ),
+                const Divider(),
+                Container(
+                  decoration: BoxDecoration(
+                    color: darkBlue.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.add_circle_outline),
+                        onPressed: _sendMessage,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: _messageController,
+                          decoration: const InputDecoration(
+                            hintText: 'Sorunuzu giriniz...',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.send),
+                        onPressed: _sendMessage,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            color: cream,
+            height: 300,
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildJournal() {
-    return Scaffold(
-
-    );
+    return Scaffold();
   }
 
   Widget _buildProfile() {
@@ -200,15 +337,13 @@ class _MainPageState extends State<MainPage> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                      "fatmanur.genar1234",
+                    "fatmanur.genar1234",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: 8),
-                  Text(
-                      "Pet Owner"
-                  ),
+                  Text("Pet Owner"),
                 ],
               ),
             ),
@@ -269,7 +404,47 @@ class _MainPageState extends State<MainPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.edit_outlined, color: Colors.white),
+                      Icon(Icons.mail_outlined, color: Colors.white),
+                      SizedBox(width: 10),
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "E-mail",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "E-mail adresini değiştir",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    print("Profile Page");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: darkBlue,
+                    fixedSize: const Size(300, 50),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.person_outlined, color: Colors.white),
                       SizedBox(width: 10),
                       Center(
                         child: Column(
@@ -477,5 +652,41 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-
 }
+
+class ChatBubble extends StatelessWidget {
+  final String message;
+  final bool isUserMessage;
+
+  const ChatBubble({
+    Key? key,
+    required this.message,
+    required this.isUserMessage,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: isUserMessage ? darkBlue.withOpacity(0.9) : pink.withOpacity(0.9),
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(10),
+          topRight: const Radius.circular(10),
+          bottomLeft: isUserMessage ? const Radius.circular(10) : Radius.zero,
+          bottomRight: isUserMessage ? Radius.zero : const Radius.circular(10),
+        ),
+      ),
+      child: Text(
+        message,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 15
+        ),
+      ),
+    );
+  }
+}
+
+
