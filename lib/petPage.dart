@@ -15,7 +15,7 @@ class _petPageState extends State<petPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      appBar: appBar(context),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -51,13 +51,13 @@ class _MainPageState extends State<MainPage> {
 
 
   String _getResponseMessage() {
-    return "Thank you for your message";
+    return "Thank you for your message.\nPlease wait for the response...";
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _selectedIndex == 0 ? null : appBar(),
+      appBar: _selectedIndex == 0 ? null : appBar(context),
       body: _selectedIndex == 0
           ? _buildAskMe()
           : _selectedIndex == 1
@@ -226,73 +226,92 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _messages.isEmpty
-                    ? const SizedBox(
-                        height: 130,
-                        child: Center(
-                          child: Text(
-                            'Gönderilmiş mesaj yok.',
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
-                        ),
-                      ),
-                    )
-                    : ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: _messages.length,
-                  itemBuilder: (context, index) {
-                    final message = _messages[index];
-                    return Align(
-                      alignment: message['type'] == 'user'
-                          ? Alignment.centerRight
-                          : Alignment.centerLeft,
-                      child: ChatBubble(
-                        message: message['message']!,
-                        isUserMessage: message['type'] == 'user',
-                      ),
-                    );
-                  },
-                ),
-                const Divider(),
-                Container(
-                  decoration: BoxDecoration(
-                    color: darkBlue.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.add_circle_outline),
-                        onPressed: _sendMessage,
-                      ),
-                      Expanded(
-                        child: TextField(
-                          controller: _messageController,
-                          decoration: const InputDecoration(
-                            hintText: 'Sorunuzu giriniz...',
-                            border: InputBorder.none,
+          Container(
+            decoration: BoxDecoration(
+              color: cream,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _messages.isEmpty
+                      ? const SizedBox(
+                          height: 130,
+                          child: Center(
+                            child: Text(
+                              'Gönderilmiş mesaj yok.',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
                           ),
                         ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.send),
-                        onPressed: _sendMessage,
-                      ),
-                    ],
+                      )
+                      : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) {
+                      final message = _messages[index];
+                      return Align(
+                        alignment: message['type'] == 'user'
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        child: ChatBubble(
+                          message: message['message']!,
+                          isUserMessage: message['type'] == 'user',
+                        ),
+                      );
+                    },
                   ),
-                ),
-              ],
+                  const Divider(),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: darkBlue.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.add_circle_outline),
+                          onPressed: _sendMessage,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: _messageController,
+                            decoration: const InputDecoration(
+                              hintText: 'Sorunuzu giriniz...',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.send),
+                          onPressed: _sendMessage,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
-          Container(
-            color: cream,
-            height: 300,
+          const SizedBox(height: 20),
+          const Row(
+            children: [
+              SizedBox(width: 20),
+              Text(
+                "Sık sorulan sorular",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18
+                ),
+              ),
+            ],
           ),
         ],
       ),
