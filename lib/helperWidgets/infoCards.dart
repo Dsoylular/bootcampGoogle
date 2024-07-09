@@ -36,7 +36,7 @@ Widget InfoCard(BuildContext context) {
                   crossAxisAlignment: CrossAxisAlignment.start, // Align text to the left
                   children: [
                     Text(
-                      '   Fred: Sleepy zZz', // TODO: Connect with backend
+                      '   Fred: Uykulu zZz', // TODO: Connect with backend
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,

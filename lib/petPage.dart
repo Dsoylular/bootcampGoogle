@@ -32,15 +32,31 @@ class _petPageState extends State<petPage> {
               child: Row(
                 children: [
                   const SizedBox(width: 20),
-                  const Column(
+                  Column(
                     children: [
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       CircleAvatar(
-                        radius: 80,
-                        backgroundImage: NetworkImage('https://i.imgur.com/9l1A4OS.jpeg'),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
+                  radius: 80,
+                  child: ClipOval(
+                    child: FadeInImage.assetNetwork(
+                      placeholder: 'assets/images/kediIcon.png',
+                      image: 'https://i.imgur.com/9l1A4OS.jpeg',
+                      fit: BoxFit.cover,
+                      width: 160,
+                      height: 160,
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/images/kediIcon.png',
+                          fit: BoxFit.cover,
+                          width: 160,
+                          height: 160,
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                      const SizedBox(height: 15),
+                      const Text(
                         "Fred",
                         style: TextStyle(
                           fontSize: 24,

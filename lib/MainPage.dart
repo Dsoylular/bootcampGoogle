@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:bootcamp_google/helperWidgets/appColors.dart';
 import 'package:bootcamp_google/helperWidgets/infoCards.dart';
 import 'package:bootcamp_google/helperWidgets/petCard.dart';
+import 'package:bootcamp_google/respondPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'helperWidgets/myAppBar.dart';
@@ -70,19 +72,19 @@ class _MainPageState extends State<MainPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.question_mark_outlined),
-            label: 'Ask Me!',
+            label: 'Bana Sor!',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book_outlined),
-            label: 'Journal',
+            label: 'Blog',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.pets_outlined),
-            label: 'My Pets',
+            label: 'Evcil Hayvanlarım',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_2_outlined),
-            label: 'Profile',
+            label: 'Profil',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -120,7 +122,7 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   const SizedBox(width: 30),
                   const Text(
-                    "My Pets",
+                    "Evcil Hayvanlarım",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -138,7 +140,7 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     child: const Text(
-                      "+   ADD",
+                      "+   Ekle",
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.white,
@@ -160,7 +162,7 @@ class _MainPageState extends State<MainPage> {
               children: [
                 SizedBox(width: 30),
                 Text(
-                  " Situation",
+                  " Durum",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -268,35 +270,40 @@ class _MainPageState extends State<MainPage> {
                     },
                   ),
                   const Divider(),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: darkBlue.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(10),
+              Container(
+                decoration: BoxDecoration(
+                  color: darkBlue.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.add_circle_outline),
+                      onPressed: (){
+                        //TODO: FILL
+                      },
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.add_circle_outline),
-                          onPressed: _sendMessage,
+                    Expanded(
+                      child: TextField(
+                        controller: _messageController,
+                        maxLines: null, // Set to null for unlimited lines
+                        keyboardType: TextInputType.multiline, // Allow multiline input
+                        textInputAction: TextInputAction.newline, // Change keyboard's enter button to newline
+                        decoration: const InputDecoration(
+                          hintText: 'Sorunuzu giriniz...',
+                          border: InputBorder.none,
                         ),
-                        Expanded(
-                          child: TextField(
-                            controller: _messageController,
-                            decoration: const InputDecoration(
-                              hintText: 'Sorunuzu giriniz...',
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.send),
-                          onPressed: _sendMessage,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
+                    IconButton(
+                      icon: const Icon(Icons.send),
+                      onPressed: _sendMessage,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 5),
                 ],
               ),
             ),
@@ -304,7 +311,7 @@ class _MainPageState extends State<MainPage> {
           const SizedBox(height: 20),
           const Row(
             children: [
-              SizedBox(width: 20),
+              SizedBox(width: 16),
               Text(
                 "Sıkça Sorulan Sorular",
                 style: TextStyle(
@@ -314,7 +321,7 @@ class _MainPageState extends State<MainPage> {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          Divider(thickness: 2, color: brown),
           _buildFaqSection(),
         ],
       ),
@@ -324,7 +331,7 @@ class _MainPageState extends State<MainPage> {
   Widget _buildFaqSection() {
     final faqs = {
       "Genel": ["Can you help me set up a virtual pet sitter and suggest a product that can give treats to my dog while I'm at work?", "Based on my active lifestyle, apartment living, and preference for medium-sized dogs, can you suggest some breeds that might be a good fit for me?"],
-      "Beslenme": ["I have a Labrador Retriever. Can you help me create a balanced diet plan for her?", "What does tarantulas eat?"],
+      "Beslenme": ["I have a Labrador Retriever. Can you help me create a balanced diet plan for her?", "What do tarantulas eat?"],
       "Sağlık": ["My cat has been sneezing a lot lately. What could be the cause, and should I be worried?", "How can I help my rescue dog overcome his fear of thunderstorms?", "Give me step-by-step instructions for handling [pet injury] before I can reach a vet."],
       "Tuvalet": ["Tuvalet soru 1", "Tuvalet soru 2"],
       "Eğitim": ["Can you help me create a training plan to teach my dog to come when called?", "My new kitten is shy around strangers. How can I help her become more social?", "Suggest an interactive game that my cat would enjoy playing."]
@@ -335,15 +342,20 @@ class _MainPageState extends State<MainPage> {
         return ExpansionTile(
           title: Text(
             entry.key,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontSize: 16, fontFamily: 'Baloo', color: brown),
           ),
           children: entry.value.map((question) {
-            return ListTile(
-              title: Text(question),
-              onTap: () {
-                print("Deniz");
-                _messageController.text = question;
-              },
+            return Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: brown)
+              ),
+              child: ListTile(
+                title: Text(question, style: const TextStyle(fontWeight: FontWeight.w300)),
+                onTap: () {
+                  print("Deniz");
+                  _messageController.text = question;
+                },
+              ),
             );
           }).toList(),
         );
@@ -396,7 +408,7 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                   SizedBox(height: 8),
-                  Text("Pet Owner"),
+                  Text("Evcil Hayvan Sahibi"),
                 ],
               ),
             ),
@@ -719,27 +731,38 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: isUserMessage ? darkBlue.withOpacity(0.9) : pink.withOpacity(0.9),
-        borderRadius: BorderRadius.only(
-          topLeft: const Radius.circular(10),
-          topRight: const Radius.circular(10),
-          bottomLeft: isUserMessage ? const Radius.circular(10) : Radius.zero,
-          bottomRight: isUserMessage ? Radius.zero : const Radius.circular(10),
+    return GestureDetector(
+      onTap: isUserMessage
+          ? null
+          : () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RespondPage(respond: message),
+          ),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: isUserMessage ? pink.withOpacity(0.9) : darkBlue.withOpacity(0.9),
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(20),
+            topRight: const Radius.circular(20),
+            bottomLeft: isUserMessage ? const Radius.circular(20) : Radius.zero,
+            bottomRight: isUserMessage ? Radius.zero : const Radius.circular(20),
+          ),
         ),
-      ),
-      child: Text(
-        message,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 15
+        child: Text(
+          message,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+          ),
         ),
       ),
     );
   }
 }
-
 

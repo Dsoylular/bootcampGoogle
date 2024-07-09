@@ -31,12 +31,28 @@ Widget PetCard(BuildContext context) {
                   border: Border.all(color: brown, width: 2),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Column(
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     CircleAvatar(
                       radius: 40,
-                      backgroundImage: NetworkImage('https://i.imgur.com/9l1A4OS.jpeg'),
+                      child: ClipOval(
+                        child: FadeInImage.assetNetwork(
+                          placeholder: 'assets/images/kediIcon.png',
+                          image: 'https://i.imgur.com/9l1A4OS.jpeg',
+                          fit: BoxFit.cover,
+                          width: 160,
+                          height: 160,
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'assets/images/kediIcon.png',
+                              fit: BoxFit.cover,
+                              width: 160,
+                              height: 160,
+                            );
+                          },
+                        ),
+                      ),
                     ),
                     Text(
                       'Fred', // TODO: Connect with backend
@@ -47,14 +63,14 @@ Widget PetCard(BuildContext context) {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      'Age: 12', // TODO: Connect with backend
+                      'Yaş: 12', // TODO: Connect with backend
                       style: TextStyle(
                         fontSize: 16,
                       ),
                     ),
                     SizedBox(height: 4),
                     Text(
-                      'Vaccine: Done', // TODO: Connect with backend
+                      'Aşı: Done', // TODO: Connect with backend
                       style: TextStyle(
                         fontSize: 16,
                       ),
