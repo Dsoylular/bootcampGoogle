@@ -39,7 +39,8 @@ class _MainPageState extends State<MainPage> {
 
   void _sendMessage() {
     setState(() {
-      final message = _messageController.text.trim();
+      var message = "";
+      message = _messageController.text.trim();
       if (message.isNotEmpty) {
         _messages.clear();
         _messages.add({'type': 'user', 'message': message});
@@ -241,14 +242,14 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   _messages.isEmpty
                       ? const SizedBox(
-                          height: 130,
-                          child: Center(
-                            child: Text(
-                              'Gönderilmiş mesaj yok.',
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
-                          ),
-                        ),
-                      )
+                    height: 130,
+                    child: Center(
+                      child: Text(
+                        'Gönderilmiş mesaj yok.',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    ),
+                  )
                       : ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -295,7 +296,7 @@ class _MainPageState extends State<MainPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 5),
                 ],
               ),
             ),
@@ -305,7 +306,7 @@ class _MainPageState extends State<MainPage> {
             children: [
               SizedBox(width: 20),
               Text(
-                "Sık sorulan sorular",
+                "Sıkça Sorulan Sorular",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18
@@ -313,10 +314,43 @@ class _MainPageState extends State<MainPage> {
               ),
             ],
           ),
+          const SizedBox(height: 10),
+          _buildFaqSection(),
         ],
       ),
     );
   }
+
+  Widget _buildFaqSection() {
+    final faqs = {
+      "Genel": ["Can you help me set up a virtual pet sitter and suggest a product that can give treats to my dog while I'm at work?", "Based on my active lifestyle, apartment living, and preference for medium-sized dogs, can you suggest some breeds that might be a good fit for me?"],
+      "Beslenme": ["I have a Labrador Retriever. Can you help me create a balanced diet plan for her?", "What does tarantulas eat?"],
+      "Sağlık": ["My cat has been sneezing a lot lately. What could be the cause, and should I be worried?", "How can I help my rescue dog overcome his fear of thunderstorms?", "Give me step-by-step instructions for handling [pet injury] before I can reach a vet."],
+      "Tuvalet": ["Tuvalet soru 1", "Tuvalet soru 2"],
+      "Eğitim": ["Can you help me create a training plan to teach my dog to come when called?", "My new kitten is shy around strangers. How can I help her become more social?", "Suggest an interactive game that my cat would enjoy playing."]
+    };
+
+    return Column(
+      children: faqs.entries.map((entry) {
+        return ExpansionTile(
+          title: Text(
+            entry.key,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          children: entry.value.map((question) {
+            return ListTile(
+              title: Text(question),
+              onTap: () {
+                print("Deniz");
+                _messageController.text = question;
+              },
+            );
+          }).toList(),
+        );
+      }).toList(),
+    );
+  }
+
 
   Widget _buildJournal() {
     return Scaffold();
