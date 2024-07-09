@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:bootcamp_google/appColors.dart';
+import 'package:bootcamp_google/helperWidgets/appColors.dart';
 import 'package:bootcamp_google/helperWidgets/infoCards.dart';
 import 'package:bootcamp_google/helperWidgets/petCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

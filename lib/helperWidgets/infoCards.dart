@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../appColors.dart';
+import 'appColors.dart';
 import '../petPage.dart';
 
 Widget InfoCard(BuildContext context) {

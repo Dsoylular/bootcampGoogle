@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:bootcamp_google/appColors.dart';
+import 'package:bootcamp_google/helperWidgets/appColors.dart';
 import 'package:bootcamp_google/helperWidgets/myAppBar.dart';
 import 'package:flutter/material.dart';
 

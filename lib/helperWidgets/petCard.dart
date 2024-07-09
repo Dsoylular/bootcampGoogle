@@ -1,7 +1,7 @@
 import 'package:bootcamp_google/petPage.dart';
 import 'package:flutter/material.dart';
 
-import '../appColors.dart';
+import 'appColors.dart';
 
 Widget PetCard(BuildContext context) {
   return GestureDetector(
