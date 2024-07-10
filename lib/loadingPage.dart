@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bootcamp_google/LoginSignUp/loginPage.dart';
 import 'package:bootcamp_google/MainPage.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +18,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     super.initState();
     Timer(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => const LoginPage(),
+        builder: (context) => const MainPage(),
       ));
     });
   }

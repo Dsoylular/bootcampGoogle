@@ -1,4 +1,6 @@
+import 'package:bootcamp_google/MainPage.dart';
 import 'package:bootcamp_google/auth.dart';
+import 'package:bootcamp_google/loadingPage.dart';
 import 'package:bootcamp_google/pages/home_page.dart';
 import 'package:bootcamp_google/pages/login_register_page.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,7 @@ class _WidgetTreeState extends State<WidgetTree> {
         stream: Auth().authStateChanges,
         builder: (context, snapshot) {
           if(snapshot.hasData){
-            return HomePage();
+            return const LoadingScreen();
           } else {
             return const LoginPage();
           }
