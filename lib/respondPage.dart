@@ -21,7 +21,7 @@ class _RespondPageState extends State<RespondPage> {
       body: Column(
         children: [
           Container(
-            height: 500,
+            height: 600,
             width: double.infinity,
             decoration: BoxDecoration(
               color: cream,
@@ -34,7 +34,7 @@ class _RespondPageState extends State<RespondPage> {
               children: [
                 const SizedBox(height: 30),
                 Container(
-                  height: 400,
+                  height: 500,
                   width: 300,
                   decoration: BoxDecoration(
                     color: darkBlue.withOpacity(0.6),
@@ -46,44 +46,63 @@ class _RespondPageState extends State<RespondPage> {
                     border: Border.all(color: brown),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
+                    padding: const EdgeInsets.all(20.0),
+                    child: SingleChildScrollView(
+                      child: Text(
                         respond,
-                      style: TextStyle(
-                        color: white,
-                        fontSize: 16,
-                        fontFamily: 'Baloo'
+                        style: TextStyle(
+                          color: white,
+                          fontSize: 16,
+                          fontFamily: 'Baloo',
+                        ),
                       ),
                     ),
                   ),
                 ),
                 Row(
                   children: [
-                    const SizedBox(width: 240),
+                    const SizedBox(width: 50),
                     IconButton(
-                        onPressed: (){
-                          //TODO: ADD FUNCTIONALITY
-                        },
-                        icon: const Icon(
-                            Icons.save,
-                          size: 30,
-                          color: Colors.black,
-                        )
+                      onPressed: (){
+                        //TODO: ADD FUNCTIONALITY
+                      },
+                      icon: const Icon(
+                        Icons.save,
+                        size: 30,
+                        color: Colors.black,
+                      ),
                     ),
                     const SizedBox(width: 10),
                     IconButton(
-                        onPressed: () {
-
-                        },
-                        icon: Icon(
-                          Icons.send,
-                          size: 30,
-                          color: Colors.black,
-                        ),
+                      onPressed: () {
+                        // TODO: ADD FUNCTIONALITY
+                      },
+                      icon: const Icon(
+                        Icons.send,
+                        size: 30,
+                        color: Colors.black,
+                      ),
                     ),
                   ],
                 ),
               ],
+            ),
+          ),
+          const SizedBox(height: 30),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: pink.withOpacity(0.8),
+              fixedSize: const Size(300, 50),
+            ),
+            onPressed: (){
+
+            },
+            child: const Text(
+              "Tekrar Sor",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Baloo'
+              ),
             ),
           ),
         ],
