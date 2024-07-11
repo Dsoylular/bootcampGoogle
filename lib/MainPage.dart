@@ -1,8 +1,10 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:bootcamp_google/helperWidgets/appColors.dart';
 import 'package:bootcamp_google/helperWidgets/infoCards.dart';
 import 'package:bootcamp_google/helperWidgets/petCard.dart';
+import 'package:bootcamp_google/helperWidgets/profileButton.dart';
 import 'package:bootcamp_google/pages/login_register_page.dart';
 import 'package:bootcamp_google/respondPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,18 +12,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bootcamp_google/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'helperWidgets/myAppBar.dart';
 
-// DocumentSnapshot snapshot = await FirebaseFirestore.instance
-//     .collection('users')
-// .doc('users')
-//     .get();
-// if (snapshot.exists) {
-// final curData = snapshot.data() as Map<String, dynamic>;
-// final res = curData['deniz'] ?? '';
-// print(res);
-// }
+
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -75,7 +70,7 @@ class _MainPageState extends State<MainPage> {
         });
       }
     }
-    print("AAAAAAAA $profilePictureUrl");
+    // print("AAAAAAAA $profilePictureUrl");
   }
 
   void _sendMessage() {
@@ -415,7 +410,7 @@ class _MainPageState extends State<MainPage> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: darkBlue.withOpacity(0.6),
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  borderRadius: const BorderRadius.all(Radius.circular(30)),
                 ),
                 child: Row(
                   children: [
@@ -424,7 +419,7 @@ class _MainPageState extends State<MainPage> {
                       height: double.infinity,
                       decoration: BoxDecoration(
                         color: darkBlue,
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderRadius: const BorderRadius.all(Radius.circular(30)),
                       ),
                       child: const Row(
                         children: [
@@ -445,16 +440,189 @@ class _MainPageState extends State<MainPage> {
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          padding: EdgeInsets.all(10),
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(10),
                           backgroundColor: Colors.orangeAccent,
                         ),
-                        child: Icon(Icons.add, color: Colors.white),
+                        child: const Icon(Icons.add, color: Colors.white),
                       ),
                     ),
                   ],
                 ),
               ),
+            ),
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection('blogPosts').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return const Text('No blog posts available');
+                }
+                final blogPosts = snapshot.data!.docs;
+                return Column(
+                  children: blogPosts.map((doc) {
+                    final post = doc.data() as Map<String, dynamic>;
+                    final userId = post['author'];
+                    return FutureBuilder<DocumentSnapshot>(
+                      future: FirebaseFirestore.instance.collection('users').doc(userId).get(),
+                      builder: (context, userSnapshot) {
+                        if (userSnapshot.connectionState == ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (!userSnapshot.hasData || !userSnapshot.data!.exists) {
+                          return const Text('User not found');
+                        }
+                        final user = userSnapshot.data!.data() as Map<String, dynamic>;
+                        // print("AAAAAAA  $user");
+                        String profilepicture = user['profilePicture'];
+                        String username = user['userName'];
+                        return Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Container(
+                            height: 200,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: cream,
+                              borderRadius: const BorderRadius.all(Radius.circular(30)),
+                              border: Border.all(color: brown, width: 2),
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Row(
+                                    children: [
+                                      const SizedBox(width: 15),
+                                      ClipOval(
+                                        child: FadeInImage.assetNetwork(
+                                          placeholder: 'assets/images/kediIcon.png',
+                                          image: profilepicture,
+                                          fit: BoxFit.cover,
+                                          width: 40,
+                                          height: 40,
+                                          imageErrorBuilder: (context, error, stackTrace) {
+                                            return Image.asset(
+                                              'assets/images/kediIcon.png',
+                                              fit: BoxFit.cover,
+                                              width: 40,
+                                              height: 40,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Text(
+                                        username,
+                                        style: const TextStyle(
+                                            fontFamily: 'Baloo'
+                                        ),
+                                      ),
+                                      const SizedBox(width: 70),
+                                      GestureDetector(
+                                        onTap: () async{
+                                          setState(() {
+                                            post['like'] += 1;
+                                          });
+                                          try {
+                                            await FirebaseFirestore.instance
+                                                .collection('blogPosts')
+                                                .doc(doc.id)
+                                                .update({
+                                              'like': FieldValue.increment(1),
+                                            });
+                                          } catch (e) {
+                                            print(
+                                                'Error updating like count: $e');
+                                            setState(() {
+                                              post['like'] -= 1;
+                                            });
+                                          }
+                                        },
+                                        child: Image.asset(
+                                          'assets/icons/circle.png',
+                                          fit: BoxFit.cover,
+                                          width: 26,
+                                          height: 26,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        post['like'].toString(),
+                                        style: const TextStyle(
+                                          fontFamily: 'Baloo',
+                                        ),
+                                      ),
+                                      const SizedBox(width: 15),
+                                      Image.asset(
+                                        'assets/icons/chat.png',
+                                        fit: BoxFit.cover,
+                                        width: 30,
+                                        height: 30,
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "12",
+                                        style: const TextStyle(
+                                          fontFamily: 'Baloo',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Divider(color: pink.withOpacity(0.6), thickness: 2),
+                                ElevatedButton(
+                                  onPressed: (){
+                                    // TODO: Connect to blog's separate page
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: darkBlue.withOpacity(0.8),
+                                    fixedSize: const Size(350, 50),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        post['title'],
+                                        style: const TextStyle(
+                                            fontFamily: 'Baloo',
+                                            fontSize: 18,
+                                            color: Colors.white
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                ElevatedButton(
+                                  onPressed: (){
+                                    // TODO: Connect to blog's separate page
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    fixedSize: const Size(350, 50),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "${post['text'].toString().substring(0,min(40,post['text'].toString().length))}...",
+                                        style: const TextStyle(
+                                            fontFamily: 'Baloo',
+                                            fontSize: 14,
+                                            color: Colors.black
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }).toList(),
+                );
+              },
             ),
           ],
         ),
@@ -462,373 +630,134 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-
   Widget _buildProfile() {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 300,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: cream,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 20),
-                  Container(
-                    width: 160,
-                    height: 160,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: brown),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        alignment: Alignment.center,
-                        image: profilePictureUrl != null
-                            ? NetworkImage(profilePictureUrl!)
-                            : const AssetImage('assets/images/kediIcon.png') as ImageProvider<Object>,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 12),
-                  Text(
-                    "$name $surname",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "$userName",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(isVet == true ? "Veteriner" : "Evcil Hayvan Sahibi"),
-                ],
-              ),
-            ),
+            _profileHeader(),
             const SizedBox(height: 20),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    print("Profile Page");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: darkBlue,
-                    fixedSize: const Size(300, 50),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.person_outline_outlined, color: Colors.white),
-                      SizedBox(width: 10),
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Profil Fotoğrafı",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "Profil resmini değiştir",
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 30),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     print("Profile Page");
-                //   },
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: darkBlue,
-                //     fixedSize: const Size(300, 50),
-                //   ),
-                //   child: const Row(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     crossAxisAlignment: CrossAxisAlignment.center,
-                //     children: [
-                //       Icon(Icons.mail_outlined, color: Colors.white),
-                //       SizedBox(width: 10),
-                //       Center(
-                //         child: Column(
-                //           mainAxisAlignment: MainAxisAlignment.center,
-                //           crossAxisAlignment: CrossAxisAlignment.start,
-                //           children: [
-                //             Text(
-                //               "E-mail",
-                //               style: TextStyle(
-                //                 color: Colors.white,
-                //                 fontWeight: FontWeight.bold,
-                //               ),
-                //             ),
-                //             Text(
-                //               "E-mail adresini değiştir",
-                //               style: TextStyle(
-                //                 color: Colors.white70,
-                //                 fontSize: 12,
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    print("Profile Page");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: darkBlue,
-                    fixedSize: const Size(300, 50),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.person_outlined, color: Colors.white),
-                      SizedBox(width: 10),
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "İsim",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "Görünür ismini değiştir",
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    print("Profile Page");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: darkBlue,
-                    fixedSize: const Size(300, 50),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.info_outlined, color: Colors.white),
-                      SizedBox(width: 10),
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Hakkında",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "Hakkında kısmını değiştir",
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    print("Profile Page");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: darkBlue,
-                    fixedSize: const Size(300, 50),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.key_outlined, color: Colors.white),
-                      SizedBox(width: 10),
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Şifre",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "Şifreyi değiştir",
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                const Row(
-                  children: [
-                    SizedBox(width: 50),
-                    Text(
-                      "Hesap Ayarları",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 15),
-          ElevatedButton(
-            onPressed: () async {
-              await Auth().signOut();
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
-                    (Route<dynamic> route) => false,
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: pink,
-              fixedSize: const Size(300, 50),
-            ),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(Icons.exit_to_app, color: Colors.white),
-                SizedBox(width: 10),
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Çıkış",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "Hesaptan çıkış yap",
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    print("Profile Page");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: pink,
-                    fixedSize: const Size(300, 50),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.cancel_presentation_sharp, color: Colors.white),
-                      SizedBox(width: 10),
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Hesabı sil",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "Hesabı kalıcı bir şekilde sil",
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 30),
-              ],
-            ),
+            _profileButtons(),
           ],
         ),
       ),
+    );
+  }
+  Widget _profileHeader(){
+    return Container(
+      height: 300,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: cream,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 20),
+          Container(
+            width: 160,
+            height: 160,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: brown),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+                image: profilePictureUrl != null
+                    ? NetworkImage(profilePictureUrl!)
+                    : const AssetImage('assets/images/kediIcon.png') as ImageProvider<Object>,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 12),
+          Text(
+            "$name $surname",
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "$userName",
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(isVet == true ? "Veteriner" : "Evcil Hayvan Sahibi"),
+        ],
+      ),
+    );
+  }
+
+  Widget _profileButtons(){
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(height: 20),
+        profileButton(
+          'Profil Fotoğrafı',
+          'Profil resmini değiştir',
+          Icon(Icons.person_outline_outlined, color: Colors.white),
+          0
+        ),
+        const SizedBox(height: 30),
+        profileButton(
+            'İsim',
+            'Görünür ismi değiştir',
+            Icon(Icons.person_outline, color: Colors.white),
+            0
+        ),
+        const SizedBox(height: 30),
+        profileButton(
+            "Hakkında",
+            "Hakkında kısmını değiştir",
+            Icon(Icons.info_outlined, color: Colors.white),
+          0
+        ),
+        const SizedBox(height: 30),
+        profileButton(
+            'Şifre',
+            'Şifreyi değiştir',
+            Icon(Icons.key_outlined, color: Colors.white),
+          0
+        ),
+        const SizedBox(height: 20),
+        const Row(
+          children: [
+            SizedBox(width: 50),
+            Text(
+              "Hesap Ayarları",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        profileButton(
+            'Çıkış',
+            'Hesaptan çıkış yap',
+            Icon(Icons.exit_to_app, color: Colors.white),
+            1,
+        ),
+        const SizedBox(height: 30),
+        profileButton(
+          'Hesabı Sil',
+          'Hesabı kalıcı bir şekilde sil',
+          Icon(Icons.cancel_presentation_sharp, color: Colors.white),
+          1
+        ),
+        const SizedBox(height: 30),
+      ],
     );
   }
 }
