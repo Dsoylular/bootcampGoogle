@@ -35,11 +35,47 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 2;
   final TextEditingController _messageController = TextEditingController();
   final List<Map<String, String>> _messages = [];
+  String? profilePictureUrl;
+  String? userName;
+  String? name;
+  String? surname;
+  bool? isVet;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void dispose() {
     _messageController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    getUserData();
+  }
+
+  void getUserData() async {
+    User? currentUser = _auth.currentUser;
+    if (currentUser != null) {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .get();
+
+      if (snapshot.exists) {
+        setState(() {
+          profilePictureUrl = snapshot['profilePicture'];
+          userName = snapshot['userName'];
+          isVet = snapshot['isVet'];
+          name = snapshot['firstName'];
+          surname = snapshot['lastName'];
+          print(profilePictureUrl);
+          print(isVet);
+          print(name);
+        });
+      }
+    }
+    print("AAAAAAAA $profilePictureUrl");
   }
 
   void _sendMessage() {
@@ -368,8 +404,64 @@ class _MainPageState extends State<MainPage> {
 
 
   Widget _buildJournal() {
-    return Scaffold();
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 60,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: darkBlue.withOpacity(0.6),
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 300,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: darkBlue,
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                      ),
+                      child: const Row(
+                        children: [
+                          SizedBox(width: 20),
+                          Text(
+                            "Pawdi Forum",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Pacifico',
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(10),
+                          backgroundColor: Colors.orangeAccent,
+                        ),
+                        child: Icon(Icons.add, color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
+
 
   Widget _buildProfile() {
     return Scaffold(
@@ -386,32 +478,44 @@ class _MainPageState extends State<MainPage> {
                   bottomRight: Radius.circular(30),
                 ),
               ),
-              child: const Column(
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(height: 20),
-                  CircleAvatar(
-                    radius: 80,
-                    backgroundImage: NetworkImage('https://i.imgur.com/9l1A4OS.jpeg'),
+                  const SizedBox(height: 20),
+                  Container(
+                    width: 160,
+                    height: 160,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: brown),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                        image: profilePictureUrl != null
+                            ? NetworkImage(profilePictureUrl!)
+                            : const AssetImage('assets/images/kediIcon.png') as ImageProvider<Object>,
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 12),
+
+                  const SizedBox(height: 12),
                   Text(
-                    "Fatmanur Genar",
-                    style: TextStyle(
+                    "$name $surname",
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
-                    "fatmanur.genar1234",
-                    style: TextStyle(
+                    "$userName",
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8),
-                  Text("Evcil Hayvan Sahibi"),
+                  const SizedBox(height: 8),
+                  Text(isVet == true ? "Veteriner" : "Evcil Hayvan Sahibi"),
                 ],
               ),
             ),
@@ -460,46 +564,46 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    print("Profile Page");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: darkBlue,
-                    fixedSize: const Size(300, 50),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.mail_outlined, color: Colors.white),
-                      SizedBox(width: 10),
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "E-mail",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "E-mail adresini değiştir",
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 30),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     print("Profile Page");
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: darkBlue,
+                //     fixedSize: const Size(300, 50),
+                //   ),
+                //   child: const Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       Icon(Icons.mail_outlined, color: Colors.white),
+                //       SizedBox(width: 10),
+                //       Center(
+                //         child: Column(
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             Text(
+                //               "E-mail",
+                //               style: TextStyle(
+                //                 color: Colors.white,
+                //                 fontWeight: FontWeight.bold,
+                //               ),
+                //             ),
+                //             Text(
+                //               "E-mail adresini değiştir",
+                //               style: TextStyle(
+                //                 color: Colors.white70,
+                //                 fontSize: 12,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
                     print("Profile Page");

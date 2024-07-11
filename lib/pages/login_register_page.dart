@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../auth.dart';
 import '../helperWidgets/appColors.dart';
 import '../loadingPage.dart';
-import '../MainPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -65,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       String email = _controllerEmail.text.trim();
       String password = _controllerPassword.text.trim();
+      String confirmPassword = _controllerConfirmPassword.text.trim();
       String firstName = _controllerFirstName.text.trim();
       String lastName = _controllerLastName.text.trim();
       String userName = _controllerUserName.text.trim();
@@ -73,6 +73,14 @@ class _LoginPageState extends State<LoginPage> {
       if (email.isEmpty || password.isEmpty) {
         setState(() {
           errorMessage = 'Email ve şifre boş olamaz.';
+        });
+        return;
+      }
+
+      // Check if passwords match
+      if (password != confirmPassword) {
+        setState(() {
+          errorMessage = 'Şifreler eşleşmiyor.';
         });
         return;
       }
@@ -96,6 +104,7 @@ class _LoginPageState extends State<LoginPage> {
         'profilePicture': '',
         'description': '',
         'isVet': _isVet,
+        'pets': [],
       });
 
       // Navigate to loading screen after successful registration
@@ -119,6 +128,7 @@ class _LoginPageState extends State<LoginPage> {
       });
     }
   }
+
 
   Widget _title() {
     return Row(
@@ -170,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Text(
-        errorMessage == '' ? '' : 'Error: $errorMessage',
+        errorMessage == '' ? '' : 'Hata: $errorMessage',
         style: const TextStyle(
           color: Colors.red,
           fontSize: 14,

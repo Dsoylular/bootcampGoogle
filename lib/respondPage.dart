@@ -101,7 +101,8 @@ class _RespondPageState extends State<RespondPage> {
               "Tekrar Sor",
               style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'Baloo'
+                  fontFamily: 'Baloo',
+                fontSize: 18,
               ),
             ),
           ),
