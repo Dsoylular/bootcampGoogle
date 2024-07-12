@@ -1,18 +1,14 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:bootcamp_google/helperWidgets/appColors.dart';
 import 'package:bootcamp_google/helperWidgets/infoCards.dart';
 import 'package:bootcamp_google/helperWidgets/petCard.dart';
 import 'package:bootcamp_google/helperWidgets/profileButton.dart';
-import 'package:bootcamp_google/pages/login_register_page.dart';
+import 'package:bootcamp_google/newBlogPost.dart';
 import 'package:bootcamp_google/respondPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:bootcamp_google/auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'helperWidgets/myAppBar.dart';
 
@@ -425,7 +421,7 @@ class _MainPageState extends State<MainPage> {
                         children: [
                           SizedBox(width: 20),
                           Text(
-                            "Pawdi Forum",
+                            "PawBlog",
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'Pacifico',
@@ -438,7 +434,14 @@ class _MainPageState extends State<MainPage> {
                     Padding(
                       padding: const EdgeInsets.all(5),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NewBlogPost(),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: const CircleBorder(),
                           padding: const EdgeInsets.all(10),
@@ -562,9 +565,9 @@ class _MainPageState extends State<MainPage> {
                                         height: 30,
                                       ),
                                       const SizedBox(width: 5),
-                                      Text(
+                                      const Text(
                                         "12",
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontFamily: 'Baloo',
                                         ),
                                       ),
@@ -593,7 +596,7 @@ class _MainPageState extends State<MainPage> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 ElevatedButton(
                                   onPressed: (){
                                     // TODO: Connect to blog's separate page
@@ -705,30 +708,42 @@ class _MainPageState extends State<MainPage> {
         profileButton(
           'Profil Fotoğrafı',
           'Profil resmini değiştir',
-          Icon(Icons.person_outline_outlined, color: Colors.white),
-          0
+          const Icon(Icons.person_outline_outlined, color: Colors.white),
+          0,
+          context
         ),
         const SizedBox(height: 30),
         profileButton(
             'İsim',
             'Görünür ismi değiştir',
-            Icon(Icons.person_outline, color: Colors.white),
-            0
+            const Icon(Icons.person_outline, color: Colors.white),
+            0,
+          context
+        ),
+        const SizedBox(height: 30),
+        profileButton(
+            'Soyisim',
+            'Görünür soyismi değiştir',
+            const Icon(Icons.person_outline, color: Colors.white),
+            0,
+          context
         ),
         const SizedBox(height: 30),
         profileButton(
             "Hakkında",
             "Hakkında kısmını değiştir",
-            Icon(Icons.info_outlined, color: Colors.white),
-          0
+            const Icon(Icons.info_outlined, color: Colors.white),
+          0,
+          context
         ),
-        const SizedBox(height: 30),
-        profileButton(
-            'Şifre',
-            'Şifreyi değiştir',
-            Icon(Icons.key_outlined, color: Colors.white),
-          0
-        ),
+        // const SizedBox(height: 30),
+        // profileButton(
+        //     'Şifre',
+        //     'Şifreyi değiştir',
+        //     const Icon(Icons.key_outlined, color: Colors.white),
+        //   0,
+        //   context
+        // ),
         const SizedBox(height: 20),
         const Row(
           children: [
@@ -746,15 +761,17 @@ class _MainPageState extends State<MainPage> {
         profileButton(
             'Çıkış',
             'Hesaptan çıkış yap',
-            Icon(Icons.exit_to_app, color: Colors.white),
+            const Icon(Icons.exit_to_app, color: Colors.white),
             1,
+          context
         ),
         const SizedBox(height: 30),
         profileButton(
           'Hesabı Sil',
           'Hesabı kalıcı bir şekilde sil',
-          Icon(Icons.cancel_presentation_sharp, color: Colors.white),
-          1
+          const Icon(Icons.cancel_presentation_sharp, color: Colors.white),
+          1,
+          context
         ),
         const SizedBox(height: 30),
       ],
@@ -767,10 +784,10 @@ class ChatBubble extends StatelessWidget {
   final bool isUserMessage;
 
   const ChatBubble({
-    Key? key,
+    super.key,
     required this.message,
     required this.isUserMessage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
