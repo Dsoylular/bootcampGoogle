@@ -3,19 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'helperWidgets/appColors.dart';
+import 'helperWidgets/appColors.dart'; // Ensure you have imported your app-specific colors
 
 class NewBlogPost extends StatefulWidget {
   const NewBlogPost({super.key});
 
   @override
-  State<NewBlogPost> createState() => _NewBlogPostState();
+  _NewBlogPostState createState() => _NewBlogPostState();
 }
 
 class _NewBlogPostState extends State<NewBlogPost> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -23,10 +22,12 @@ class _NewBlogPostState extends State<NewBlogPost> {
     return Scaffold(
       appBar: appBar(context),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4),
               child: Container(
                 height: 60,
                 width: double.infinity,
@@ -61,152 +62,97 @@ class _NewBlogPostState extends State<NewBlogPost> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: lightBlue,
+              onPressed: () {
+                // TODO: Implement photo upload functionality
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: lightBlue,
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
-                onPressed: (){
-                  //TODO: FILL
-                },
-                child: const Row(
-                  children: [
-                    SizedBox(width: 10),
-                    Text(
-                      "Fotoğraf Ekle",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Baloo',
-                        color: Colors.black
-                      ),
-                    ),
-                    SizedBox(width: 130),
-                    Icon(Icons.add_photo_alternate_outlined, color: Colors.black),
-                  ],
-                ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              height: 550,
-              // width: double.infinity,
-              decoration: BoxDecoration(
-                color: lightBlue,
-                borderRadius: const BorderRadius.all(Radius.circular(30)),
               ),
-              child: Column(
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 20),
-                  const Row(
-                    children: [
-                      SizedBox(width: 25),
-                      Text(
-                          'Başlık',
-                        style: TextStyle(
-                          fontFamily: 'Baloo',
-                          fontSize: 22,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: brown, width: 2),
-                        color: cream,
-                        borderRadius: const BorderRadius.all(Radius.circular(20))
-                    ),
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: TextField(
-                            controller: _titleController,
-                            maxLines: null,
-                            keyboardType: TextInputType.multiline,
-                            textInputAction: TextInputAction.newline,
-                            decoration: const InputDecoration(
-                              hintText: 'Başlığı giriniz...',
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                      ],
+                  Text(
+                    "Fotoğraf Ekle",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'Baloo',
+                      color: Colors.black,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  const Row(
-                    children: [
-                      SizedBox(width: 25),
-                      Text(
-                        'İçerik',
-                        style: TextStyle(
-                            fontFamily: 'Baloo',
-                            fontSize: 22
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    height: 300,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: brown, width: 2),
-                        color: cream,
-                        borderRadius: const BorderRadius.all(Radius.circular(20))
-                    ),
-                    child: SingleChildScrollView(
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 20),
-                          Expanded(
-                            child: TextField(
-                              controller: _contentController,
-                              maxLines: null,
-                              keyboardType: TextInputType.multiline,
-                              textInputAction: TextInputAction.newline,
-                              decoration: const InputDecoration(
-                                hintText: 'İçeriği giriniz...',
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: pink,
-                      fixedSize: const Size(350, 50),
-                    ),
-                      onPressed: () async {
-                        User? currentUser = _auth.currentUser;
-                        await FirebaseFirestore.instance
-                            .collection('blogPosts')
-                            .doc("blogID") // TODO: RANDOM ID HERE
-                            .set({
-                          'title': _titleController.text,
-                          'text': _contentController.text,
-                          'author': currentUser?.uid.toString(),
-                          'pictureURL': '',
-                          'like': 0,
-                          'comments': [],
-                          'blogID': 'blogID' // TODO: RANDOM ID HERE
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        "Oluştur",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Baloo',
-                          fontSize: 18
-                        ),
-                      ),
-                  ),
+                  SizedBox(width: 8.0),
+                  Icon(Icons.add_photo_alternate_outlined, color: Colors.black),
                 ],
+              ),
+            ),
+            const SizedBox(height: 20.0),
+            TextField(
+              controller: _titleController,
+              decoration: InputDecoration(
+                hintText: 'Başlık',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(color: brown, width: 2.0),
+                ),
+                filled: true,
+                fillColor: cream,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+              ),
+              maxLines: null,
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              controller: _contentController,
+              decoration: InputDecoration(
+                hintText: 'İçerik',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(color: brown, width: 2.0),
+                ),
+                filled: true,
+                fillColor: cream,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              ),
+              maxLines: null,
+            ),
+            const SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () async {
+                User? currentUser = _auth.currentUser;
+                var docRef = await FirebaseFirestore.instance.collection('blogPosts').add({
+                  'title': _titleController.text,
+                  'text': _contentController.text,
+                  'author': currentUser?.uid.toString(),
+                  'pictureURL': '',
+                  'like': 0,
+                  'likedPeople': [],
+                  'comments': [],
+                  'blogId': '',
+                  'isVet': false,
+                  'timestamp': Timestamp.now(),
+                });
+                await docRef.update({'blogId': docRef.id});
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: pink,
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+              ),
+              child: const Text(
+                "Oluştur",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Baloo',
+                  fontSize: 18,
+                ),
               ),
             ),
           ],

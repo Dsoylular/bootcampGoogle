@@ -9,6 +9,7 @@ import 'package:bootcamp_google/newBlogPost.dart';
 import 'package:bootcamp_google/respondPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'helperWidgets/myAppBar.dart';
@@ -396,7 +397,6 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-
   Widget _buildJournal() {
     return Scaffold(
       body: SingleChildScrollView(
@@ -480,151 +480,176 @@ class _MainPageState extends State<MainPage> {
                         final user = userSnapshot.data!.data() as Map<String, dynamic>;
                         String profilePicture = user['profilePicture'];
                         String username = user['userName'];
-                        return Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            elevation: 5,
-                            child: Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
+
+                        // Fetch the length of the 'comments' collection
+                        return StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('blogPosts')
+                              .doc(doc.id)
+                              .collection('comments')
+                              .snapshots(),
+                          builder: (context, commentsSnapshot) {
+                            int commentsLength = commentsSnapshot.hasData
+                                ? commentsSnapshot.data!.docs.length
+                                : 0;
+
+                            return Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                elevation: 5,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      ClipOval(
-                                        child: FadeInImage.assetNetwork(
-                                          placeholder: 'assets/images/kediIcon.png',
-                                          image: profilePicture,
-                                          fit: BoxFit.cover,
-                                          width: 40,
-                                          height: 40,
-                                          imageErrorBuilder: (context, error, stackTrace) {
-                                            return Image.asset(
-                                              'assets/images/kediIcon.png',
+                                      Row(
+                                        children: [
+                                          ClipOval(
+                                            child: FadeInImage.assetNetwork(
+                                              placeholder: 'assets/images/kediIcon.png',
+                                              image: profilePicture,
                                               fit: BoxFit.cover,
                                               width: 40,
                                               height: 40,
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Text(
-                                        username,
-                                        style: const TextStyle(
-                                          fontFamily: 'Baloo',
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      if (post['isVet']) ...[
-                                        const SizedBox(width: 5),
-                                        Icon(Icons.check_circle, color: Colors.blue, size: 16),
-                                      ],
-                                      Spacer(),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          if (post['likedPeople'] != null && !post['likedPeople'].contains(curUserId)) {
-                                            setState(() {
-                                              post['like'] += 1;
-                                              post['likedPeople'].add(curUserId);
-                                            });
-                                            try {
-                                              await FirebaseFirestore.instance
-                                                  .collection('blogPosts')
-                                                  .doc(doc.id)
-                                                  .update({
-                                                'like': FieldValue.increment(1),
-                                                'likedPeople': FieldValue.arrayUnion([curUserId]),
-                                              });
-                                            } catch (e) {
-                                              print('Error updating like count: $e');
-                                              post['like'] -= 1;
-                                            }
-                                          } else {
-                                            setState(() {
-                                              post['like'] -= 1;
-                                              post['likedPeople'].remove(curUserId);
-                                            });
-                                            try {
-                                              await FirebaseFirestore.instance
-                                                  .collection('blogPosts')
-                                                  .doc(doc.id)
-                                                  .update({
-                                                'like': FieldValue.increment(-1),
-                                                'likedPeople': FieldValue.arrayRemove([curUserId]),
-                                              });
-                                            } catch (e) {
-                                              print('Error updating like count: $e');
-                                              post['like'] += 1;
-                                            }
-                                          }
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Icon(Icons.thumb_up, color: post['likedPeople'].contains(curUserId) ? Colors.blue : Colors.grey, size: 20),
-                                            const SizedBox(width: 5),
-                                            Text(
-                                              post['likedPeople'].length.toString(),
-                                              style: const TextStyle(
-                                                fontFamily: 'Baloo',
-                                                fontSize: 14,
-                                              ),
+                                              imageErrorBuilder: (context, error, stackTrace) {
+                                                return Image.asset(
+                                                  'assets/images/kediIcon.png',
+                                                  fit: BoxFit.cover,
+                                                  width: 40,
+                                                  height: 40,
+                                                );
+                                              },
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(width: 15),
-                                      const Row(
-                                        children: [
-                                          Icon(Icons.chat_bubble_outline, color: Colors.grey, size: 20),
-                                          SizedBox(width: 5),
+                                          ),
+                                          const SizedBox(width: 10),
                                           Text(
-                                            "12",
-                                            style: TextStyle(
+                                            username,
+                                            style: const TextStyle(
                                               fontFamily: 'Baloo',
-                                              fontSize: 14,
+                                              fontSize: 16,
                                             ),
+                                          ),
+                                          if (post['isVet']) ...[
+                                            const SizedBox(width: 5),
+                                            Icon(Icons.check_circle, color: Colors.blue, size: 16),
+                                          ],
+                                          Spacer(),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              if (post['likedPeople'] != null && !post['likedPeople'].contains(curUserId)) {
+                                                setState(() {
+                                                  post['like'] += 1;
+                                                  post['likedPeople'].add(curUserId);
+                                                });
+                                                try {
+                                                  await FirebaseFirestore.instance
+                                                      .collection('blogPosts')
+                                                      .doc(doc.id)
+                                                      .update({
+                                                    'like': FieldValue.increment(1),
+                                                    'likedPeople': FieldValue.arrayUnion([curUserId]),
+                                                  });
+                                                } catch (e) {
+                                                  print('Error updating like count: $e');
+                                                  post['like'] -= 1;
+                                                }
+                                              } else {
+                                                setState(() {
+                                                  post['like'] -= 1;
+                                                  post['likedPeople'].remove(curUserId);
+                                                });
+                                                try {
+                                                  await FirebaseFirestore.instance
+                                                      .collection('blogPosts')
+                                                      .doc(doc.id)
+                                                      .update({
+                                                    'like': FieldValue.increment(-1),
+                                                    'likedPeople': FieldValue.arrayRemove([curUserId]),
+                                                  });
+                                                } catch (e) {
+                                                  print('Error updating like count: $e');
+                                                  post['like'] += 1;
+                                                }
+                                              }
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.thumb_up, color: post['likedPeople'].contains(curUserId) ? Colors.blue : Colors.grey, size: 20),
+                                                const SizedBox(width: 5),
+                                                Text(
+                                                  post['likedPeople'].length.toString(),
+                                                  style: const TextStyle(
+                                                    fontFamily: 'Baloo',
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(width: 15),
+                                          Row(
+                                            children: [
+                                              GestureDetector(
+                                                onTap: (){
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
+                                                    ),
+                                                  );
+                                                },
+                                                child: const Icon(Icons.chat_bubble_outline, color: Colors.grey, size: 20)
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                commentsLength.toString(),
+                                                style: const TextStyle(
+                                                  fontFamily: 'Baloo',
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
+                                      const Divider(color: Colors.grey, thickness: 1),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          post['title'],
+                                          style: TextStyle(
+                                            fontFamily: 'Baloo',
+                                            fontSize: 18,
+                                            color: darkBlue,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        "${post['text'].toString().substring(0, min(40, post['text'].toString().length))}...",
+                                        style: const TextStyle(
+                                          fontFamily: 'Baloo',
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ],
                                   ),
-                                  const Divider(color: Colors.grey, thickness: 1),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      post['title'],
-                                      style: TextStyle(
-                                        fontFamily: 'Baloo',
-                                        fontSize: 18,
-                                        color: darkBlue,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    "${post['text'].toString().substring(0, min(40, post['text'].toString().length))}...",
-                                    style: const TextStyle(
-                                      fontFamily: 'Baloo',
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         );
                       },
                     );
@@ -637,7 +662,6 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-
 
   Widget _buildProfile() {
     return Scaffold(
