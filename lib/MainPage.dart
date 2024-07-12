@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bootcamp_google/blogProfile.dart';
 import 'package:bootcamp_google/helperWidgets/appColors.dart';
 import 'package:bootcamp_google/helperWidgets/infoCards.dart';
 import 'package:bootcamp_google/helperWidgets/petCard.dart';
@@ -30,6 +31,7 @@ class _MainPageState extends State<MainPage> {
   String? userName;
   String? name;
   String? surname;
+  String? curUserId;
   bool? isVet;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -60,6 +62,7 @@ class _MainPageState extends State<MainPage> {
           isVet = snapshot['isVet'];
           name = snapshot['firstName'];
           surname = snapshot['lastName'];
+          curUserId = currentUser.uid.toString();
           print(profilePictureUrl);
           print(isVet);
           print(name);
@@ -474,34 +477,27 @@ class _MainPageState extends State<MainPage> {
                         if (userSnapshot.connectionState == ConnectionState.waiting) {
                           return const CircularProgressIndicator();
                         }
-                        if (!userSnapshot.hasData || !userSnapshot.data!.exists) {
-                          return const Text('User not found');
-                        }
                         final user = userSnapshot.data!.data() as Map<String, dynamic>;
-                        // print("AAAAAAA  $user");
-                        String profilepicture = user['profilePicture'];
+                        String profilePicture = user['profilePicture'];
                         String username = user['userName'];
                         return Padding(
                           padding: const EdgeInsets.all(10),
-                          child: Container(
-                            height: 200,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: cream,
-                              borderRadius: const BorderRadius.all(Radius.circular(30)),
-                              border: Border.all(color: brown, width: 2),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
                             ),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Row(
+                            elevation: 5,
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
-                                      const SizedBox(width: 15),
                                       ClipOval(
                                         child: FadeInImage.assetNetwork(
                                           placeholder: 'assets/images/kediIcon.png',
-                                          image: profilepicture,
+                                          image: profilePicture,
                                           fit: BoxFit.cover,
                                           width: 40,
                                           height: 40,
@@ -519,105 +515,114 @@ class _MainPageState extends State<MainPage> {
                                       Text(
                                         username,
                                         style: const TextStyle(
-                                            fontFamily: 'Baloo'
+                                          fontFamily: 'Baloo',
+                                          fontSize: 16,
                                         ),
                                       ),
-                                      const SizedBox(width: 70),
+                                      if (post['isVet']) ...[
+                                        const SizedBox(width: 5),
+                                        Icon(Icons.check_circle, color: Colors.blue, size: 16),
+                                      ],
+                                      Spacer(),
                                       GestureDetector(
-                                        onTap: () async{
-                                          setState(() {
-                                            post['like'] += 1;
-                                          });
-                                          try {
-                                            await FirebaseFirestore.instance
-                                                .collection('blogPosts')
-                                                .doc(doc.id)
-                                                .update({
-                                              'like': FieldValue.increment(1),
+                                        onTap: () async {
+                                          if (post['likedPeople'] != null && !post['likedPeople'].contains(curUserId)) {
+                                            setState(() {
+                                              post['like'] += 1;
+                                              post['likedPeople'].add(curUserId);
                                             });
-                                          } catch (e) {
-                                            print(
-                                                'Error updating like count: $e');
+                                            try {
+                                              await FirebaseFirestore.instance
+                                                  .collection('blogPosts')
+                                                  .doc(doc.id)
+                                                  .update({
+                                                'like': FieldValue.increment(1),
+                                                'likedPeople': FieldValue.arrayUnion([curUserId]),
+                                              });
+                                            } catch (e) {
+                                              print('Error updating like count: $e');
+                                              post['like'] -= 1;
+                                            }
+                                          } else {
                                             setState(() {
                                               post['like'] -= 1;
+                                              post['likedPeople'].remove(curUserId);
                                             });
+                                            try {
+                                              await FirebaseFirestore.instance
+                                                  .collection('blogPosts')
+                                                  .doc(doc.id)
+                                                  .update({
+                                                'like': FieldValue.increment(-1),
+                                                'likedPeople': FieldValue.arrayRemove([curUserId]),
+                                              });
+                                            } catch (e) {
+                                              print('Error updating like count: $e');
+                                              post['like'] += 1;
+                                            }
                                           }
                                         },
-                                        child: Image.asset(
-                                          'assets/icons/circle.png',
-                                          fit: BoxFit.cover,
-                                          width: 26,
-                                          height: 26,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        post['like'].toString(),
-                                        style: const TextStyle(
-                                          fontFamily: 'Baloo',
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.thumb_up, color: post['likedPeople'].contains(curUserId) ? Colors.blue : Colors.grey, size: 20),
+                                            const SizedBox(width: 5),
+                                            Text(
+                                              post['likedPeople'].length.toString(),
+                                              style: const TextStyle(
+                                                fontFamily: 'Baloo',
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       const SizedBox(width: 15),
-                                      Image.asset(
-                                        'assets/icons/chat.png',
-                                        fit: BoxFit.cover,
-                                        width: 30,
-                                        height: 30,
-                                      ),
-                                      const SizedBox(width: 5),
-                                      const Text(
-                                        "12",
-                                        style: TextStyle(
-                                          fontFamily: 'Baloo',
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Divider(color: pink.withOpacity(0.6), thickness: 2),
-                                ElevatedButton(
-                                  onPressed: (){
-                                    // TODO: Connect to blog's separate page
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: darkBlue.withOpacity(0.8),
-                                    fixedSize: const Size(350, 50),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        post['title'],
-                                        style: const TextStyle(
-                                            fontFamily: 'Baloo',
-                                            fontSize: 18,
-                                            color: Colors.white
-                                        ),
+                                      const Row(
+                                        children: [
+                                          Icon(Icons.chat_bubble_outline, color: Colors.grey, size: 20),
+                                          SizedBox(width: 5),
+                                          Text(
+                                            "12",
+                                            style: TextStyle(
+                                              fontFamily: 'Baloo',
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                ElevatedButton(
-                                  onPressed: (){
-                                    // TODO: Connect to blog's separate page
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    fixedSize: const Size(350, 50),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "${post['text'].toString().substring(0,min(40,post['text'].toString().length))}...",
-                                        style: const TextStyle(
-                                            fontFamily: 'Baloo',
-                                            fontSize: 14,
-                                            color: Colors.black
+                                  const Divider(color: Colors.grey, thickness: 1),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
                                         ),
+                                      );
+                                    },
+                                    child: Text(
+                                      post['title'],
+                                      style: TextStyle(
+                                        fontFamily: 'Baloo',
+                                        fontSize: 18,
+                                        color: darkBlue,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    "${post['text'].toString().substring(0, min(40, post['text'].toString().length))}...",
+                                    style: const TextStyle(
+                                      fontFamily: 'Baloo',
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );
@@ -632,6 +637,7 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+
 
   Widget _buildProfile() {
     return Scaffold(

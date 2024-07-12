@@ -192,7 +192,8 @@ class _NewBlogPostState extends State<NewBlogPost> {
                           'author': currentUser?.uid.toString(),
                           'pictureURL': '',
                           'like': 0,
-                          'comments': []
+                          'comments': [],
+                          'blogID': 'blogID' // TODO: RANDOM ID HERE
                         });
                         Navigator.pop(context);
                       },
