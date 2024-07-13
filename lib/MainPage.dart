@@ -6,6 +6,7 @@ import 'package:bootcamp_google/helperWidgets/infoCards.dart';
 import 'package:bootcamp_google/helperWidgets/petCard.dart';
 import 'package:bootcamp_google/helperWidgets/profileButton.dart';
 import 'package:bootcamp_google/newBlogPost.dart';
+import 'package:bootcamp_google/newPet.dart';
 import 'package:bootcamp_google/respondPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -88,6 +89,7 @@ class _MainPageState extends State<MainPage> {
 
 
   String _getResponseMessage() {
+    // TODO: GEMINI CODES SHOULD BE FILLED
     return "Thank you for your message.\nPlease wait for the response...";
   }
 
@@ -139,7 +141,7 @@ class _MainPageState extends State<MainPage> {
     return Column(
       children: [
         Container(
-          height: 375,
+          height: 360,
           width: double.infinity,
           decoration: BoxDecoration(
             color: cream,
@@ -166,6 +168,12 @@ class _MainPageState extends State<MainPage> {
                   ElevatedButton(
                     onPressed: () async {
                       print("Clicked ADD"); // TODO: Connect with backend
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NewPet(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: darkBlue,
@@ -184,7 +192,7 @@ class _MainPageState extends State<MainPage> {
                   const SizedBox(width: 30),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               PetCard(context),
             ],
           ),
@@ -315,7 +323,7 @@ class _MainPageState extends State<MainPage> {
                     IconButton(
                       icon: const Icon(Icons.add_circle_outline),
                       onPressed: (){
-                        //TODO: FILL
+                        //TODO: FILL THIS BUTTON
                       },
                     ),
                     Expanded(
@@ -441,7 +449,7 @@ class _MainPageState extends State<MainPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => NewBlogPost(),
+                              builder: (context) => const NewBlogPost(),
                             ),
                           );
                         },
@@ -729,7 +737,6 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-
   Widget _profileButtons(){
     return Column(
       mainAxisSize: MainAxisSize.min,
