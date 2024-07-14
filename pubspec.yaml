@@ -10,15 +10,18 @@ environment:
 
 
 dependencies:
+  lottie: ^1.2.0
   flutter:
     sdk: flutter
-  http: ^0.13.3
 
   firebase_core: ^2.25.4
   firebase_auth: ^4.17.4
   cloud_firestore: ^4.15.2
   cupertino_icons: ^1.0.6
   flutter_dotenv: ^5.0.2
+  flutter_markdown: ^0.6.9
+  google_generative_ai:
+  intl:
 
 dev_dependencies:
   flutter_test:

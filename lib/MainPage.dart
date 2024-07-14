@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bootcamp_google/blogProfile.dart';
 import 'package:bootcamp_google/helperWidgets/appColors.dart';
+import 'package:bootcamp_google/helperWidgets/geminiCodes.dart';
 import 'package:bootcamp_google/helperWidgets/infoCards.dart';
 import 'package:bootcamp_google/helperWidgets/petCard.dart';
 import 'package:bootcamp_google/helperWidgets/profileButton.dart';
@@ -10,10 +11,8 @@ import 'package:bootcamp_google/newPet.dart';
 import 'package:bootcamp_google/respondPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'helperWidgets/myAppBar.dart';
 
@@ -37,6 +36,7 @@ class _MainPageState extends State<MainPage> {
   String? surname;
   String? curUserId;
   bool? isVet;
+  bool _isLoading = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -73,14 +73,10 @@ class _MainPageState extends State<MainPage> {
         });
       }
     }
-    // print("AAAAAAAA $profilePictureUrl");
   }
 
   @override
   Widget build(BuildContext context) {
-
-    final apiKey = dotenv.env['API_KEY'];
-    print("AAAAAAAAAAAAAAAAAAAAAA $apiKey");
 
     return Scaffold(
       appBar: _selectedIndex == 0 ? null : appBar(context),
@@ -94,7 +90,7 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.question_mark_outlined),
+            icon: Icon(Icons.smart_toy_outlined),
             label: 'Bana Sor!',
           ),
           BottomNavigationBarItem(
@@ -151,7 +147,7 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-  Widget _askMeUpperDesign(){
+  Widget _askMeUpperDesign() {
     return Container(
       height: 200,
       decoration: BoxDecoration(
@@ -233,7 +229,7 @@ class _MainPageState extends State<MainPage> {
       }).toList(),
     );
   }
-  Widget _messagingInterface(){
+  Widget _messagingInterface() {
     return Container(
       decoration: BoxDecoration(
         color: cream,
@@ -274,6 +270,7 @@ class _MainPageState extends State<MainPage> {
                 );
               },
             ),
+            if (_isLoading) const Center(child: CircularProgressIndicator()),
             const Divider(),
             Container(
               decoration: BoxDecoration(
@@ -285,7 +282,7 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.add_circle_outline),
-                    onPressed: (){
+                    onPressed: () {
                       //TODO: FILL THIS BUTTON
                     },
                   ),
@@ -314,22 +311,28 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-  void _sendMessage() {
-    setState(() {
-      var message = "";
-      message = _messageController.text.trim();
-      if (message.isNotEmpty) {
+  void _sendMessage() async {
+    var message = _messageController.text.trim();
+    if (message.isNotEmpty) {
+      setState(() {
         _messages.clear();
         _messages.add({'type': 'user', 'message': message});
-        _messages.add({'type': 'response', 'message': _getResponseMessage()});
+        _isLoading = true;
+      });
+
+      final response = await _getResponseMessage(message);
+
+      setState(() {
+        _messages.add({'type': 'response', 'message': response ?? ""});
         _messageController.clear();
-      }
-    });
+        _isLoading = false;
+      });
+    }
   }
-  String _getResponseMessage() {
-    // TODO: GEMINI CODES SHOULD BE FILLED
-    return "Thank you for your message.\nPlease wait for the response...";
+  Future<String?> _getResponseMessage(String message) async {
+    return await talkWithGemini(message);
   }
+
 
   Widget _buildJournal() {
     return Scaffold(
@@ -421,9 +424,9 @@ class _MainPageState extends State<MainPage> {
                                   ),
                                   if (post['isVet']) ...[
                                     const SizedBox(width: 5),
-                                    Icon(Icons.check_circle, color: Colors.blue, size: 16),
+                                    const Icon(Icons.check_circle, color: Colors.blue, size: 16),
                                   ],
-                                  Spacer(),
+                                  const Spacer(),
                                   GestureDetector(
                                     onTap: () async {
                                       if (post['likedPeople'] != null && !post['likedPeople'].contains(curUserId)) {
@@ -853,6 +856,8 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String displayMessage = message.length > 200 ? "${message.substring(0, 200)}..." : message;
+
     return GestureDetector(
       onTap: isUserMessage
           ? null
@@ -876,14 +881,17 @@ class ChatBubble extends StatelessWidget {
             bottomRight: isUserMessage ? Radius.zero : const Radius.circular(20),
           ),
         ),
-        child: Text(
-          message,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 15,
+        child: MarkdownBody(
+          data: displayMessage,
+          styleSheet: MarkdownStyleSheet(
+            p: const TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+            ),
           ),
         ),
       ),
     );
   }
 }
+
