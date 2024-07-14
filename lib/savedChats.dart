@@ -11,7 +11,11 @@ class _SavedChatsState extends State<SavedChats> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text("Saved chats"),
+      body: Column(
+        children: [
+          SizedBox(height: 20),
+        ],
+      ),
     );
   }
 }

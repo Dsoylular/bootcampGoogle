@@ -218,7 +218,6 @@ class _MainPageState extends State<MainPage> {
               child: ListTile(
                 title: Text(question, style: const TextStyle(fontWeight: FontWeight.w300)),
                 onTap: () {
-                  print("Deniz");
                   _messageController.text = question;
                 },
               ),
@@ -264,7 +263,9 @@ class _MainPageState extends State<MainPage> {
                       : Alignment.centerLeft,
                   child: ChatBubble(
                     message: message['message']!,
+                    messages: _messages,
                     isUserMessage: message['type'] == 'user',
+                    controller: _messageController,
                   ),
                 );
               },
@@ -845,12 +846,16 @@ class _MainPageState extends State<MainPage> {
 
 class ChatBubble extends StatelessWidget {
   final String message;
+  final List<Map<String, String>> messages;
   final bool isUserMessage;
+  final TextEditingController controller;
 
   const ChatBubble({
     super.key,
     required this.message,
     required this.isUserMessage,
+    required this.controller,
+    required this.messages,
   });
 
   @override
@@ -859,12 +864,14 @@ class ChatBubble extends StatelessWidget {
 
     return GestureDetector(
       onTap: isUserMessage
-          ? null
+          ? (){
+            controller.text = message;
+          }
           : () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => RespondPage(respond: message),
+            builder: (context) => RespondPage(respond: message, prompt: messages[0]['message'] ?? ""),
           ),
         );
       },
