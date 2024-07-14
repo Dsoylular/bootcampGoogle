@@ -1,9 +1,8 @@
 import 'package:bootcamp_google/widget_tree.dart';
-import 'package:bootcamp_google/loadingPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'MainPage.dart';
 
 Future <void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +15,8 @@ Future <void> main() async{
         storageBucket: 'pawdi-7b40f.appspot.com',
       )
   );
+  await dotenv.load(fileName: '.env');
+
   runApp(const MyApp());
 }
 

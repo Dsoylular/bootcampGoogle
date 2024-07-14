@@ -33,7 +33,7 @@ flutter:
     - assets/images/cuteCat.jpeg
     - assets/icons/chat.png
     - assets/icons/circle.png
-
+    - .env
   uses-material-design: true
 
   fonts:

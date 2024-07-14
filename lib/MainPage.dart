@@ -12,6 +12,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'helperWidgets/myAppBar.dart';
 
@@ -74,27 +76,12 @@ class _MainPageState extends State<MainPage> {
     // print("AAAAAAAA $profilePictureUrl");
   }
 
-  void _sendMessage() {
-    setState(() {
-      var message = "";
-      message = _messageController.text.trim();
-      if (message.isNotEmpty) {
-        _messages.clear();
-        _messages.add({'type': 'user', 'message': message});
-        _messages.add({'type': 'response', 'message': _getResponseMessage()});
-        _messageController.clear();
-      }
-    });
-  }
-
-
-  String _getResponseMessage() {
-    // TODO: GEMINI CODES SHOULD BE FILLED
-    return "Thank you for your message.\nPlease wait for the response...";
-  }
-
   @override
   Widget build(BuildContext context) {
+
+    final apiKey = dotenv.env['API_KEY'];
+    print("AAAAAAAAAAAAAAAAAAAAAA $apiKey");
+
     return Scaffold(
       appBar: _selectedIndex == 0 ? null : appBar(context),
       body: _selectedIndex == 0
@@ -137,219 +124,14 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  Widget _buildMyPets() {
-    return Column(
-      children: [
-        Container(
-          height: 360,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: cream,
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(30),
-              bottomRight: Radius.circular(30),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  const SizedBox(width: 30),
-                  const Text(
-                    "Evcil Hayvanlarım",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Spacer(),
-                  ElevatedButton(
-                    onPressed: () async {
-                      print("Clicked ADD"); // TODO: Connect with backend
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const NewPet(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: darkBlue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: const Text(
-                      "+   Ekle",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                ],
-              ),
-              const SizedBox(height: 10),
-              PetCard(context),
-            ],
-          ),
-        ),
-        const SizedBox(height: 30),
-        Column(
-          children: [
-            const Row(
-              children: [
-                SizedBox(width: 30),
-                Text(
-                  " Durum",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            InfoCard(context),
-          ],
-        ),
-      ],
-    );
-  }
 
   Widget _buildAskMe() {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              color: cream,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-            ),
-            width: double.infinity,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/cuteCat.jpeg',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    alignment: Alignment.topCenter,
-                  ),
-                  Positioned(
-                    bottom: 20,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: darkBlue,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Text(
-                        "    Sor Bana    ",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: cream,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _messages.isEmpty
-                      ? const SizedBox(
-                    height: 130,
-                    child: Center(
-                      child: Text(
-                        'Gönderilmiş mesaj yok.',
-                        style: TextStyle(fontSize: 16, color: Colors.grey),
-                      ),
-                    ),
-                  )
-                      : ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: _messages.length,
-                    itemBuilder: (context, index) {
-                      final message = _messages[index];
-                      return Align(
-                        alignment: message['type'] == 'user'
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: ChatBubble(
-                          message: message['message']!,
-                          isUserMessage: message['type'] == 'user',
-                        ),
-                      );
-                    },
-                  ),
-                  const Divider(),
-              Container(
-                decoration: BoxDecoration(
-                  color: darkBlue.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.add_circle_outline),
-                      onPressed: (){
-                        //TODO: FILL THIS BUTTON
-                      },
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: _messageController,
-                        maxLines: null, // Set to null for unlimited lines
-                        keyboardType: TextInputType.multiline, // Allow multiline input
-                        textInputAction: TextInputAction.newline, // Change keyboard's enter button to newline
-                        decoration: const InputDecoration(
-                          hintText: 'Sorunuzu giriniz...',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: _sendMessage,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 5),
-                ],
-              ),
-            ),
-          ),
+          _askMeUpperDesign(),
+          _messagingInterface(),
           const SizedBox(height: 20),
           const Row(
             children: [
@@ -369,7 +151,54 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-
+  Widget _askMeUpperDesign(){
+    return Container(
+      height: 200,
+      decoration: BoxDecoration(
+        color: cream,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
+      width: double.infinity,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset(
+              'assets/images/cuteCat.jpeg',
+              fit: BoxFit.cover,
+              width: double.infinity,
+              alignment: Alignment.topCenter,
+            ),
+            Positioned(
+              bottom: 20,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: darkBlue,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Text(
+                  "    Sor Bana    ",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
   Widget _buildFaqSection() {
     final faqs = {
       "Genel": ["Can you help me set up a virtual pet sitter and suggest a product that can give treats to my dog while I'm at work?", "Based on my active lifestyle, apartment living, and preference for medium-sized dogs, can you suggest some breeds that might be a good fit for me?"],
@@ -404,272 +233,466 @@ class _MainPageState extends State<MainPage> {
       }).toList(),
     );
   }
+  Widget _messagingInterface(){
+    return Container(
+      decoration: BoxDecoration(
+        color: cream,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _messages.isEmpty
+                ? const SizedBox(
+              height: 130,
+              child: Center(
+                child: Text(
+                  'Gönderilmiş mesaj yok.',
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+              ),
+            )
+                : ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return Align(
+                  alignment: message['type'] == 'user'
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  child: ChatBubble(
+                    message: message['message']!,
+                    isUserMessage: message['type'] == 'user',
+                  ),
+                );
+              },
+            ),
+            const Divider(),
+            Container(
+              decoration: BoxDecoration(
+                color: darkBlue.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.add_circle_outline),
+                    onPressed: (){
+                      //TODO: FILL THIS BUTTON
+                    },
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: _messageController,
+                      maxLines: null, // Set to null for unlimited lines
+                      keyboardType: TextInputType.multiline, // Allow multiline input
+                      textInputAction: TextInputAction.newline, // Change keyboard's enter button to newline
+                      decoration: const InputDecoration(
+                        hintText: 'Sorunuzu giriniz...',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.send),
+                    onPressed: _sendMessage,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 5),
+          ],
+        ),
+      ),
+    );
+  }
+  void _sendMessage() {
+    setState(() {
+      var message = "";
+      message = _messageController.text.trim();
+      if (message.isNotEmpty) {
+        _messages.clear();
+        _messages.add({'type': 'user', 'message': message});
+        _messages.add({'type': 'response', 'message': _getResponseMessage()});
+        _messageController.clear();
+      }
+    });
+  }
+  String _getResponseMessage() {
+    // TODO: GEMINI CODES SHOULD BE FILLED
+    return "Thank you for your message.\nPlease wait for the response...";
+  }
 
   Widget _buildJournal() {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 60,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: darkBlue.withOpacity(0.6),
-                  borderRadius: const BorderRadius.all(Radius.circular(30)),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 300,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: darkBlue,
-                        borderRadius: const BorderRadius.all(Radius.circular(30)),
-                      ),
-                      child: const Row(
-                        children: [
-                          SizedBox(width: 20),
-                          Text(
-                            "PawBlog",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Pacifico',
-                              fontSize: 18,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const NewBlogPost(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: const CircleBorder(),
-                          padding: const EdgeInsets.all(10),
-                          backgroundColor: Colors.orangeAccent,
-                        ),
-                        child: const Icon(Icons.add, color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('blogPosts').snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
+            _journalUpperDesign(),
+            _journalPosts(),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _journalPosts(){
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('blogPosts').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return const Text('No blog posts available');
+        }
+        final blogPosts = snapshot.data!.docs;
+        return Column(
+          children: blogPosts.map((doc) {
+            final post = doc.data() as Map<String, dynamic>;
+            final userId = post['author'];
+            return FutureBuilder<DocumentSnapshot>(
+              future: FirebaseFirestore.instance.collection('users').doc(userId).get(),
+              builder: (context, userSnapshot) {
+                if (userSnapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 }
-                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Text('No blog posts available');
-                }
-                final blogPosts = snapshot.data!.docs;
-                return Column(
-                  children: blogPosts.map((doc) {
-                    final post = doc.data() as Map<String, dynamic>;
-                    final userId = post['author'];
-                    return FutureBuilder<DocumentSnapshot>(
-                      future: FirebaseFirestore.instance.collection('users').doc(userId).get(),
-                      builder: (context, userSnapshot) {
-                        if (userSnapshot.connectionState == ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        }
-                        final user = userSnapshot.data!.data() as Map<String, dynamic>;
-                        String profilePicture = user['profilePicture'];
-                        String username = user['userName'];
+                final user = userSnapshot.data!.data() as Map<String, dynamic>;
+                String profilePicture = user['profilePicture'];
+                String username = user['userName'];
 
-                        // Fetch the length of the 'comments' collection
-                        return StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .collection('blogPosts')
-                              .doc(doc.id)
-                              .collection('comments')
-                              .snapshots(),
-                          builder: (context, commentsSnapshot) {
-                            int commentsLength = commentsSnapshot.hasData
-                                ? commentsSnapshot.data!.docs.length
-                                : 0;
+                // Fetch the length of the 'comments' collection
+                return StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('blogPosts')
+                      .doc(doc.id)
+                      .collection('comments')
+                      .snapshots(),
+                  builder: (context, commentsSnapshot) {
+                    int commentsLength = commentsSnapshot.hasData
+                        ? commentsSnapshot.data!.docs.length
+                        : 0;
 
-                            return Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                elevation: 5,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          ClipOval(
-                                            child: FadeInImage.assetNetwork(
-                                              placeholder: 'assets/images/kediIcon.png',
-                                              image: profilePicture,
-                                              fit: BoxFit.cover,
-                                              width: 40,
-                                              height: 40,
-                                              imageErrorBuilder: (context, error, stackTrace) {
-                                                return Image.asset(
-                                                  'assets/images/kediIcon.png',
-                                                  fit: BoxFit.cover,
-                                                  width: 40,
-                                                  height: 40,
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            username,
-                                            style: const TextStyle(
-                                              fontFamily: 'Baloo',
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          if (post['isVet']) ...[
-                                            const SizedBox(width: 5),
-                                            Icon(Icons.check_circle, color: Colors.blue, size: 16),
-                                          ],
-                                          Spacer(),
-                                          GestureDetector(
-                                            onTap: () async {
-                                              if (post['likedPeople'] != null && !post['likedPeople'].contains(curUserId)) {
-                                                setState(() {
-                                                  post['like'] += 1;
-                                                  post['likedPeople'].add(curUserId);
-                                                });
-                                                try {
-                                                  await FirebaseFirestore.instance
-                                                      .collection('blogPosts')
-                                                      .doc(doc.id)
-                                                      .update({
-                                                    'like': FieldValue.increment(1),
-                                                    'likedPeople': FieldValue.arrayUnion([curUserId]),
-                                                  });
-                                                } catch (e) {
-                                                  print('Error updating like count: $e');
-                                                  post['like'] -= 1;
-                                                }
-                                              } else {
-                                                setState(() {
-                                                  post['like'] -= 1;
-                                                  post['likedPeople'].remove(curUserId);
-                                                });
-                                                try {
-                                                  await FirebaseFirestore.instance
-                                                      .collection('blogPosts')
-                                                      .doc(doc.id)
-                                                      .update({
-                                                    'like': FieldValue.increment(-1),
-                                                    'likedPeople': FieldValue.arrayRemove([curUserId]),
-                                                  });
-                                                } catch (e) {
-                                                  print('Error updating like count: $e');
-                                                  post['like'] += 1;
-                                                }
-                                              }
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.thumb_up, color: post['likedPeople'].contains(curUserId) ? Colors.blue : Colors.grey, size: 20),
-                                                const SizedBox(width: 5),
-                                                Text(
-                                                  post['likedPeople'].length.toString(),
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Baloo',
-                                                    fontSize: 14,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          const SizedBox(width: 15),
-                                          Row(
-                                            children: [
-                                              GestureDetector(
-                                                onTap: (){
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
-                                                    ),
-                                                  );
-                                                },
-                                                child: const Icon(Icons.chat_bubble_outline, color: Colors.grey, size: 20)
-                                              ),
-                                              const SizedBox(width: 5),
-                                              Text(
-                                                commentsLength.toString(),
-                                                style: const TextStyle(
-                                                  fontFamily: 'Baloo',
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      const Divider(color: Colors.grey, thickness: 1),
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
-                                            ),
-                                          );
-                                        },
-                                        child: Text(
-                                          post['title'],
-                                          style: TextStyle(
+                    return Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        elevation: 5,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  ClipOval(
+                                    child: FadeInImage.assetNetwork(
+                                      placeholder: 'assets/images/kediIcon.png',
+                                      image: profilePicture,
+                                      fit: BoxFit.cover,
+                                      width: 40,
+                                      height: 40,
+                                      imageErrorBuilder: (context, error, stackTrace) {
+                                        return Image.asset(
+                                          'assets/images/kediIcon.png',
+                                          fit: BoxFit.cover,
+                                          width: 40,
+                                          height: 40,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    username,
+                                    style: const TextStyle(
+                                      fontFamily: 'Baloo',
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  if (post['isVet']) ...[
+                                    const SizedBox(width: 5),
+                                    Icon(Icons.check_circle, color: Colors.blue, size: 16),
+                                  ],
+                                  Spacer(),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      if (post['likedPeople'] != null && !post['likedPeople'].contains(curUserId)) {
+                                        setState(() {
+                                          post['like'] += 1;
+                                          post['likedPeople'].add(curUserId);
+                                        });
+                                        try {
+                                          await FirebaseFirestore.instance
+                                              .collection('blogPosts')
+                                              .doc(doc.id)
+                                              .update({
+                                            'like': FieldValue.increment(1),
+                                            'likedPeople': FieldValue.arrayUnion([curUserId]),
+                                          });
+                                        } catch (e) {
+                                          print('Error updating like count: $e');
+                                          post['like'] -= 1;
+                                        }
+                                      } else {
+                                        setState(() {
+                                          post['like'] -= 1;
+                                          post['likedPeople'].remove(curUserId);
+                                        });
+                                        try {
+                                          await FirebaseFirestore.instance
+                                              .collection('blogPosts')
+                                              .doc(doc.id)
+                                              .update({
+                                            'like': FieldValue.increment(-1),
+                                            'likedPeople': FieldValue.arrayRemove([curUserId]),
+                                          });
+                                        } catch (e) {
+                                          print('Error updating like count: $e');
+                                          post['like'] += 1;
+                                        }
+                                      }
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.thumb_up, color: post['likedPeople'].contains(curUserId) ? Colors.blue : Colors.grey, size: 20),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          post['likedPeople'].length.toString(),
+                                          style: const TextStyle(
                                             fontFamily: 'Baloo',
-                                            fontSize: 18,
-                                            color: darkBlue,
-                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
                                           ),
                                         ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 15),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                          onTap: (){
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
+                                              ),
+                                            );
+                                          },
+                                          child: const Icon(Icons.chat_bubble_outline, color: Colors.grey, size: 20)
                                       ),
-                                      const SizedBox(height: 10),
+                                      const SizedBox(width: 5),
                                       Text(
-                                        "${post['text'].toString().substring(0, min(40, post['text'].toString().length))}...",
+                                        commentsLength.toString(),
                                         style: const TextStyle(
                                           fontFamily: 'Baloo',
                                           fontSize: 14,
-                                          color: Colors.black,
                                         ),
                                       ),
                                     ],
                                   ),
+                                ],
+                              ),
+                              const Divider(color: Colors.grey, thickness: 1),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  post['title'],
+                                  style: TextStyle(
+                                    fontFamily: 'Baloo',
+                                    fontSize: 18,
+                                    color: darkBlue,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            );
-                          },
-                        );
-                      },
+                              const SizedBox(height: 10),
+                              Text(
+                                "${post['text'].toString().substring(0, min(40, post['text'].toString().length))}...",
+                                style: const TextStyle(
+                                  fontFamily: 'Baloo',
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     );
-                  }).toList(),
+                  },
                 );
               },
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+  Widget _journalUpperDesign(){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 60,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: darkBlue.withOpacity(0.6),
+          borderRadius: const BorderRadius.all(Radius.circular(30)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 300,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: darkBlue,
+                borderRadius: const BorderRadius.all(Radius.circular(30)),
+              ),
+              child: const Row(
+                children: [
+                  SizedBox(width: 20),
+                  Text(
+                    "PawBlog",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Pacifico',
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NewBlogPost(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(10),
+                  backgroundColor: Colors.orangeAccent,
+                ),
+                child: const Icon(Icons.add, color: Colors.white),
+              ),
             ),
           ],
         ),
       ),
     );
   }
+
+
+  Widget _buildMyPets() {
+    return Column(
+      children: [
+        _myPetsUpperBar(),
+        const SizedBox(height: 30),
+        _myPetsSituation(),
+      ],
+    );
+  }
+  Widget _myPetsUpperBar(){
+    return Container(
+      height: 360,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: cream,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              const SizedBox(width: 30),
+              const Text(
+                "Evcil Hayvanlarım",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () async {
+                  print("Clicked ADD"); // TODO: Connect with backend
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NewPet(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: darkBlue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: const Text(
+                  "+   Ekle",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 30),
+            ],
+          ),
+          const SizedBox(height: 10),
+          PetCard(context),
+        ],
+      ),
+    );
+  }
+  Widget _myPetsSituation(){
+    return Column(
+      children: [
+        const Row(
+          children: [
+            SizedBox(width: 30),
+            Text(
+              " Durum",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        InfoCard(context),
+      ],
+    );
+  }
+
 
   Widget _buildProfile() {
     return Scaffold(
@@ -814,7 +837,9 @@ class _MainPageState extends State<MainPage> {
       ],
     );
   }
+
 }
+
 
 class ChatBubble extends StatelessWidget {
   final String message;
@@ -862,4 +887,3 @@ class ChatBubble extends StatelessWidget {
     );
   }
 }
-
