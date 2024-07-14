@@ -16,8 +16,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'helperWidgets/myAppBar.dart';
 
-
-
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -29,7 +27,8 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 2;
   final TextEditingController _messageController = TextEditingController();
-  final List<Map<String, String>> _messages = [];
+  final List<Map<String, String>> _messages = [{'type': 'user', 'message': 'Aklınızdaki soruyu sorun.'},
+    {'type': 'response', 'message': 'Cevabını yapay zekadan alın!'}];
   String? profilePictureUrl;
   String? userName;
   String? name;

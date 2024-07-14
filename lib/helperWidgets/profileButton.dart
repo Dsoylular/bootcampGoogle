@@ -36,6 +36,7 @@ Widget profileButton(String name, String explanation, Icon icon, int type, Build
     style: ElevatedButton.styleFrom(
       backgroundColor: type == 0 ? darkBlue : pink,
       fixedSize: const Size(300, 50),
+      elevation: 8
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,

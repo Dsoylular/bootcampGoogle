@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'appColors.dart';
 
 Widget PetCard(BuildContext context) {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? currentUser = _auth.currentUser;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  User? currentUser = auth.currentUser;
   String userID = currentUser!.uid;
 
   return GestureDetector(
@@ -56,6 +56,7 @@ Widget PetCard(BuildContext context) {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
+                    color: cream,
                     elevation: 5,
                     child: Padding(
                       padding: const EdgeInsets.all(15),
