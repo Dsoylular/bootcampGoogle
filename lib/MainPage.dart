@@ -12,6 +12,7 @@ import 'package:bootcamp_google/respondPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'helperWidgets/myAppBar.dart';
@@ -33,6 +34,7 @@ class _MainPageState extends State<MainPage> {
   String? userName;
   String? name;
   String? surname;
+  String? about;
   String? curUserId;
   bool? isVet;
   bool _isLoading = false;
@@ -60,11 +62,12 @@ class _MainPageState extends State<MainPage> {
 
       if (snapshot.exists) {
         setState(() {
-          profilePictureUrl = snapshot['profilePicture'];
+          profilePictureUrl = snapshot['pictureURL'];
           userName = snapshot['userName'];
           isVet = snapshot['isVet'];
           name = snapshot['firstName'];
           surname = snapshot['lastName'];
+          about = snapshot['description'];
           curUserId = currentUser.uid.toString();
           print(profilePictureUrl);
           print(isVet);
@@ -696,7 +699,6 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-
   Widget _buildProfile() {
     return Scaffold(
       body: SingleChildScrollView(
@@ -710,59 +712,118 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-  Widget _profileHeader(){
+  Widget _profileHeader() {
     return Container(
-      height: 300,
       width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
       decoration: BoxDecoration(
         color: cream,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 20),
-          Container(
-            width: 160,
-            height: 160,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: brown),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
-                image: profilePictureUrl != null
-                    ? NetworkImage(profilePictureUrl!)
-                    : const AssetImage('assets/images/kediIcon.png') as ImageProvider<Object>,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: brown,
+                    width: 2,
+                  ),
+                ),
+                child: CircleAvatar(
+                  radius: 80,
+                  backgroundImage: profilePictureUrl != null
+                      ? NetworkImage(profilePictureUrl!)
+                      : const AssetImage('assets/images/kediIcon.png') as ImageProvider<Object>,
+                ),
               ),
+              const SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "$name $surname",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "@$userName",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    isVet! ? "Veteriner" : "Evcil Hayvan Sahibi",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: darkBlue,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Divider(),
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: about ?? ""));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Hakkında kopyalandı'),
+                        duration: Duration(seconds: 1),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      about ?? "No information provided",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-
-          const SizedBox(height: 12),
-          Text(
-            "$name $surname",
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              color: Colors.black,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "$userName",
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(isVet == true ? "Veteriner" : "Evcil Hayvan Sahibi"),
         ],
       ),
     );
   }
+
   Widget _profileButtons(){
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -773,7 +834,8 @@ class _MainPageState extends State<MainPage> {
           'Profil resmini değiştir',
           const Icon(Icons.person_outline_outlined, color: Colors.white),
           0,
-          context
+          context,
+          refreshProfilePhoto
         ),
         const SizedBox(height: 30),
         profileButton(
@@ -781,7 +843,8 @@ class _MainPageState extends State<MainPage> {
             'Görünür ismi değiştir',
             const Icon(Icons.person_outline, color: Colors.white),
             0,
-          context
+          context,
+          refreshName
         ),
         const SizedBox(height: 30),
         profileButton(
@@ -789,7 +852,8 @@ class _MainPageState extends State<MainPage> {
             'Görünür soyismi değiştir',
             const Icon(Icons.person_outline, color: Colors.white),
             0,
-          context
+          context,
+          refreshSurname
         ),
         const SizedBox(height: 30),
         profileButton(
@@ -797,16 +861,9 @@ class _MainPageState extends State<MainPage> {
             "Hakkında kısmını değiştir",
             const Icon(Icons.info_outlined, color: Colors.white),
           0,
-          context
+          context,
+          refreshAbout
         ),
-        // const SizedBox(height: 30),
-        // profileButton(
-        //     'Şifre',
-        //     'Şifreyi değiştir',
-        //     const Icon(Icons.key_outlined, color: Colors.white),
-        //   0,
-        //   context
-        // ),
         const SizedBox(height: 20),
         const Row(
           children: [
@@ -826,7 +883,8 @@ class _MainPageState extends State<MainPage> {
             'Hesaptan çıkış yap',
             const Icon(Icons.exit_to_app, color: Colors.white),
             1,
-          context
+          context,
+          refreshProfilePhoto
         ),
         const SizedBox(height: 30),
         profileButton(
@@ -834,15 +892,34 @@ class _MainPageState extends State<MainPage> {
           'Hesabı kalıcı bir şekilde sil',
           const Icon(Icons.cancel_presentation_sharp, color: Colors.white),
           1,
-          context
+          context,
+          refreshProfilePhoto
         ),
         const SizedBox(height: 30),
       ],
     );
   }
-
+  void refreshProfilePhoto(String newUrl) {
+    setState(() {
+      profilePictureUrl = newUrl;
+    });
+  }
+  void refreshName(String newName){
+    setState(() {
+      name = newName;
+    });
+  }
+  void refreshSurname(String newSurname){
+    setState(() {
+      surname = newSurname;
+    });
+  }
+  void refreshAbout(String newAbout){
+    setState(() {
+      about = newAbout;
+    });
+  }
 }
-
 
 class ChatBubble extends StatelessWidget {
   final String message;

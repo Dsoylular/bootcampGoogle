@@ -19,6 +19,8 @@ dependencies:
   cloud_firestore: ^4.15.2
   cupertino_icons: ^1.0.6
   flutter_dotenv: ^5.0.2
+  firebase_storage: ^11.6.9
+  image_picker: ^1.0.7
   flutter_markdown: ^0.6.9
   google_generative_ai:
   intl:
