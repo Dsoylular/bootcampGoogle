@@ -101,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
         'firstName': firstName,
         'lastName': lastName,
         'userName': userName,
-        'profilePicture': '',
+        'pictureURL': '',
         'description': '',
         'isVet': _isVet,
         'pets': [],

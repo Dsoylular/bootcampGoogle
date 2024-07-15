@@ -70,7 +70,7 @@ class _MainPageState extends State<MainPage> {
           about = snapshot['description'];
           curUserId = currentUser.uid.toString();
           print(profilePictureUrl);
-          print(isVet);
+          print("AAAAAAAAAAAAAAAAA $isVet");
           print(name);
         });
       }
@@ -371,10 +371,9 @@ class _MainPageState extends State<MainPage> {
                   return const CircularProgressIndicator();
                 }
                 final user = userSnapshot.data!.data() as Map<String, dynamic>;
-                String profilePicture = user['profilePicture'];
+                String profilePicture = user['pictureURL'] ?? " ";
                 String username = user['userName'];
 
-                // Fetch the length of the 'comments' collection
                 return StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('blogPosts')
@@ -754,34 +753,38 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               const SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "$name $surname",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      color: Colors.black,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "$name $surname",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        color: Colors.black,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "@$userName",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[700],
+                    const SizedBox(height: 8),
+                    Text(
+                      "@$userName",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[700],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    isVet! ? "Veteriner" : "Evcil Hayvan Sahibi",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: darkBlue,
+                    const SizedBox(height: 8),
+                    Text(
+                      isVet! ? "Veteriner" : "Evcil Hayvan Sahibi",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: darkBlue,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -823,7 +826,6 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-
   Widget _profileButtons(){
     return Column(
       mainAxisSize: MainAxisSize.min,
