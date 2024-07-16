@@ -287,12 +287,12 @@ class _MainPageState extends State<MainPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  IconButton(
+                  if(isLogin)...[IconButton(
                     icon: const Icon(Icons.add_circle_outline),
                     onPressed: () {
                       //TODO: FILL THIS BUTTON
                     },
-                  ),
+                  )],
                   Expanded(
                     child: TextField(
                       controller: _messageController,

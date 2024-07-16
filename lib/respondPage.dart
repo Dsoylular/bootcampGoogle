@@ -125,7 +125,7 @@ class _RespondPageState extends State<RespondPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Row(
+                if(FirebaseAuth.instance.currentUser != null)...[Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
@@ -148,28 +148,7 @@ class _RespondPageState extends State<RespondPage> {
                       ),
                     ),
                   ],
-                ),
-                // SizedBox(height: 30),
-                // ElevatedButton(
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: pink.withOpacity(0.8),
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(10),
-                //     ),
-                //     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
-                //   ),
-                //   onPressed: () {
-                //     // TODO: Implement "Tekrar Sor" functionality
-                //   },
-                //   child: Text(
-                //     "Tekrar Sor",
-                //     style: TextStyle(
-                //       color: Colors.white,
-                //       fontFamily: 'Baloo',
-                //       fontSize: 18,
-                //     ),
-                //   ),
-                // ),
+                )],
               ],
             ),
           ),
