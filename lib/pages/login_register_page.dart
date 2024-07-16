@@ -1,3 +1,4 @@
+import 'package:bootcamp_google/MainPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore package
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -318,6 +319,23 @@ class _LoginPageState extends State<LoginPage> {
             _submitButton(),
             const SizedBox(height: 10),
             _loginOrRegisterButton(),
+            const SizedBox(height: 50),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const LoadingScreen()
+                  ),
+                );
+              },
+              child: const Text(
+                "Giriş yapmadan devam et",
+                style: TextStyle(
+                  fontSize: 12
+                ),
+              ),
+            ),
           ],
         ),
       ),

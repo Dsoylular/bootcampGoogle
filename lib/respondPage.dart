@@ -31,17 +31,17 @@ class _RespondPageState extends State<RespondPage> {
           'response': respond,
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Saved successfully'), backgroundColor: Colors.green),
+          const SnackBar(content: Text('Başarıyla kaydedildi!'), backgroundColor: Colors.green),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User not signed in'), backgroundColor: Colors.red),
+          const SnackBar(content: Text('Kullanıcı giriş yapmadı!'), backgroundColor: Colors.red),
         );
       }
     } catch (e) {
       print('Error saving to Firestore: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to save'), backgroundColor: Colors.red),
+        const SnackBar(content: Text('Kayıtta sıkıntı yaşandı'), backgroundColor: Colors.red),
       );
     }
   }

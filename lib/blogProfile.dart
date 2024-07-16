@@ -72,7 +72,7 @@ class _BlogProfileState extends State<BlogProfile> {
         .collection('comments')
         .add({
       'commentText': commentText,
-      'profilePicture': snapshot['profilePicture'],
+      'profilePicture': snapshot['pictureURL'],
       'userName': snapshot['userName'],
     });
 
@@ -143,7 +143,7 @@ class _BlogProfileState extends State<BlogProfile> {
                           ClipOval(
                             child: FadeInImage.assetNetwork(
                               placeholder: 'assets/images/kediIcon.png',
-                              image: widget.user['profilePicture'],
+                              image: widget.user['pictureURL'],
                               fit: BoxFit.cover,
                               width: 40,
                               height: 40,
@@ -204,10 +204,10 @@ class _BlogProfileState extends State<BlogProfile> {
             const SizedBox(height: 10),
             ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: comments.length,
               itemBuilder: (context, index) {
-                // Check if profilePicture and userName are not null
+                print("AAAAAAAAAAAA  ${comments[index]}  AAAAAAAAAAAAAAAAAAAAAAA");
                 String profilePictureUrl = comments[index]['profilePicture'] ?? 'assets/images/default_profile.png';
                 String userName = comments[index]['userName'] ?? 'Anonymous';
 
