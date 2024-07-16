@@ -27,7 +27,7 @@ class MainPage extends StatefulWidget {
 
 
 class _MainPageState extends State<MainPage> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
   final TextEditingController _messageController = TextEditingController();
   final List<Map<String, String>> _messages = [{'type': 'user', 'message': 'Aklınızdaki soruyu sorun.'},
     {'type': 'response', 'message': 'Cevabını yapay zekadan alın!'}];
@@ -59,6 +59,7 @@ class _MainPageState extends State<MainPage> {
     User? currentUser = _auth.currentUser;
     if (currentUser != null) {
       isLogin = true;
+      _selectedIndex = 2;
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser.uid)
@@ -438,7 +439,8 @@ class _MainPageState extends State<MainPage> {
                                   const Spacer(),
                                   GestureDetector(
                                     onTap: () async {
-                                      if (post['likedPeople'] != null && !post['likedPeople'].contains(curUserId)) {
+                                      if(!isLogin){}
+                                      else if (post['likedPeople'] != null && !post['likedPeople'].contains(curUserId)) {
                                         setState(() {
                                           post['like'] += 1;
                                           post['likedPeople'].add(curUserId);
@@ -455,7 +457,8 @@ class _MainPageState extends State<MainPage> {
                                           print('Error updating like count: $e');
                                           post['like'] -= 1;
                                         }
-                                      } else {
+                                      }
+                                      else {
                                         setState(() {
                                           post['like'] -= 1;
                                           post['likedPeople'].remove(curUserId);
@@ -592,21 +595,24 @@ class _MainPageState extends State<MainPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(5),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NewBlogPost(),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(10),
-                  backgroundColor: Colors.orangeAccent,
+              child: Visibility(
+                visible: isLogin,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NewBlogPost(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(10),
+                    backgroundColor: Colors.orangeAccent,
+                  ),
+                  child: const Icon(Icons.add, color: Colors.white),
                 ),
-                child: const Icon(Icons.add, color: Colors.white),
               ),
             ),
           ],
@@ -647,7 +653,8 @@ class _MainPageState extends State<MainPage> {
                 "Evcil Hayvanlarım",
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  // fontWeight: FontWeight.bold,
+                  fontFamily: 'Baloo',
                 ),
               ),
               const Spacer(),
@@ -671,6 +678,7 @@ class _MainPageState extends State<MainPage> {
                   "+   Ekle",
                   style: TextStyle(
                     fontSize: 20,
+                    fontFamily: 'Baloo',
                     color: Colors.white,
                   ),
                 ),
@@ -693,7 +701,8 @@ class _MainPageState extends State<MainPage> {
             Text(
               " Durum",
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                // fontWeight: FontWeight.bold,
+                fontFamily: 'Baloo',
                 fontSize: 20,
               ),
             ),

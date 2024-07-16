@@ -252,7 +252,7 @@ class _BlogProfileState extends State<BlogProfile> {
             ),
 
             const SizedBox(height: 10),
-            Padding(
+            if(FirebaseAuth.instance.currentUser != null)...[Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Row(
                 children: [
@@ -278,7 +278,7 @@ class _BlogProfileState extends State<BlogProfile> {
                   ),
                 ],
               ),
-            ),
+            )],
             const SizedBox(height: 20),
           ],
         ),

@@ -65,7 +65,7 @@ class _NewPetState extends State<NewPet> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 // TODO: Implement photo upload functionality
@@ -166,6 +166,7 @@ class _NewPetState extends State<NewPet> {
                   'pictureURL': '',
                   'vaccinationStatus': true,
                   'timestamp': Timestamp.now(),
+                  // TODO: ADD OTHER PARTS
                 });
                 Navigator.pop(context);
               },

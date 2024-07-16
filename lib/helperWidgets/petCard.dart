@@ -48,7 +48,7 @@ Widget PetCard(BuildContext context) {
                 final petName = pet['petName'] ?? 'No name';
                 final petAge = pet['petAge'] ?? 'No age';
                 final petVaccinationStatus = pet['vaccinationStatus'] ?? 'No status';
-                final petImage = pet['petImage'] ?? 'https://i.imgur.com/9l1A4OS.jpeg';
+                final petImage = pet['petImage'] ?? 'https://i.imgur.com/9l1A4OS.jpeg'; // TODO: ADD DEFAULT ICONS HERE
 
                 return Padding(
                   padding: const EdgeInsets.all(10),
@@ -70,7 +70,8 @@ Widget PetCard(BuildContext context) {
                           Text(
                             petName,
                             style: const TextStyle(
-                              fontWeight: FontWeight.bold,
+                              // fontWeight: FontWeight.bold,
+                              fontFamily: 'Baloo',
                               fontSize: 18,
                             ),
                           ),
