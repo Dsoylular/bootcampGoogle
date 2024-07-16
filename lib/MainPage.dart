@@ -8,6 +8,7 @@ import 'package:bootcamp_google/helperWidgets/petCard.dart';
 import 'package:bootcamp_google/helperWidgets/profileButton.dart';
 import 'package:bootcamp_google/newBlogPost.dart';
 import 'package:bootcamp_google/newPet.dart';
+import 'package:bootcamp_google/pages/login_register_page.dart';
 import 'package:bootcamp_google/respondPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -958,7 +959,12 @@ class _MainPageState extends State<MainPage> {
               const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                      )
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: darkBlue,
