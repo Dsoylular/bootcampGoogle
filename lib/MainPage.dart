@@ -40,6 +40,8 @@ class _MainPageState extends State<MainPage> {
   bool _isLoading = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  bool isLogin = false;
+
   @override
   void dispose() {
     _messageController.dispose();
@@ -55,6 +57,7 @@ class _MainPageState extends State<MainPage> {
   void getUserData() async {
     User? currentUser = _auth.currentUser;
     if (currentUser != null) {
+      isLogin = true;
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser.uid)
@@ -81,14 +84,14 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: _selectedIndex == 0 ? null : appBar(context),
+      appBar: (_selectedIndex == 0 || !isLogin) ? null : appBar(context),
       body: _selectedIndex == 0
           ? _buildAskMe()
           : _selectedIndex == 1
           ? _buildJournal()
           : _selectedIndex == 2
-          ? _buildMyPets()
-          : _buildProfile(),
+          ? (isLogin ? _buildMyPets() : _buildNotLogin())
+          : (isLogin ? _buildProfile() : _buildNotLogin()),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -342,6 +345,9 @@ class _MainPageState extends State<MainPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            if(!isLogin)...[
+              const SizedBox(height: 40),
+            ],
             _journalUpperDesign(),
             _journalPosts(),
           ],
@@ -921,6 +927,60 @@ class _MainPageState extends State<MainPage> {
       about = newAbout;
     });
   }
+
+  Widget _buildNotLogin() {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Image.asset(
+            'assets/images/notLoginPageDesign.png',
+            fit: BoxFit.cover,
+            width: double.infinity,
+            alignment: Alignment.topCenter,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 200),
+              Padding(
+                padding:  const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  'Bu alanı görmek için giriş yapmanız gerekiyor',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: brown,
+                    fontFamily: 'Baloo'
+                    // fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: darkBlue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                    'Giriş Yap',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Baloo'
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
 }
 
 class ChatBubble extends StatelessWidget {
