@@ -1,9 +1,9 @@
-import 'package:bootcamp_google/helperWidgets/myAppBar.dart';
+import 'package:bootcamp_google/helperFiles/myAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'helperWidgets/appColors.dart';
+import '../helperFiles/appColors.dart';
 
 class NewPet extends StatefulWidget {
   const NewPet({super.key});

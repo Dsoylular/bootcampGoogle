@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import 'helperWidgets/appColors.dart';
+import '../helperFiles/appColors.dart';
 
 class SavedChats extends StatefulWidget {
   const SavedChats({super.key});

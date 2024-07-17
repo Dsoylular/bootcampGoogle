@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:io';
 
-import 'package:bootcamp_google/helperWidgets/appColors.dart';
+import 'package:bootcamp_google/helperFiles/appColors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 
-import '../auth.dart';
+import 'auth.dart';
 import '../pages/login_register_page.dart';
 
 Widget profileButton(String name, String explanation, Icon icon, int type, BuildContext context, Function(String) refresh) {

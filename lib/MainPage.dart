@@ -1,22 +1,22 @@
 import 'dart:math';
 
-import 'package:bootcamp_google/blogProfile.dart';
-import 'package:bootcamp_google/helperWidgets/appColors.dart';
-import 'package:bootcamp_google/helperWidgets/geminiCodes.dart';
-import 'package:bootcamp_google/helperWidgets/infoCards.dart';
-import 'package:bootcamp_google/helperWidgets/petCard.dart';
-import 'package:bootcamp_google/helperWidgets/profileButton.dart';
-import 'package:bootcamp_google/newBlogPost.dart';
-import 'package:bootcamp_google/newPet.dart';
+import 'package:bootcamp_google/blogFiles/blogProfile.dart';
+import 'package:bootcamp_google/helperFiles/appColors.dart';
+import 'package:bootcamp_google/helperFiles/geminiCodes.dart';
+import 'package:bootcamp_google/helperFiles/infoCards.dart';
+import 'package:bootcamp_google/helperFiles/petCard.dart';
+import 'package:bootcamp_google/helperFiles/profileButton.dart';
+import 'package:bootcamp_google/myPetFiles/newPet.dart';
 import 'package:bootcamp_google/pages/login_register_page.dart';
-import 'package:bootcamp_google/respondPage.dart';
+import 'package:bootcamp_google/askMeFiles/respondPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import 'helperWidgets/myAppBar.dart';
+import 'blogFiles/newBlogPost.dart';
+import 'helperFiles/myAppBar.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

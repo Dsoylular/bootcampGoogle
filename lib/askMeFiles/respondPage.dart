@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import 'helperWidgets/appColors.dart';
+import '../helperFiles/appColors.dart';
 
 class RespondPage extends StatefulWidget {
   final String respond;

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'appColors.dart';
-import '../petPage.dart';
+import '../myPetFiles/petPage.dart';
 
 Widget InfoCard(BuildContext context) {
   final FirebaseAuth auth = FirebaseAuth.instance;

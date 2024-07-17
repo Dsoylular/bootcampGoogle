@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'helperWidgets/appColors.dart';
-import 'helperWidgets/myAppBar.dart'; // Assuming you have a custom app bar implementation
+import '../helperFiles/appColors.dart';
+import '../helperFiles/myAppBar.dart';
 
 class BlogProfile extends StatefulWidget {
   final String? blogID;

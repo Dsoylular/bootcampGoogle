@@ -2,8 +2,8 @@ import 'package:bootcamp_google/MainPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore package
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../auth.dart';
-import '../helperWidgets/appColors.dart';
+import '../helperFiles/auth.dart';
+import '../helperFiles/appColors.dart';
 import '../loadingPage.dart';
 
 class LoginPage extends StatefulWidget {
