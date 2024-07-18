@@ -67,7 +67,23 @@ Widget PetCard(BuildContext context) {
                         children: [
                           CircleAvatar(
                             radius: 50,
-                            backgroundImage: NetworkImage(petImage),
+                            child: ClipOval(
+                              child: FadeInImage.assetNetwork(
+                                placeholder: 'assets/images/kediIcon.png', // TODO: Connect with backend
+                                image: petImage, // TODO: Connect with backend
+                                fit: BoxFit.cover,
+                                width: 160,
+                                height: 160,
+                                imageErrorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    'assets/images/kediIcon.png',
+                                    fit: BoxFit.cover,
+                                    width: 160,
+                                    height: 160,
+                                  );
+                                },
+                              ),
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Text(

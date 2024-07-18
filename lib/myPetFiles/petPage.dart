@@ -1,13 +1,20 @@
-import 'dart:ui';
 import 'package:bootcamp_google/helperFiles/appColors.dart';
 import 'package:bootcamp_google/helperFiles/myAppBar.dart';
 import 'package:bootcamp_google/myPetFiles/checkUpPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+
 
 class PetPage extends StatefulWidget {
   final String petID;
@@ -26,6 +33,10 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
   List<DateTime> _preSelectedDays = [];
   DateTime? _userSelectedDay;
   User? currentUser = FirebaseAuth.instance.currentUser;
+  String petName = "";
+  String petAge = "";
+  String petBreed = "";
+  String petImage = "";
 
   get petID => widget.petID;
 
@@ -46,6 +57,10 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
         .get();
     setState(() {
       _preSelectedDays = List<DateTime>.from(snapshot['vaccinationDates'].map((timestamp) => (timestamp as Timestamp).toDate()));
+      petName = snapshot['petName'];
+      petAge = snapshot['petAge'].toString();
+      petBreed = snapshot['petBreed'];
+      petImage = snapshot['petImage'];
       print("Preselected Dates: $_preSelectedDays");
     });
   }
@@ -131,30 +146,73 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                   Column(
                     children: [
                       const SizedBox(height: 20),
-                      CircleAvatar(
-                        radius: 80,
-                        child: ClipOval(
-                          child: FadeInImage.assetNetwork(
-                            placeholder: 'assets/images/kediIcon.png', // TODO: Connect with backend
-                            image: 'https://i.imgur.com/9l1A4OS.jpeg', // TODO: Connect with backend
-                            fit: BoxFit.cover,
-                            width: 160,
-                            height: 160,
-                            imageErrorBuilder: (context, error, stackTrace) {
-                              return Image.asset(
-                                'assets/images/kediIcon.png',
-                                fit: BoxFit.cover,
-                                width: 160,
-                                height: 160,
-                              );
-                            },
+                      Stack(
+                        children: [
+                          Container(
+                            width: 164,
+                            height: 164,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: brown,
+                                width: 2,
+                              ),
+                            ),
+                            child: CircleAvatar(
+                              radius: 80,
+                              child: ClipOval(
+                                child: petImage.isNotEmpty
+                                    ? FadeInImage.assetNetwork(
+                                  placeholder: 'assets/images/kediIcon.png',
+                                  image: petImage,
+                                  fit: BoxFit.cover,
+                                  width: 160,
+                                  height: 160,
+                                  imageErrorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      'assets/images/kediIcon.png',
+                                      fit: BoxFit.cover,
+                                      width: 160,
+                                      height: 160,
+                                    );
+                                  },
+                                )
+                                    : Image.asset(
+                                  'assets/images/kediIcon.png',
+                                  fit: BoxFit.cover,
+                                  width: 160,
+                                  height: 160,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          Positioned(
+                            bottom: 0,
+                            right: 10,
+                            child: GestureDetector(
+                              onTap: () {
+                                updatePetProfilePicture(context, refreshProfilePhoto);
+                              },
+                              child: Container(
+                                width: 35,
+                                height: 35,
+                                decoration: BoxDecoration(
+                                  color: darkBlue,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 15),
-                      const Text(
-                        "Fred",
-                        style: TextStyle(
+                      Text(
+                        petName,
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
@@ -171,10 +229,10 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                             constraints: const BoxConstraints(
                               maxWidth: 150,
                             ),
-                            child: const Text(
-                              "Fred, 12 yaşında, Ragdoll cinsinde bir beyefendidir.",
+                            child: Text(
+                              "$petName, $petAge yaşında, $petBreed cinsinde bir beyefendidir.",
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -453,5 +511,149 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
         ],
       ),
     );
+  }
+  void refreshProfilePhoto(String newUrl) {
+    setState(() {
+      petImage = newUrl;
+    });
+  }
+  Future<String?> updatePetProfilePicture(BuildContext context, Function(String) refreshProfilePhoto) async {
+    try {
+      final ImagePicker picker = ImagePicker();
+      XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile == null) return null;
+
+      File imageFile = File(pickedFile.path);
+
+      String? imageUrl = await showDialog<String?>(
+        context: context,
+        barrierDismissible: false, // Prevent dismissing the dialog
+        builder: (BuildContext context) {
+          bool isLoading = false;
+
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return AlertDialog(
+                title: const Text("Ön Gösterim"),
+                content: isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: FileImage(imageFile),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                actions: <Widget>[
+                  if (!isLoading)
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(null);
+                      },
+                      child: Text(
+                        "İptal",
+                        style: TextStyle(
+                          color: darkBlue,
+                        ),
+                      ),
+                    ),
+                  if (!isLoading)
+                    TextButton(
+                      onPressed: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        String? imageUrl = await uploadAndCropImage(imageFile);
+
+                        setState(() {
+                          isLoading = false;
+                        });
+
+                        if (imageUrl != null) {
+                          refreshProfilePhoto(imageUrl);
+                          Navigator.of(context).pop(imageUrl);
+                        } else {
+                          Navigator.of(context).pop(null);
+                        }
+                      },
+                      child: Text(
+                        "Seç",
+                        style: TextStyle(
+                          color: darkBlue,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
+          );
+        },
+      );
+
+      return imageUrl;
+    } catch (e) {
+      print("Error updating profile picture: $e");
+      return null;
+    }
+  }
+
+  Future<String?> uploadAndCropImage(File imageFile) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    try {
+      ui.Image? image = await loadImage(imageFile);
+      if (image != null) {
+        int size = image.width < image.height ? image.width : image.height;
+        ui.Rect square = ui.Rect.fromCenter(
+          center: Offset(image.width / 2, image.height / 2),
+          width: size.toDouble(),
+          height: size.toDouble(),
+        );
+        ui.Image? croppedImage = await cropImage(image, square);
+
+        // Convert cropped image to bytes
+        ByteData? byteData = await croppedImage!.toByteData(format: ui.ImageByteFormat.png);
+        Uint8List? imageData = byteData?.buffer.asUint8List();
+
+        if (imageData != null) {
+          // BE CAREFUL USER HAS TO BE INITIALIZED - BERK
+          Reference ref = FirebaseStorage.instance.ref().child('pet_photos').child(petName ?? "");
+          UploadTask uploadTask = ref.putData(imageData);
+          TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
+
+          // Get download URL of uploaded image
+          String imageUrl = await snapshot.ref.getDownloadURL();
+
+          await FirebaseFirestore.instance.collection('users').doc(user?.uid).collection('pets').doc(petID).update({
+            'petImage': imageUrl,
+          });
+
+          return imageUrl;
+        }
+      }
+    } catch (e) {
+      print("Error uploading and cropping image: $e");
+    }
+    return null;
+  }
+
+  Future<ui.Image?> loadImage(File imageFile) async {
+    Uint8List bytes = await imageFile.readAsBytes();
+    ui.Codec codec = await ui.instantiateImageCodec(bytes);
+    ui.FrameInfo frameInfo = await codec.getNextFrame();
+    return frameInfo.image;
+  }
+
+  Future<ui.Image?> cropImage(ui.Image image, ui.Rect cropRect) async {
+    int targetWidth = cropRect.width.toInt();
+    int targetHeight = cropRect.height.toInt();
+    ui.PictureRecorder recorder = ui.PictureRecorder();
+    ui.Canvas canvas = ui.Canvas(recorder);
+    canvas.drawImageRect(image, cropRect, ui.Rect.fromLTRB(0, 0, targetWidth.toDouble(), targetHeight.toDouble()), Paint());
+    ui.Picture picture = recorder.endRecording();
+    return await picture.toImage(targetWidth, targetHeight);
   }
 }
