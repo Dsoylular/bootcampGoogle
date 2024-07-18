@@ -1,8 +1,8 @@
-import 'package:bootcamp_google/myPetFiles/petPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../myPetFiles/petPage.dart';
 import 'appColors.dart';
 
 Widget PetCard(BuildContext context) {
@@ -10,47 +10,50 @@ Widget PetCard(BuildContext context) {
   User? currentUser = auth.currentUser;
   String userID = currentUser!.uid;
 
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const petPage(),
-        ),
-      );
-      print("Directing to pet page");
-    },
-    child: SizedBox(
-      height: 260,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('users')
-              .doc(userID)
-              .collection('pets')
-              .snapshots(),
-          builder: (context, petsSnapshot) {
-            if (petsSnapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            }
-            if (!petsSnapshot.hasData || petsSnapshot.data!.docs.isEmpty) {
-              return const Padding(
-                padding: EdgeInsets.all(10),
-                child: Text('No pets available for this user'),
-              );
-            }
-            final pets = petsSnapshot.data!.docs;
+  return SizedBox(
+    height: 260,
+    child: SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(userID)
+            .collection('pets')
+            .snapshots(),
+        builder: (context, petsSnapshot) {
+          if (petsSnapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (!petsSnapshot.hasData || petsSnapshot.data!.docs.isEmpty) {
+            return const Padding(
+              padding: EdgeInsets.all(10),
+              child: Text('No pets available for this user'),
+            );
+          }
+          final pets = petsSnapshot.data!.docs;
 
-            return Row(
-              children: pets.map((petDoc) {
-                final pet = petDoc.data() as Map<String, dynamic>;
-                final petName = pet['petName'] ?? 'No name';
-                final petAge = pet['petAge'] ?? 'No age';
-                final petVaccinationStatus = pet['vaccinationStatus'] ?? 'No status';
-                final petImage = pet['petImage'] ?? 'https://i.imgur.com/9l1A4OS.jpeg'; // TODO: ADD DEFAULT ICONS HERE
+          return Row(
+            children: pets.map((petDoc) {
+              final pet = petDoc.data() as Map<String, dynamic>;
+              final petName = pet['petName'] ?? 'No name';
+              final petAge = pet['petAge'] ?? 'No age';
+              final petVaccinationStatus = pet['vaccinationStatus'] ?? 'No status';
+              final petImage = pet['petImage'] ?? 'https://i.imgur.com/9l1A4OS.jpeg';
+              final petID = petDoc.id;
 
-                return Padding(
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PetPage(
+                        petID: petID,
+                      ),
+                    ),
+                  );
+                  print("Directing to pet page");
+                },
+                child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -70,7 +73,6 @@ Widget PetCard(BuildContext context) {
                           Text(
                             petName,
                             style: const TextStyle(
-                              // fontWeight: FontWeight.bold,
                               fontFamily: 'Baloo',
                               fontSize: 18,
                             ),
@@ -93,11 +95,11 @@ Widget PetCard(BuildContext context) {
                       ),
                     ),
                   ),
-                );
-              }).toList(),
-            );
-          },
-        ),
+                ),
+              );
+            }).toList(),
+          );
+        },
       ),
     ),
   );
