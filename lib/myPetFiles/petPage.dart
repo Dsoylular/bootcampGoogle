@@ -37,12 +37,15 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
   String petAge = "";
   String petBreed = "";
   String petImage = "";
+  List<FlSpot> foodList = [];
+  List<FlSpot> exerciseList = [];
+  List<FlSpot> weightList = [];
+  List<FlSpot> sleepList = [];
 
   get petID => widget.petID;
 
   @override
   void initState() {
-    print("AAAAAAAAAAAAAAA");
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
     initializeData();
@@ -61,10 +64,21 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
       petAge = snapshot['petAge'].toString();
       petBreed = snapshot['petBreed'];
       petImage = snapshot['petImage'];
+      foodList = getFlSpotList(snapshot['foodList']);
+      exerciseList = getFlSpotList(snapshot['exerciseList']);
+      weightList = getFlSpotList(snapshot['weightList']);
+      sleepList = getFlSpotList(snapshot['sleepList']);
       print("Preselected Dates: $_preSelectedDays");
     });
   }
 
+  List<FlSpot> getFlSpotList(List<dynamic> fireList){
+    List<FlSpot> endList = [];
+    for(int i = 0; i < fireList.length; i++){
+      endList.add(FlSpot(i.ceilToDouble(), fireList[i].ceilToDouble()));
+    }
+    return endList;
+  }
 
   @override
   void dispose() {
@@ -214,7 +228,8 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                         petName,
                         style: const TextStyle(
                           fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Baloo',
+                          // fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
@@ -234,7 +249,8 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 15,
-                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Baloo',
+                                // fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -249,10 +265,11 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                             fixedSize: const Size(150, 40),
                           ),
                           child: const Text(
-                            "Profili düzenle",
+                            "Düzenle",
                             style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                              // fontWeight: FontWeight.bold,
+                              fontFamily: 'Baloo',
                             ),
                           ),
                         ),
@@ -389,8 +406,9 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 Text(
                   "Durum Analizi",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18
+                      // fontWeight: FontWeight.bold,
+                      fontFamily: 'Baloo',
+                      fontSize: 18,
                   ),
                 ),
               ],
@@ -451,57 +469,25 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
               children: [
                 buildChart(
                   "Yemek",
-                  [
-                    FlSpot(0, 3),
-                    FlSpot(1, 1),
-                    FlSpot(2, 4),
-                    FlSpot(3, 3),
-                    FlSpot(4, 2),
-                    FlSpot(5, 5),
-                    FlSpot(6, 4),
-                  ],
+                  foodList,
                   ['Paz', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'],
                   Colors.blue,
                 ),
                 buildChart(
                   "Egzersiz",
-                  [
-                    FlSpot(0, 2),
-                    FlSpot(1, 3),
-                    FlSpot(2, 2),
-                    FlSpot(3, 5),
-                    FlSpot(4, 1),
-                    FlSpot(5, 4),
-                    FlSpot(6, 3),
-                  ],
+                  exerciseList,
                   ['Paz', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'],
                   Colors.green,
                 ),
                 buildChart(
                   "Kilo",
-                  [
-                    FlSpot(0, 4),
-                    FlSpot(1, 3),
-                    FlSpot(2, 5),
-                    FlSpot(3, 2),
-                    FlSpot(4, 4),
-                    FlSpot(5, 3),
-                    FlSpot(6, 5),
-                  ],
-                  ['Paz', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'],
+                  weightList,
+                  ['1', '2', '3', '4', '5', '6', '7'],
                   Colors.orange,
                 ),
                 buildChart(
                   "Uyku",
-                  [
-                    FlSpot(0, 3),
-                    FlSpot(1, 4),
-                    FlSpot(2, 2),
-                    FlSpot(3, 5),
-                    FlSpot(4, 3),
-                    FlSpot(5, 4),
-                    FlSpot(6, 2),
-                  ],
+                  sleepList,
                   ['Paz', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'],
                   Colors.purple,
                 ),
@@ -620,7 +606,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
 
         if (imageData != null) {
           // BE CAREFUL USER HAS TO BE INITIALIZED - BERK
-          Reference ref = FirebaseStorage.instance.ref().child('pet_photos').child(petName ?? "");
+          Reference ref = FirebaseStorage.instance.ref().child('pet_photos').child(petName);
           UploadTask uploadTask = ref.putData(imageData);
           TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
 

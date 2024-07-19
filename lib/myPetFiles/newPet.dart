@@ -127,7 +127,7 @@ class _NewPetState extends State<NewPet> {
             TextField(
               controller: _breedController,
               decoration: InputDecoration(
-                hintText: 'Cins (Labrador, FALANFİLAN, Balık...)',
+                hintText: 'Cins (Labrador, Siyam, Balık...)',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
                   borderSide: BorderSide(color: brown, width: 2.0),
@@ -163,9 +163,14 @@ class _NewPetState extends State<NewPet> {
                   'petSpecies': _speciesController.text,
                   'petBreed': _breedController.text,
                   'petAge': _ageController.text,
-                  'pictureURL': '',
-                  'vaccinationStatus': true,
+                  'petImage': '',
                   'timestamp': Timestamp.now(),
+                  'vaccinationDates': [],
+                  'foodList': [],
+                  'sleepList': [],
+                  'weightList': [],
+                  'exerciseList': [],
+
                   // TODO: ADD OTHER PARTS
                 });
                 Navigator.pop(context);

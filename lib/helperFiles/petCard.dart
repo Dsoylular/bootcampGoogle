@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../myPetFiles/petPage.dart';
 import 'appColors.dart';
@@ -37,7 +38,8 @@ Widget PetCard(BuildContext context) {
               final pet = petDoc.data() as Map<String, dynamic>;
               final petName = pet['petName'] ?? 'No name';
               final petAge = pet['petAge'] ?? 'No age';
-              final petVaccinationStatus = pet['vaccinationStatus'] ?? 'No status';
+              final petVacDates = pet['vaccinationDates'] ?? [];
+              // final petVaccinationStatus = pet['vaccinationStatus'] ?? 'No status';
               final petImage = pet['petImage'] ?? 'https://i.imgur.com/9l1A4OS.jpeg';
               final petID = petDoc.id;
 
@@ -95,14 +97,14 @@ Widget PetCard(BuildContext context) {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            'Age: $petAge',
+                            'Yaş: $petAge',
                             style: const TextStyle(
                               fontSize: 16,
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Vaccination: $petVaccinationStatus',
+                            petVacDates != null ? 'Aşı: ${DateFormat('dd/MM/yyyy').format((petVacDates[0].toDate()))}' : 'Yakında aşı yok',
                             style: const TextStyle(
                               fontSize: 16,
                             ),
