@@ -8,10 +8,6 @@ Product Owner: Deniz Soylular
 
 Developer:     Funda Yıldızhan
 
-Developer:     Yakup Büyükkaya
-
-Developer:     Emre Kalkan
-
 # Ürün İsmi:
 Pawdi
 
@@ -73,17 +69,31 @@ Sprint Review: Genel olarak planlandığı şekilde ilk sprint tamamlanmıştır
 
 Sprint Retrospective: Funda’nın yoğun çalışma temposu olduğu için sprint review ve retrospective toplantılarının sabah erken saatte yapılmasına karar verilmiştir.
 
+# Sprint 2
 
+## Sprint 2 Ekranlar
 
+Profil Sayfası;
 
+![profil](https://github.com/user-attachments/assets/a9c8ccac-afc1-451b-9435-b666ba157eff)
 
+Blog Sayfası;
 
+![blog](https://github.com/user-attachments/assets/fc0d903d-abea-469b-9549-f58adfb2014d)
 
+Soru Sor Sayfası;
 
+![askme](https://github.com/user-attachments/assets/74bb0d7b-6905-43bb-8e65-8aa8c4517cfe)
 
+Evcil Hayvanlar Sayfası;
 
+![mypets](https://github.com/user-attachments/assets/c37de73b-a969-4d6f-a3e9-6d411b675177)
 
+## Sprint 2 İçin Sprint Board: 
 
+Trello Link: https://trello.com/b/8X118Esa/ouabootcamp2024fluttergroup56-sprint2
+
+<img width="1075" alt="image" src="https://github.com/user-attachments/assets/a6f59eed-316f-4df7-8f30-92aa9385ebbe">
 
 
 
