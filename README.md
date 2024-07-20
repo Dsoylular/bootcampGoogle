@@ -95,6 +95,33 @@ Trello Link: https://trello.com/b/8X118Esa/ouabootcamp2024fluttergroup56-sprint2
 
 <img width="1075" alt="image" src="https://github.com/user-attachments/assets/a6f59eed-316f-4df7-8f30-92aa9385ebbe">
 
+# Sprint Notları:
+
+  Ekran tasarımlarında değişikliğe gidildi.
+  
+  Uygulamanın gerekli fonksiyonlar çalışacak şekilde tamamlanması hedeflendi.
+
+Sprint İçinde Beklenen Puan Tamamlama: 180 Puan
+
+Tamamlanan Puan: 180 (Hedeflenen sprint puanı sağlanmıştır.)
+
+Günlük Topantılar:  Günlük toplntılar yine google meet üzerinden devam etti. Bazı günler müsaitliğimize göre whatsapp grubumuz üzerinden de haberleştik.
+
+<img width="925" alt="Ekran görüntüsü 2024-07-21 015712" src="https://github.com/user-attachments/assets/f52f0612-17d3-461c-9b39-f728ee447b80">
+
+Sprint Review:
+
+Participants: Deniz SOYLULAR, Fatmanur GENAR, Funda YILDIZHAN
+
+Genel olarak planlandığı gibi 2.sprint tamamlanmıştır. 
+
+Sprint Retrospective:  
+
+Ekibimzide Emre ve Yakup'a başta ulaşmış olmamıza ve whatsapp grubumuza da dahil etmemize rağmen herhangi bir görev için dahi gönüllü olmadıkları ve gerek planlanan toplantılar gerekse whatsapp üzerinden dönüş alamadığımız  için ekipten çıkarmaya karar verdik. Yine ulaşım sağlayamadığımız için kendilerine whatsapp grubumuz üzerinden kendilerine haber verildi.
+
+3.Sprint için uygulama testlerinin yapılmasına ve eksiklerin tamamlanmasına karar verildi.
+
+
 
 
 
