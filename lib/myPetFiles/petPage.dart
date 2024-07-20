@@ -68,7 +68,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
       exerciseList = getFlSpotList(snapshot['exerciseList']);
       weightList = getFlSpotList(snapshot['weightList']);
       sleepList = getFlSpotList(snapshot['sleepList']);
-      print("Preselected Dates: $_preSelectedDays");
+      // print("Preselected Dates: $_preSelectedDays");
     });
   }
 
@@ -329,7 +329,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
                     if (_preSelectedDays.contains(selectedDay.toLocal())) {
-                      print("kfgjlkdjflşdgşfd");
+                      // print("kfgjlkdjflşdgşfd");
                       _preSelectedDays.remove(selectedDay.toLocal());
                       _userSelectedDay = null;
                       showAddButton = true;
@@ -346,7 +346,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                     }
                     _focusedDay = focusedDay;
                   });
-                  print("${_preSelectedDays}     ${_userSelectedDay}      ${selectedDay}       ${_preSelectedDays.contains(selectedDay.toLocal())}");
+                  // print("${_preSelectedDays}     ${_userSelectedDay}      ${selectedDay}       ${_preSelectedDays.contains(selectedDay.toLocal())}");
                 },
                 onFormatChanged: (format) {
                   if (_calendarFormat != format) {
@@ -370,7 +370,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                       backgroundColor: darkBlue,
                     ),
                     onPressed: () async {
-                      print("AAAAAAAA $_preSelectedDays");
+                      // print("AAAAAAAA $_preSelectedDays");
                       setState(() {
                         if(_userSelectedDay != null){
                           _preSelectedDays.add(_userSelectedDay!);
@@ -390,7 +390,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                         print('Error updating vaccination dates: $e');
                         // Handle error accordingly
                       }
-                      print("AAAAAAAA $_preSelectedDays");
+                      // print("AAAAAAAA $_preSelectedDays");
                     },
                     child: const Text(
                       'Kaydet',
