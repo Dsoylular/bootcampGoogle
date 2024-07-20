@@ -324,28 +324,29 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 focusedDay: _focusedDay,
                 calendarFormat: _calendarFormat,
                 selectedDayPredicate: (day) {
-                  // print("${_preSelectedDays[0]}    ${day.toLocal()}     ${_preSelectedDays.contains(day.toLocal())}");
                   return _preSelectedDays.contains(day.toLocal()) || isSameDay(_userSelectedDay, day);
                 },
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
-                    if (_preSelectedDays.contains(selectedDay)) {
-                      // Do nothing if the selected day is already in the pre-selected dates
-                      _preSelectedDays.remove(selectedDay);
+                    if (_preSelectedDays.contains(selectedDay.toLocal())) {
+                      print("kfgjlkdjflşdgşfd");
+                      _preSelectedDays.remove(selectedDay.toLocal());
                       _userSelectedDay = null;
                       showAddButton = true;
-                    } else {
-                      if(_userSelectedDay == selectedDay){
+                    }
+                    else {
+                      if(_userSelectedDay == selectedDay.toLocal()){
                         _userSelectedDay = null;
                         showAddButton = true;
                       }
                       else{
-                        _userSelectedDay = selectedDay;
+                        _userSelectedDay = selectedDay.toLocal();
                         showAddButton = true;
                       }
                     }
-                    _focusedDay = focusedDay; // update `_focusedDay` here as well
+                    _focusedDay = focusedDay;
                   });
+                  print("${_preSelectedDays}     ${_userSelectedDay}      ${selectedDay}       ${_preSelectedDays.contains(selectedDay.toLocal())}");
                 },
                 onFormatChanged: (format) {
                   if (_calendarFormat != format) {
@@ -371,7 +372,9 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                     onPressed: () async {
                       print("AAAAAAAA $_preSelectedDays");
                       setState(() {
-                        _preSelectedDays.add(_userSelectedDay!);
+                        if(_userSelectedDay != null){
+                          _preSelectedDays.add(_userSelectedDay!);
+                        }
                         showAddButton = false;
                       });
 
