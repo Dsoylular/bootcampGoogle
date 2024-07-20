@@ -104,7 +104,7 @@ Widget PetCard(BuildContext context) {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            petVacDates != null ? 'Aşı: ${DateFormat('dd/MM/yyyy').format((petVacDates[0].toDate()))}' : 'Yakında aşı yok',
+                            !petVacDates.isEmpty ? 'Aşı: ${DateFormat('dd/MM/yyyy').format((petVacDates[0].toDate()))}' : 'Yakında aşı yok',
                             style: const TextStyle(
                               fontSize: 16,
                             ),

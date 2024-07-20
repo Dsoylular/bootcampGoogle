@@ -1,9 +1,11 @@
 import 'package:bootcamp_google/helperFiles/myAppBar.dart';
+import 'package:bootcamp_google/myPetFiles/petPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../helperFiles/appColors.dart';
+import '../helperFiles/photoAddFunctions.dart';
 
 class NewPet extends StatefulWidget {
   const NewPet({super.key});
@@ -66,33 +68,33 @@ class _NewPetState extends State<NewPet> {
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // TODO: Implement photo upload functionality
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: lightBlue,
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Fotoğraf Ekle",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Baloo',
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(width: 8.0),
-                  Icon(Icons.add_photo_alternate_outlined, color: Colors.black),
-                ],
-              ),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     // TODO: Implement photo upload functionality
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: lightBlue,
+            //     padding: const EdgeInsets.symmetric(vertical: 12.0),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(30.0),
+            //     ),
+            //   ),
+            //   child: const Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       Text(
+            //         "Fotoğraf Ekle",
+            //         style: TextStyle(
+            //           fontSize: 18,
+            //           fontFamily: 'Baloo',
+            //           color: Colors.black,
+            //         ),
+            //       ),
+            //       SizedBox(width: 8.0),
+            //       Icon(Icons.add_photo_alternate_outlined, color: Colors.black),
+            //     ],
+            //   ),
+            // ),
             const SizedBox(height: 20.0),
             TextField(
               controller: _nameController,
@@ -153,7 +155,7 @@ class _NewPetState extends State<NewPet> {
               ),
               maxLines: null,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () async {
                 final FirebaseAuth auth = FirebaseAuth.instance;
@@ -165,7 +167,7 @@ class _NewPetState extends State<NewPet> {
                   'petAge': _ageController.text,
                   'petImage': '',
                   'timestamp': Timestamp.now(),
-                  'vaccinationDates': [3, 3, 3, 3, 3, 3, 3],
+                  'vaccinationDates': [],
                   'foodList': [3, 3, 3, 3, 3, 3, 3],
                   'sleepList': [3, 3, 3, 3, 3, 3, 3],
                   'weightList': [3, 3, 3, 3, 3, 3, 3],

@@ -347,14 +347,15 @@ class _MainPageState extends State<MainPage> {
                     icon: const Icon(Icons.add_circle_outline),
                     onPressed: () {
                       //TODO: FILL THIS BUTTON
+
                     },
                   )],
                   Expanded(
                     child: TextField(
                       controller: _messageController,
-                      maxLines: null, // Set to null for unlimited lines
-                      keyboardType: TextInputType.multiline, // Allow multiline input
-                      textInputAction: TextInputAction.newline, // Change keyboard's enter button to newline
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      textInputAction: TextInputAction.newline,
                       decoration: const InputDecoration(
                         hintText: 'Sorunuzu giriniz...',
                         border: InputBorder.none,
@@ -715,7 +716,7 @@ class _MainPageState extends State<MainPage> {
               const Spacer(),
               ElevatedButton(
                 onPressed: () async {
-                  print("Clicked ADD"); // TODO: Connect with backend
+                  print("Clicked ADD");
                   Navigator.push(
                     context,
                     MaterialPageRoute(
