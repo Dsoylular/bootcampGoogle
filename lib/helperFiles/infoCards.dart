@@ -36,8 +36,8 @@ Widget InfoCard(BuildContext context) {
             children: pets.map((petDoc) {
               final pet = petDoc.data() as Map<String, dynamic>;
               final petName = pet['petName'] ?? 'No name';
-              final petSituation = pet['petSituation'] ?? 'Uykulu'; // Example situation
-              final petID = petDoc.id; // Get the document ID of the pet
+              final petSituation = pet['petSituation'] ?? 'Uykulu'; // TODO: Connect with backend
+              final petID = petDoc.id;
 
               return GestureDetector(
                 onTap: () {

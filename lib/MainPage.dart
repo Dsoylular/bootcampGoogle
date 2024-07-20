@@ -204,11 +204,65 @@ class _MainPageState extends State<MainPage> {
   }
   Widget _buildFaqSection() {
     final faqs = {
-      "Genel": ["Can you help me set up a virtual pet sitter and suggest a product that can give treats to my dog while I'm at work?", "Based on my active lifestyle, apartment living, and preference for medium-sized dogs, can you suggest some breeds that might be a good fit for me?"],
-      "Beslenme": ["I have a Labrador Retriever. Can you help me create a balanced diet plan for her?", "What do tarantulas eat?"],
-      "Sağlık": ["My cat has been sneezing a lot lately. What could be the cause, and should I be worried?", "How can I help my rescue dog overcome his fear of thunderstorms?", "Give me step-by-step instructions for handling [pet injury] before I can reach a vet."],
-      "Tuvalet": ["Tuvalet soru 1", "Tuvalet soru 2"],
-      "Eğitim": ["Can you help me create a training plan to teach my dog to come when called?", "My new kitten is shy around strangers. How can I help her become more social?", "Suggest an interactive game that my cat would enjoy playing."]
+      'Genel': [
+        "Hangi aşıları yaptırmalıyım ve aşı takvimi nedir?",
+        "Parazitlerden korunma için hangi ilaçları kullanmalıyım?",
+        "Kısırlaştırma operasyonunun faydaları ve riskleri nelerdir?",
+        "Evcil hayvanımı ne sıklıkla sağlık kontrolüne götürmeliyim?",
+        "Hangi belirtiler acil veteriner müdahalesi gerektirir?",
+        "Evcil hayvanımda alerji belirtileri var, ne yapmalıyım?",
+        "Evcil hayvanımın kilosunu nasıl ideal seviyede tutabilirim?",
+        "Evcil hayvanım için yeterli egzersiz nasıl sağlanır?"
+      ],
+      'Kedi': [
+        "Kedimin sağlıklı bir diyet için nelere ihtiyacı var?",
+        "Kedim neden tüylerini yutuyor ve kusuyor?",
+        "Kedimin tırnak bakımı nasıl yapılmalıdır?",
+        "Kedimin tuvalet eğitimi nasıl sağlanır?",
+        "Kedim neden mobilyaları tırmalıyor ve nasıl önleyebilirim?"
+      ],
+      'Köpek': [
+        "Köpeğim için en uygun beslenme planı nedir?",
+        "Köpeğimin diş sağlığını nasıl koruyabilirim?",
+        "Köpeğimin sosyalleşmesi için neler yapmalıyım?",
+        "Köpeğimi yürüyüşe ne sıklıkla çıkarmalıyım?",
+        "Köpeğim neden havlıyor ve nasıl önleyebilirim?"
+      ],
+      'Kuşlar': [
+        "Kuşum için en uygun beslenme programı nedir?",
+        "Kuşumun kafesi nasıl olmalı? Hangi malzemeleri kullanmalıyım?",
+        "Kuşum neden tüylerini yoluyor veya agresif davranıyor?",
+        "Kuşumun veteriner kontrolü ne sıklıkla yapılmalı?",
+        "Kuşumun hangi aşıları olması gerekiyor?"
+      ],
+      'Sürüngenler': [
+        "Sürüngenim için en uygun diyet nedir? Canlı yem mi vermeliyim?",
+        "Terraryum nasıl olmalı? Hangi sıcaklık ve nem seviyeleri idealdir?",
+        "Sürüngenimin hareket ve davranışları normal mi?",
+        "Yaygın sürüngen hastalıkları nelerdir ve nasıl tedavi edilir?",
+        "Sürüngenimin üreme sürecini nasıl yönetmeliyim?"
+      ],
+      'Kemirgenler': [
+        "Kemirgenim için en uygun beslenme planı nedir?",
+        "Kemirgenimin kafesi nasıl olmalı? Hangi malzemeleri kullanmalıyım?",
+        "Kemirgenimin kemirme ve tünel kazma davranışlarını nasıl yönlendirebilirim?",
+        "Kemirgenimin veteriner kontrolü ne sıklıkla yapılmalı?",
+        "Kemirgenimin sosyal ihtiyaçları nelerdir?"
+      ],
+      'Balıklar': [
+        "Akvaryumumun su kalitesini nasıl koruyabilirim?",
+        "Balıklarım için en uygun yemler nelerdir?",
+        "Balık hastalıkları nasıl tedavi edilir?",
+        "Akvaryum dekorasyonu ve bitki seçimi nasıl olmalı?",
+        "Akvaryuma yeni balık eklerken nelere dikkat etmeliyim?"
+      ],
+      'Egzotik Hayvanlar': [
+        "Egzotik hayvanım için en uygun beslenme programı nedir?",
+        "Egzotik hayvanımın yaşam alanını nasıl düzenlemeliyim?",
+        "Egzotik hayvanımın agresif veya çekingen davranışlarını nasıl düzeltebilirim?",
+        "Egzotik hayvanımın veteriner kontrolü ne sıklıkla yapılmalı?",
+        "Egzotik hayvanımın özel bakım ihtiyaçları nelerdir?"
+      ],
     };
 
     return Column(
@@ -235,6 +289,7 @@ class _MainPageState extends State<MainPage> {
       }).toList(),
     );
   }
+
   Widget _messagingInterface() {
     return Container(
       decoration: BoxDecoration(

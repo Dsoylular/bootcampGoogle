@@ -7,6 +7,9 @@ import 'appColors.dart';
 PreferredSizeWidget appBar(BuildContext context){
   return AppBar(
     backgroundColor: pink,
+    iconTheme: const IconThemeData(
+      color: Colors.white, 
+    ),
     title: Row(
       children: [
         const SizedBox(width: 20),

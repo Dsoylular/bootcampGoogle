@@ -143,7 +143,7 @@ class _BlogProfileState extends State<BlogProfile> {
                           ClipOval(
                             child: FadeInImage.assetNetwork(
                               placeholder: 'assets/images/kediIcon.png',
-                              image: widget.user['pictureURL'],
+                              image: widget.user['pictureURL'] ?? 'assets/images/kediIcon.png',
                               fit: BoxFit.cover,
                               width: 40,
                               height: 40,
@@ -207,7 +207,7 @@ class _BlogProfileState extends State<BlogProfile> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: comments.length,
               itemBuilder: (context, index) {
-                print("AAAAAAAAAAAA  ${comments[index]}  AAAAAAAAAAAAAAAAAAAAAAA");
+                // print("AAAAAAAAAAAA  ${comments[index]}  AAAAAAAAAAAAAAAAAAAAAAA");
                 String profilePictureUrl = comments[index]['profilePicture'] ?? 'assets/images/default_profile.png';
                 String userName = comments[index]['userName'] ?? 'Anonymous';
 

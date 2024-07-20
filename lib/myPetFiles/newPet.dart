@@ -165,11 +165,11 @@ class _NewPetState extends State<NewPet> {
                   'petAge': _ageController.text,
                   'petImage': '',
                   'timestamp': Timestamp.now(),
-                  'vaccinationDates': [],
-                  'foodList': [],
-                  'sleepList': [],
-                  'weightList': [],
-                  'exerciseList': [],
+                  'vaccinationDates': [3, 3, 3, 3, 3, 3, 3],
+                  'foodList': [3, 3, 3, 3, 3, 3, 3],
+                  'sleepList': [3, 3, 3, 3, 3, 3, 3],
+                  'weightList': [3, 3, 3, 3, 3, 3, 3],
+                  'exerciseList': [3, 3, 3, 3, 3, 3, 3],
 
                   // TODO: ADD OTHER PARTS
                 });

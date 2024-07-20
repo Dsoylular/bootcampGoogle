@@ -273,7 +273,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20), // Distance from the bottom
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -473,13 +473,13 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 buildChart(
                   "Yemek",
                   foodList,
-                  ['Paz', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'],
+                  ['1', '2', '3', '4', '5', '6', '7'],
                   Colors.blue,
                 ),
                 buildChart(
                   "Egzersiz",
                   exerciseList,
-                  ['Paz', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'],
+                  ['1', '2', '3', '4', '5', '6', '7'],
                   Colors.green,
                 ),
                 buildChart(
@@ -491,7 +491,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 buildChart(
                   "Uyku",
                   sleepList,
-                  ['Paz', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'],
+                  ['1', '2', '3', '4', '5', '6', '7'],
                   Colors.purple,
                 ),
               ],
