@@ -1,4 +1,6 @@
-![Pawdi (1)](https://github.com/user-attachments/assets/d08787ee-bab1-4146-ace0-fb9ed95e3aee)
+<p align="center">
+  <img src="(https://github.com/user-attachments/assets/d08787ee-bab1-4146-ace0-fb9ed95e3aee" alt="Pawdi (1)" width="450"/>
+</p>
 
 
 # Takım İsmi
