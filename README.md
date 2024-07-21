@@ -74,19 +74,19 @@ Sprint Retrospective: Funda’nın yoğun çalışma temposu olduğu için sprin
 
 ## Sprint 2 Ekranlar
 
-Profil Sayfası;
+Profil Sayfası:
 
 ![profil](https://github.com/user-attachments/assets/a9c8ccac-afc1-451b-9435-b666ba157eff)
 
-Blog Sayfası;
+Blog Sayfası:
 
 ![blog](https://github.com/user-attachments/assets/fc0d903d-abea-469b-9549-f58adfb2014d)
 
-Soru Sor Sayfası;
+Soru Sor Sayfası:
 
 ![askme](https://github.com/user-attachments/assets/74bb0d7b-6905-43bb-8e65-8aa8c4517cfe)
 
-Evcil Hayvanlar Sayfası;
+Evcil Hayvanlar Sayfası:
 
 ![mypets](https://github.com/user-attachments/assets/c37de73b-a969-4d6f-a3e9-6d411b675177)
 
