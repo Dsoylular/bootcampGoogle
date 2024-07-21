@@ -26,7 +26,7 @@ Uygulama içindeki blog yazıları sayesinde diğer kullanıcıların yazıları
 # Ürün Özellikleri:
 Evcil hayvan sahipleri hayvanları hakkında uykulu- uykusuz, hareketli-hareketsiz gibi durumlarını takip edebilecekler.
 Her evcil hayvan için ayrı bir profil sayfası olacak ve bu profil sayfalarında evcil hayvanlar ile ilgili profil fotoğrafı,isim, hakkında, durum gibi bilgileri kaydedebilecek ve düzenlemeler yapılabilecek.
-Kendi profil sayfamızda yine foroğraf, kişisel bilgler ve hakkında gibi ayrıntıları kaydedebileceğiz.
+Kendi profil sayfamızda yine fotoğraf, kişisel bilgler ve hakkında gibi ayrıntıları kaydedebileceğiz.
 Ask Me sayfasında evcil hayvanalrımız hakkında yapay zekaya sorular sorabilecek bazı durumlar için nasıl bir yol izleyeceğimizi bu sayede oluşturabilecek. Ya da hangi durumlarda veterinere gitmeliyiz sorularına cevap bulabileceğiz.
 Ask me sayfasındaki sık sorulan sorular kısmında tuvalet-sağlık-beslenme-genel bazı sık sorulan soruların cevabına hızlıca ulaşılabilecek.
 Journal sayfasında evcil hayvanlarımız hakkında blog yazıları yazabilecek ya da diğer kullanıcıların/veterinerlerin eklemiş olduğu blog yazılarını okuyabileceğiz.
