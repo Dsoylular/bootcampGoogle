@@ -1,6 +1,6 @@
 
-![Pawdi Logo](https://github.com/user-attachments/assets/f55061af-9aa8-4da5-97ed-6fcd5b4a6897)
-![image](https://github.com/user-attachments/assets/4c438d9c-f1c8-4ff0-8b27-6cbaae964705)
+![Pawdi (1)](https://github.com/user-attachments/assets/74e43e3c-ef5d-4dea-96d3-bc511886ae84)
+
 
 # Takım İsmi
 Flutter 56
