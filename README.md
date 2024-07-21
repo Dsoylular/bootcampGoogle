@@ -1,7 +1,8 @@
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/74e43e3c-ef5d-4dea-96d3-bc511886ae84" alt="Pawdi Logo" width="450"/>
+  <img src="(https://github.com/user-attachments/assets/d08787ee-bab1-4146-ace0-fb9ed95e3aee" alt="Pawdi Logo" width="450"/>
 </p>
+![Pawdi (1)](https://github.com/user-attachments/assets/d08787ee-bab1-4146-ace0-fb9ed95e3aee)
 
 
 # Takım İsmi
