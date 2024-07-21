@@ -1,9 +1,7 @@
 
-<div style="text-align: center;">
-  <img src="https://github.com/user-attachments/assets/649c85e3-480f-45ab-aeaa-d205f974e073" width="450" style="border-radius: 15px;" />
-</div>
-
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/649c85e3-480f-45ab-aeaa-d205f974e073" width="450" />
+</p>
 
 
 # Takım İsmi
