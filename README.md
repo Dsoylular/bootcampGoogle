@@ -49,7 +49,8 @@ Sprint board ekran görüntüleri
 
 - Proje yönetimi için Trello kullanılmasına karar verildi.
 - UI tasarımları için Figma kullanılmasına karar verildi
-- Firebase kullanılmasına karar verildi.
+- Database olarak Firebase kullanılmasına karar verildi.
+- Yapay zeka kısmı için Gemini API kullanılmasına karar verildi.
 - Giriş sistemi için e-posta girişi kullanılmasına karar verildi.
   
  Sprint İçinde Beklenen Puan Tamamlama: 200 Puan 
