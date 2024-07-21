@@ -106,7 +106,7 @@ Sprint İçinde Beklenen Puan Tamamlama: 180 Puan
 
 Tamamlanan Puan: 180 (Hedeflenen sprint puanı sağlanmıştır.)
 
-Günlük Topantılar:  Günlük toplntılar yine google meet üzerinden devam etti. Bazı günler müsaitliğimize göre whatsapp grubumuz üzerinden de haberleştik.
+Günlük Topantılar:  Günlük toplantılar yine google meet üzerinden devam etti. Bazı günler müsaitliğimize göre whatsapp grubumuz üzerinden de haberleştik.
 
 <img width="925" alt="Ekran görüntüsü 2024-07-21 015712" src="https://github.com/user-attachments/assets/f52f0612-17d3-461c-9b39-f728ee447b80">
 
