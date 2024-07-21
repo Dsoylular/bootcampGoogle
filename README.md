@@ -38,7 +38,7 @@ Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın
 # Sprint 1
 
 Uygulama ekran görüntüleri
-Figa üzerinde ilgili sayfaların tasarımı aşaıdaki gibidir.
+Figa üzerinde ilgili sayfaların tasarımı aşağıdaki gibidir.
 ![WhatsApp Image 2024-07-07 at 14 56 46](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/9d15d87b-3816-4f7a-80a7-3a2a1b999e53)
 
 
