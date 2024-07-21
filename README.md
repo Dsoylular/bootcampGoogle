@@ -118,9 +118,9 @@ Genel olarak planlandığı gibi 2.sprint tamamlanmıştır.
 
 Sprint Retrospective:  
 
-Ekibimzide Emre ve Yakup'a başta ulaşmış olmamıza ve whatsapp grubumuza da dahil etmemize rağmen herhangi bir görev için dahi gönüllü olmadıkları ve gerek planlanan toplantılar gerekse whatsapp üzerinden dönüş alamadığımız  için ekipten çıkarmaya karar verdik. Yine ulaşım sağlayamadığımız için kendilerine whatsapp grubumuz üzerinden kendilerine haber verildi.
+Ekibimizde Emre ve Yakup'a başta ulaşmış olmamıza ve Whatsapp grubumuza da dahil etmemize rağmen herhangi bir görev için gönüllü olmadıkları ve gerek planlanan toplantılar gerekse whatsapp üzerinden dönüş alamadığımız  için ekip Whatsapp grubundan çıkarmaya karar verdik. Yine ulaşım sağlayamadığımız için kendilerine Whatsapp grubumuz üzerinden kendilerine haber verildi.
 
-3.Sprint için uygulama testlerinin yapılmasına ve eksiklerin tamamlanmasına karar verildi.
+3.Sprint için uygulama testlerinin yapılmasına ve eksiklerin tamamlanmasına karar verildi. 
 
 
 
