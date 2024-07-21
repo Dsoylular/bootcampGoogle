@@ -77,6 +77,9 @@ Sprint Review: Genel olarak planlandığı şekilde ilk sprint tamamlanmıştır
 Sprint Retrospective: Funda’nın yoğun çalışma temposu olduğu için sprint review ve retrospective toplantılarının sabah erken saatte yapılmasına karar verilmiştir.
 
 # Sprint 2
+## Ekran tasarımlarında güncellemeler yapıldı.
+
+<img width="282" alt="ask me tasarımlar" src="https://github.com/user-attachments/assets/1147da86-11fe-4324-bc56-522527bbf7d2">
 
 ## Sprint 2 Ekranlar
 
@@ -100,7 +103,7 @@ Evcil Hayvanlar Sayfası:
 
 Trello Link: https://trello.com/b/8X118Esa/ouabootcamp2024fluttergroup56-sprint2
 
-<img width="1075" alt="image" src="https://github.com/user-attachments/assets/a6f59eed-316f-4df7-8f30-92aa9385ebbe">
+<img width="1067" alt="sprint board güncel" src="https://github.com/user-attachments/assets/1b0cd718-449c-406d-886f-a5102f55b3df">
 
 # Sprint Notları:
 
