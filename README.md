@@ -24,7 +24,7 @@ Evcil hayvanlarının durumlarını uygulama üzerinden takip edebilecek ve olu�
 Uygulama içindeki blog yazıları sayesinde diğer kullanıcıların yazılarını takip edebilecek belki veterinerlerin yazıları sayelerinde evcil hayvanları ile ilgili daha geniş bilgi sahibi olabilecekler.
 
 # Ürün Özellikleri:
-Evcil hayvan sahipleri hayvanları hakkında uykulu- uykusuz, hareketli-hareketsiz gibi durumlarını takip edebilecekler.
+Evcil hayvan sahipleri hayvanları hakkında uykulu-uykusuz, hareketli-hareketsiz gibi durumlarını takip edebilecekler.
 Her evcil hayvan için ayrı bir profil sayfası olacak ve bu profil sayfalarında evcil hayvanlar ile ilgili profil fotoğrafı,isim, hakkında, durum gibi bilgileri kaydedebilecek ve düzenlemeler yapılabilecek.
 Kendi profil sayfamızda yine fotoğraf, kişisel bilgler ve hakkında gibi ayrıntıları kaydedebileceğiz.
 Ask Me sayfasında evcil hayvanalrımız hakkında yapay zekaya sorular sorabilecek bazı durumlar için nasıl bir yol izleyeceğimizi bu sayede oluşturabilecek. Ya da hangi durumlarda veterinere gitmeliyiz sorularına cevap bulabileceğiz.
