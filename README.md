@@ -10,7 +10,7 @@ Flutter 56
 # Takım Bilgileri
 Scrum Master:  Fatmanur GENAR
 
-Product Owner: Deniz Soylular
+Product Owner & Developer : Deniz Soylular 
 
 Developer:     Funda Yıldızhan
 
