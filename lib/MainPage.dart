@@ -37,9 +37,15 @@ class _MainPageState extends State<MainPage> {
   String? surname;
   String? about;
   String? curUserId;
+  String chosenPetName = "";
+  String chosenPetID = "";
   bool? isVet;
   bool _isLoading = false;
+  bool petChosen = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  Map<String, String> userPets = {};
+  Map<String, String> petsID = {};
+  Map<String, String> petsPicture = {};
 
   bool isLogin = false;
 
@@ -74,11 +80,21 @@ class _MainPageState extends State<MainPage> {
           surname = snapshot['lastName'];
           about = snapshot['description'];
           curUserId = currentUser.uid.toString();
-          print(profilePictureUrl);
-          print("AAAAAAAAAAAAAAAAA $isVet");
-          print(name);
         });
       }
+      QuerySnapshot petSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('pets')
+          .get();
+
+      for (var doc in petSnapshot.docs) {
+        petsID[doc['petName']] = doc.id;
+        petsPicture[doc['petName']] = doc['petImage'];
+      }
+      setState(() {
+        userPets = petsID;
+      });
     }
   }
 
@@ -343,13 +359,39 @@ class _MainPageState extends State<MainPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  if(isLogin)...[IconButton(
+                  if(isLogin)...[(!petChosen) ? IconButton(
                     icon: const Icon(Icons.add_circle_outline),
                     onPressed: () {
-                      //TODO: FILL THIS BUTTON
-
+                      _showPetSelectionMenu(context);
                     },
-                  )],
+                  ) : Row(
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          _showPetSelectionMenu(context);
+                        },
+                        child: ClipOval(
+                          child: FadeInImage.assetNetwork(
+                            placeholder: 'assets/images/kediIcon.png',
+                            image: petsPicture[chosenPetName] ?? 'assets/images/kediIcon.png',
+                            fit: BoxFit.cover,
+                            width: 40,
+                            height: 40,
+                            imageErrorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                'assets/images/kediIcon.png',
+                                fit: BoxFit.cover,
+                                width: 40,
+                                height: 40,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                    ],
+                  ),
+                  ],
                   Expanded(
                     child: TextField(
                       controller: _messageController,
@@ -375,6 +417,36 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+  void _showPetSelectionMenu(BuildContext context) {
+    List<String> pets = userPets.keys.toList();
+    pets.add("Hiçbiri");
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: pets.map((pet) {
+              return ListTile(
+                title: Text(pet),
+                onTap: () {
+                  Navigator.pop(context);
+                  print('Selected pet: $pet');
+                  // print("$petsPicture");
+                  setState(() {
+                    petChosen = (pet != 'Hiçbiri') ? true : false;
+                    chosenPetName = (pet != 'Hiçbiri') ? pet : ""; // TODO: FIX HERE
+                    chosenPetID = (pet != 'Hiçbiri') ? petsID[pet]! : "";
+                  });
+                },
+              );
+            }).toList(),
+          ),
+        );
+      },
+    );
+  }
   void _sendMessage() async {
     var message = _messageController.text.trim();
     if (message.isNotEmpty) {
@@ -394,7 +466,7 @@ class _MainPageState extends State<MainPage> {
     }
   }
   Future<String?> _getResponseMessage(String message) async {
-    return await talkWithGemini(message);
+    return await talkWithGemini(message, chosenPetID);
   }
 
 

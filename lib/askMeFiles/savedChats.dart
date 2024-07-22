@@ -20,7 +20,7 @@ class _SavedChatsState extends State<SavedChats> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-            "Saved Chats",
+            "Kaydedilmiş Sohbetler",
           style: TextStyle(
             fontFamily: 'Baloo',
             color: Colors.white,
