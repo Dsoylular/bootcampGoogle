@@ -1,16 +1,18 @@
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/649c85e3-480f-45ab-aeaa-d205f974e073" width="450" />
+</p>
+
+
 # Takım İsmi
 Flutter 56
 
 # Takım Bilgileri
 Scrum Master:  Fatmanur GENAR
 
-Product Owner: Deniz Soylular
+Product Owner & Developer : Deniz Soylular 
 
 Developer:     Funda Yıldızhan
-
-Developer:     Yakup Büyükkaya
-
-Developer:     Emre Kalkan
 
 # Ürün İsmi:
 Pawdi
@@ -28,9 +30,9 @@ Evcil hayvanlarının durumlarını uygulama üzerinden takip edebilecek ve olu�
 Uygulama içindeki blog yazıları sayesinde diğer kullanıcıların yazılarını takip edebilecek belki veterinerlerin yazıları sayelerinde evcil hayvanları ile ilgili daha geniş bilgi sahibi olabilecekler.
 
 # Ürün Özellikleri:
-Evcil hayvan sahipleri hayvanları hakkında uykulu- uykusuz, hareketli-hareketsiz gibi durumlarını takip edebilecekler.
+Evcil hayvan sahipleri hayvanları hakkında uykulu-uykusuz, hareketli-hareketsiz gibi durumlarını takip edebilecekler.
 Her evcil hayvan için ayrı bir profil sayfası olacak ve bu profil sayfalarında evcil hayvanlar ile ilgili profil fotoğrafı,isim, hakkında, durum gibi bilgileri kaydedebilecek ve düzenlemeler yapılabilecek.
-Kendi profil sayfamızda yine foroğraf, kişisel bilgler ve hakkında gibi ayrıntıları kaydedebileceğiz.
+Kendi profil sayfamızda yine fotoğraf, kişisel bilgler ve hakkında gibi ayrıntıları kaydedebileceğiz.
 Ask Me sayfasında evcil hayvanalrımız hakkında yapay zekaya sorular sorabilecek bazı durumlar için nasıl bir yol izleyeceğimizi bu sayede oluşturabilecek. Ya da hangi durumlarda veterinere gitmeliyiz sorularına cevap bulabileceğiz.
 Ask me sayfasındaki sık sorulan sorular kısmında tuvalet-sağlık-beslenme-genel bazı sık sorulan soruların cevabına hızlıca ulaşılabilecek.
 Journal sayfasında evcil hayvanlarımız hakkında blog yazıları yazabilecek ya da diğer kullanıcıların/veterinerlerin eklemiş olduğu blog yazılarını okuyabileceğiz.
@@ -42,7 +44,7 @@ Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın
 # Sprint 1
 
 Uygulama ekran görüntüleri
-Figa üzerinde ilgili sayfaların tasarımı aşaıdaki gibidir.
+Figa üzerinde ilgili sayfaların tasarımı aşağıdaki gibidir.
 ![WhatsApp Image 2024-07-07 at 14 56 46](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/9d15d87b-3816-4f7a-80a7-3a2a1b999e53)
 
 
@@ -53,7 +55,8 @@ Sprint board ekran görüntüleri
 
 - Proje yönetimi için Trello kullanılmasına karar verildi.
 - UI tasarımları için Figma kullanılmasına karar verildi
-- Firebase kullanılmasına karar verildi.
+- Database olarak Firebase kullanılmasına karar verildi.
+- Yapay zeka kısmı için Gemini API kullanılmasına karar verildi.
 - Giriş sistemi için e-posta girişi kullanılmasına karar verildi.
   
  Sprint İçinde Beklenen Puan Tamamlama: 200 Puan 
@@ -73,16 +76,60 @@ Sprint Review: Genel olarak planlandığı şekilde ilk sprint tamamlanmıştır
 
 Sprint Retrospective: Funda’nın yoğun çalışma temposu olduğu için sprint review ve retrospective toplantılarının sabah erken saatte yapılmasına karar verilmiştir.
 
+# Sprint 2
+## Ekran tasarımlarında güncellemeler yapıldı.
 
+<img width="282" alt="ask me tasarımlar" src="https://github.com/user-attachments/assets/1147da86-11fe-4324-bc56-522527bbf7d2">
 
+## Sprint 2 Ekranlar
 
+Profil Sayfası:
 
+![profil](https://github.com/user-attachments/assets/a9c8ccac-afc1-451b-9435-b666ba157eff)
 
+Blog Sayfası:
 
+![blog](https://github.com/user-attachments/assets/fc0d903d-abea-469b-9549-f58adfb2014d)
 
+Soru Sor Sayfası:
 
+![askme](https://github.com/user-attachments/assets/74bb0d7b-6905-43bb-8e65-8aa8c4517cfe)
 
+Evcil Hayvanlar Sayfası:
 
+![mypets](https://github.com/user-attachments/assets/c37de73b-a969-4d6f-a3e9-6d411b675177)
+
+## Sprint 2 İçin Sprint Board: 
+
+Trello Link: https://trello.com/b/8X118Esa/ouabootcamp2024fluttergroup56-sprint2
+
+<img width="1067" alt="sprint board güncel" src="https://github.com/user-attachments/assets/1b0cd718-449c-406d-886f-a5102f55b3df">
+
+# Sprint Notları:
+
+  Ekran tasarımlarında değişikliğe gidildi.
+  
+  Uygulamanın gerekli fonksiyonlar çalışacak şekilde tamamlanması hedeflendi.
+
+Sprint İçinde Beklenen Puan Tamamlama: 180 Puan
+
+Tamamlanan Puan: 180 (Hedeflenen sprint puanı sağlanmıştır.)
+
+Günlük Topantılar:  Günlük toplantılar yine google meet üzerinden devam etti. Bazı günler müsaitliğimize göre whatsapp grubumuz üzerinden de haberleştik.
+
+<img width="925" alt="Ekran görüntüsü 2024-07-21 015712" src="https://github.com/user-attachments/assets/f52f0612-17d3-461c-9b39-f728ee447b80">
+
+Sprint Review:
+
+Participants: Deniz SOYLULAR, Fatmanur GENAR, Funda YILDIZHAN
+
+Genel olarak planlandığı gibi 2.sprint tamamlanmıştır. 
+
+Sprint Retrospective:  
+
+Ekibimizde Emre ve Yakup'a başta ulaşmış olmamıza ve Whatsapp grubumuza da dahil etmemize rağmen herhangi bir görev için gönüllü olmadıkları ve gerek planlanan toplantılar gerekse whatsapp üzerinden dönüş alamadığımız  için ekip Whatsapp grubundan çıkarmaya karar verdik. Yine ulaşım sağlayamadığımız için kendilerine Whatsapp grubumuz üzerinden kendilerine haber verildi.
+
+3.Sprint için uygulama testlerinin yapılmasına ve eksiklerin tamamlanmasına karar verildi. 
 
 
 
