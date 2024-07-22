@@ -95,25 +95,29 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
         LineChartData(
           gridData: FlGridData(show: false),
           titlesData: FlTitlesData(
-            bottomTitles: SideTitles(
-              showTitles: true,
-              reservedSize: 32,
-              margin: 10,
-              interval: 1,
-              getTitles: (value) {
-                return days[value.toInt() % days.length];
-              },
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 32,
+                // margin: 10,
+                interval: 1,
+                getTitlesWidget: (value, meta) {
+                  return Text(days[value.toInt() % days.length]);
+                },
+              ),
             ),
-            leftTitles: SideTitles(
-              showTitles: true,
-              reservedSize: 28,
-              margin: 10,
-              getTitles: (value) {
-                return value.toInt().toString();
-              },
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 28,
+                // margin: 10,
+                getTitlesWidget: (value, meta) {
+                  return Text(value.toInt().toString());
+                },
+              ),
             ),
-            topTitles: SideTitles(showTitles: false),
-            rightTitles: SideTitles(showTitles: false),
+            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
           ),
           borderData: FlBorderData(
             show: true,
@@ -127,7 +131,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
             LineChartBarData(
               spots: spots,
               isCurved: true,
-              colors: [lineColor],
+              color: lineColor,
               barWidth: 3,
               isStrokeCapRound: true,
               belowBarData: BarAreaData(show: false),
@@ -135,7 +139,8 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
             ),
           ],
         ),
-      ),
+      )
+
     );
   }
 
