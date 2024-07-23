@@ -446,6 +446,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 ),
               ),
             ),
+            SizedBox(height: 20),
           ],
         ),
       ),

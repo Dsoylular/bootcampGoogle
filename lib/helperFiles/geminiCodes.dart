@@ -16,8 +16,8 @@ Future<String?> talkWithGemini(String message, String petID) async {
     final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey!);
     String finalMessage = "Sen evcil hayvanlar konusunda uzman bir kişisin. $message .Bu soruyu evcil hayvan konusunda kalarak cevapla. Cevabı Türkçe ver ve olası tehlikeler konusunda bilgi ver ve yapılacak adımları söyle.";
     if(petID != ""){
-      _getPetData();
-      finalMessage += " Bu soruyu, sana bilgilerini vereceğim evcil hayvana göre cevapla: Evcil hayvan ismi: $petName, evcil hayvan türü: $petSpecies, cinsi: $petBreed, yaşı: $petAge.";
+      _getPetData(petID);
+      finalMessage += " Bu soruyu, sana bilgilerini vereceğim evcil hayvana göre cevapla: Evcil hayvan ismi: $petName, evcil hayvan türü: $petSpecies, cinsi: $petBreed, yaşı: $petAge. Cevap sırasında hayvanın ismi ile hitab et ve Türkçe cevap ver.";
     }
     final content = Content.text(finalMessage);
     final response = await model.generateContent([content]);
@@ -28,11 +28,13 @@ Future<String?> talkWithGemini(String message, String petID) async {
   }
 }
 
-void _getPetData() async {
+void _getPetData(String petID) async {
   User? currentUser = _auth.currentUser;
   DocumentSnapshot snapshot = await FirebaseFirestore.instance
       .collection('users')
       .doc(currentUser!.uid)
+      .collection('pets')
+      .doc(petID)
       .get();
 
   if (snapshot.exists) {

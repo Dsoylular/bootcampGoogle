@@ -136,17 +136,17 @@ class _RespondPageState extends State<RespondPage> {
                         color: Colors.black,
                       ),
                     ),
-                    const SizedBox(width: 20),
-                    IconButton(
-                      onPressed: () {
-                        // TODO: Implement send functionality
-                      },
-                      icon: const Icon(
-                        Icons.send,
-                        size: 30,
-                        color: Colors.black,
-                      ),
-                    ),
+                    // const SizedBox(width: 20),
+                    // IconButton(
+                    //   onPressed: () {
+                    //     // TODO: Implement send functionality
+                    //   },
+                    //   icon: const Icon(
+                    //     Icons.send,
+                    //     size: 30,
+                    //     color: Colors.black,
+                    //   ),
+                    // ),
                   ],
                 )],
               ],
