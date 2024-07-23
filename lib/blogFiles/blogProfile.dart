@@ -16,7 +16,7 @@ class BlogProfile extends StatefulWidget {
 }
 
 class _BlogProfileState extends State<BlogProfile> {
-  String profileUrl = ""; // Unused for now
+  String profileUrl = "";
   String title = "";
   String text = "";
   int like = 0;
@@ -41,6 +41,7 @@ class _BlogProfileState extends State<BlogProfile> {
         title = snapshot['title'];
         text = snapshot['text'];
         like = snapshot['like'];
+        profileUrl = snapshot['pictureURL'];
       });
     }
   }
@@ -56,8 +57,6 @@ class _BlogProfileState extends State<BlogProfile> {
       comments = snapshot.docs.map((doc) => doc.data()).toList();
     });
   }
-
-  // Assuming FirebaseAuth.instance.currentUser is used to get current user
 
   Future<void> _addComment(String blogID, String commentText) async {
     User? currentUser = FirebaseAuth.instance.currentUser;
@@ -124,6 +123,28 @@ class _BlogProfileState extends State<BlogProfile> {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
+            if (profileUrl.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image.network(
+                    profileUrl,
+                    height: 200,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(
+                        'assets/images/kediIcon.png',
+                        height: 150,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      );
+                    },
+                  ),
+                ),
+              ),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(8.0),

@@ -22,7 +22,7 @@ class _NewBlogPostState extends State<NewBlogPost> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
 
-  String photoURL = "";
+  File? selectedImageFile;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -73,8 +73,7 @@ class _NewBlogPostState extends State<NewBlogPost> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // TODO: Implement photo upload functionality
-                // addNewPicture(context);
+                addNewPicture(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: lightBlue,
@@ -133,19 +132,37 @@ class _NewBlogPostState extends State<NewBlogPost> {
             ElevatedButton(
               onPressed: () async {
                 User? currentUser = _auth.currentUser;
-                var docRef = await FirebaseFirestore.instance.collection('blogPosts').add({
-                  'title': _titleController.text,
-                  'text': _contentController.text,
-                  'author': currentUser?.uid.toString(),
-                  'pictureURL': photoURL,
-                  'like': 0,
-                  'likedPeople': [],
-                  'blogId': '',
-                  'isVet': false,
-                  'timestamp': Timestamp.now(),
-                });
-                await docRef.update({'blogId': docRef.id});
-                Navigator.pop(context);
+
+                if (selectedImageFile != null) {
+                  String? photoURL = await uploadAndCropImage(selectedImageFile!);
+
+                  if (photoURL != null) {
+                    var docRef = await FirebaseFirestore.instance.collection('blogPosts').add({
+                      'title': _titleController.text,
+                      'text': _contentController.text,
+                      'author': currentUser?.uid.toString(),
+                      'pictureURL': photoURL,
+                      'like': 0,
+                      'likedPeople': [],
+                      'blogId': '',
+                      'isVet': false,
+                      'timestamp': Timestamp.now(),
+                    });
+
+                    await docRef.update({'blogId': docRef.id});
+                    Navigator.pop(context);
+                  } else {
+                    // Handle the error of image upload failure
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Image upload failed")),
+                    );
+                  }
+                } else {
+                  // Handle the case when no image is selected
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("No image selected")),
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: pink,
@@ -168,86 +185,60 @@ class _NewBlogPostState extends State<NewBlogPost> {
       ),
     );
   }
-  Future<String?> addNewPicture(BuildContext context) async {
+
+  Future<void> addNewPicture(BuildContext context) async {
     try {
       final ImagePicker picker = ImagePicker();
       XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile == null) return null;
+      if (pickedFile == null) return;
 
-      File imageFile = File(pickedFile.path);
+      selectedImageFile = File(pickedFile.path);
 
-      String? imageUrl = await showDialog<String?>(
+      showDialog<void>(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          bool isLoading = false;
-
-          return StatefulBuilder(
-            builder: (context, setState) {
-              return AlertDialog(
-                title: const Text("Ön Gösterim"),
-                content: isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: FileImage(imageFile),
-                      fit: BoxFit.cover,
-                    ),
+          return AlertDialog(
+            title: const Text("Ön Gösterim"),
+            content: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: FileImage(selectedImageFile!),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  "İptal",
+                  style: TextStyle(
+                    color: darkBlue,
                   ),
                 ),
-                actions: <Widget>[
-                  if (!isLoading)
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(null);
-                      },
-                      child: Text(
-                        "İptal",
-                        style: TextStyle(
-                          color: darkBlue,
-                        ),
-                      ),
-                    ),
-                  if (!isLoading)
-                    TextButton(
-                      onPressed: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-
-                        String? imageUrl = await uploadAndCropImage(imageFile);
-
-                        setState(() {
-                          isLoading = false;
-                        });
-
-                        if (imageUrl != null) {
-                          Navigator.of(context).pop(imageUrl);
-                        } else {
-                          Navigator.of(context).pop(null);
-                        }
-                      },
-                      child: Text(
-                        "Seç",
-                        style: TextStyle(
-                          color: darkBlue,
-                        ),
-                      ),
-                    ),
-                ],
-              );
-            },
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  "Seç",
+                  style: TextStyle(
+                    color: darkBlue,
+                  ),
+                ),
+              ),
+            ],
           );
         },
       );
-
-      return imageUrl;
     } catch (e) {
-      print("Error updating profile picture: $e");
-      return null;
+      print("Error selecting image: $e");
     }
   }
 
@@ -269,14 +260,13 @@ class _NewBlogPostState extends State<NewBlogPost> {
         Uint8List? imageData = byteData?.buffer.asUint8List();
 
         if (imageData != null) {
-          // BE CAREFUL USER HAS TO BE INITIALIZED - BERK
           Reference ref = FirebaseStorage.instance.ref().child('blog_pictures').child(user?.uid ?? "");
           UploadTask uploadTask = ref.putData(imageData);
           TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
 
           // Get download URL of uploaded image
           String imageUrl = await snapshot.ref.getDownloadURL();
-          photoURL = imageUrl;
+
           return imageUrl;
         }
       }

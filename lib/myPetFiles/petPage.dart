@@ -39,6 +39,8 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
   String petAge = "";
   String petBreed = "";
   String petImage = "";
+  String petGender = "";
+
   List<FlSpot> foodList = [];
   List<FlSpot> exerciseList = [];
   List<FlSpot> weightList = [];
@@ -70,6 +72,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
       exerciseList = getFlSpotList(snapshot['exerciseList']);
       weightList = getFlSpotList(snapshot['weightList']);
       sleepList = getFlSpotList(snapshot['sleepList']);
+      petGender = snapshot['petGender'];
       // print("Preselected Dates: $_preSelectedDays");
     });
   }
@@ -252,7 +255,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                               maxWidth: 150,
                             ),
                             child: Text(
-                              "$petName, $petAge yaşında, $petBreed cinsinde bir beyefendidir.",
+                              "$petName, $petAge yaşında, $petBreed cinsinde akıllı bir ${petGender == 'erkek' ? 'beyefendidir' : 'hanımefendidir'}.",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 15,

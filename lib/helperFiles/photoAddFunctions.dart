@@ -20,7 +20,7 @@ Future<String?> updatePetProfilePicture(BuildContext context, String petName, St
 
     String? imageUrl = await showDialog<String?>(
       context: context,
-      barrierDismissible: false, // Prevent dismissing the dialog
+      barrierDismissible: false,
       builder: (BuildContext context) {
         bool isLoading = false;
 
@@ -60,7 +60,7 @@ Future<String?> updatePetProfilePicture(BuildContext context, String petName, St
                         isLoading = true;
                       });
 
-                      String? imageUrl = await uploadAndCropImage(imageFile, petName, petID);
+                      String? imageUrl = await uploadAndCropPetImage(imageFile, petName, petID);
 
                       setState(() {
                         isLoading = false;
@@ -94,7 +94,7 @@ Future<String?> updatePetProfilePicture(BuildContext context, String petName, St
   }
 }
 
-Future<String?> uploadAndCropImage(File imageFile, String petName, String petID) async {
+Future<String?> uploadAndCropPetImage(File imageFile, String petName, String petID) async {
   User? user = FirebaseAuth.instance.currentUser;
   try {
     ui.Image? image = await loadImage(imageFile);
@@ -132,6 +132,9 @@ Future<String?> uploadAndCropImage(File imageFile, String petName, String petID)
   }
   return null;
 }
+
+
+
 
 Future<ui.Image?> loadImage(File imageFile) async {
   Uint8List bytes = await imageFile.readAsBytes();

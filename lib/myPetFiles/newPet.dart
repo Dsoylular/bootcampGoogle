@@ -19,6 +19,7 @@ class _NewPetState extends State<NewPet> {
   final TextEditingController _speciesController = TextEditingController();
   final TextEditingController _breedController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
   // final TextEditingController _ = TextEditingController();
 
   @override
@@ -155,6 +156,21 @@ class _NewPetState extends State<NewPet> {
               ),
               maxLines: null,
             ),
+            const SizedBox(height: 20.0),
+            TextField(
+              controller: _genderController,
+              decoration: InputDecoration(
+                hintText: 'Cinsiyet',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(color: brown, width: 2.0),
+                ),
+                filled: true,
+                fillColor: cream,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+              ),
+              maxLines: null,
+            ),
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () async {
@@ -166,6 +182,7 @@ class _NewPetState extends State<NewPet> {
                   'petBreed': _breedController.text,
                   'petAge': _ageController.text,
                   'petImage': '',
+                  'petGender': _genderController.text,
                   'timestamp': Timestamp.now(),
                   'vaccinationDates': [],
                   'foodList': [3, 3, 3, 3, 3, 3, 3],

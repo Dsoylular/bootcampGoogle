@@ -17,7 +17,7 @@ Future<String?> talkWithGemini(String message, String petID) async {
     String finalMessage = "Sen evcil hayvanlar konusunda uzman bir kişisin. $message .Bu soruyu evcil hayvan konusunda kalarak cevapla. Cevabı Türkçe ver ve olası tehlikeler konusunda bilgi ver ve yapılacak adımları söyle.";
     if(petID != ""){
       _getPetData(petID);
-      finalMessage += " Bu soruyu, sana bilgilerini vereceğim evcil hayvana göre cevapla: Evcil hayvan ismi: $petName, evcil hayvan türü: $petSpecies, cinsi: $petBreed, yaşı: $petAge. Cevap sırasında hayvanın ismi ile hitab et ve Türkçe cevap ver.";
+      finalMessage += " Bu soruyu, sana bilgilerini vereceğim evcil hayvana göre cevapla: Evcil hayvan ismi: $petName, evcil hayvan türü: $petSpecies, cinsi: $petBreed, yaşı: $petAge. Cevap sırasında hayvandan bahsedeceğin zmana direkt ismini kullan ve Türkçe cevap ver.";
     }
     final content = Content.text(finalMessage);
     final response = await model.generateContent([content]);
@@ -39,7 +39,7 @@ void _getPetData(String petID) async {
 
   if (snapshot.exists) {
     petName = snapshot['petName'];
-    petAge = snapshot['petAge'];
+    petAge = snapshot['petAge'].toString();
     petBreed = snapshot['petBreed'];
     petSpecies = snapshot['petSpecies'];
   }
