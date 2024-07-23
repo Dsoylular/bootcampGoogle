@@ -39,6 +39,7 @@ flutter:
     - assets/images/kediIcon.png
     - assets/images/cuteCat.jpeg
     - assets/images/notLoginPageDesign.png
+    - assets/images/cozyCats.jpg
     - assets/icons/chat.png
     - assets/icons/circle.png
     - .env

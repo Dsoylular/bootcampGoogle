@@ -509,7 +509,7 @@ class _MainPageState extends State<MainPage> {
                 final user = userSnapshot.data!.data() as Map<String, dynamic>;
                 String profilePicture = user['pictureURL'] ?? " ";
                 String username = user['userName'];
-
+                bool isVet = user['isVet'];
                 return StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('blogPosts')
@@ -560,7 +560,7 @@ class _MainPageState extends State<MainPage> {
                                       fontSize: 16,
                                     ),
                                   ),
-                                  if (post['isVet']) ...[
+                                  if (isVet) ...[
                                     const SizedBox(width: 5),
                                     const Icon(Icons.check_circle, color: Colors.blue, size: 16),
                                   ],

@@ -7,12 +7,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-import 'dart:io';
-
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import '../helperFiles/photoAddFunctions.dart';
 
@@ -431,10 +425,13 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: (){
-                // TODO: FUNCTIONALITY
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CheckUpPage()),
+                    MaterialPageRoute(builder: (context) => CheckUpPage(
+                      petID: petID,
+                      refreshGraph: refreshGraph,
+                    ),
+                  ),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -515,6 +512,15 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
   void refreshProfilePhoto(String newUrl) {
     setState(() {
       petImage = newUrl;
+    });
+  }
+
+  refreshGraph(List<FlSpot> sleep, List<FlSpot> food, List<FlSpot> weight, List<FlSpot> exercise) {
+    setState(() {
+      sleepList = sleep;
+      foodList = food;
+      weightList = weight;
+      exerciseList = exercise;
     });
   }
 }
