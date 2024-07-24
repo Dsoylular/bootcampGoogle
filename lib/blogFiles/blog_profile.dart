@@ -6,20 +6,23 @@ import '../helperFiles/app_colors.dart';
 import '../helperFiles/my_app_bar.dart';
 
 class BlogProfile extends StatefulWidget {
+
   final String? blogID;
   final dynamic user;
 
-  const BlogProfile({Key? key, required this.blogID, required this.user}) : super(key: key);
+  const BlogProfile({super.key, required this.blogID, required this.user});
 
   @override
   State<BlogProfile> createState() => _BlogProfileState();
 }
 
 class _BlogProfileState extends State<BlogProfile> {
+
   String profileUrl = "";
   String title = "";
   String text = "";
   int like = 0;
+
   List<dynamic> comments = [];
   TextEditingController commentController = TextEditingController();
 
@@ -30,60 +33,10 @@ class _BlogProfileState extends State<BlogProfile> {
     _getComments(widget.blogID!);
   }
 
-  Future<void> _getBlogData(String blogID) async {
-    DocumentSnapshot snapshot = await FirebaseFirestore.instance
-        .collection('blogPosts')
-        .doc(blogID)
-        .get();
-
-    if (snapshot.exists) {
-      setState(() {
-        title = snapshot['title'];
-        text = snapshot['text'];
-        like = snapshot['like'];
-        profileUrl = snapshot['pictureURL'];
-      });
-    }
-  }
-
-  Future<void> _getComments(String blogID) async {
-    QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection('blogPosts')
-        .doc(blogID)
-        .collection('comments')
-        .get();
-
-    setState(() {
-      comments = snapshot.docs.map((doc) => doc.data()).toList();
-    });
-  }
-
-  Future<void> _addComment(String blogID, String commentText) async {
-    User? currentUser = FirebaseAuth.instance.currentUser;
-    DocumentSnapshot snapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser?.uid)
-        .get();
-
-    await FirebaseFirestore.instance
-        .collection('blogPosts')
-        .doc(blogID)
-        .collection('comments')
-        .add({
-      'commentText': commentText,
-      'profilePicture': snapshot['pictureURL'],
-      'userName': snapshot['userName'],
-    });
-
-    commentController.clear();
-    _getComments(blogID);
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context), // Custom app bar
+      appBar: appBar(context),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,8 +181,7 @@ class _BlogProfileState extends State<BlogProfile> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: comments.length,
               itemBuilder: (context, index) {
-                // print("AAAAAAAAAAAA  ${comments[index]}  AAAAAAAAAAAAAAAAAAAAAAA");
-                String profilePictureUrl = comments[index]['profilePicture'] ?? 'assets/images/default_profile.png';
+                String profilePictureUrl = comments[index]['profilePicture'] ?? 'assets/images/kediIcon.png';
                 String userName = comments[index]['userName'] ?? 'Anonymous';
 
                 return Padding(
@@ -307,4 +259,52 @@ class _BlogProfileState extends State<BlogProfile> {
     );
   }
 
+  Future<void> _getBlogData(String blogID) async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('blogPosts')
+        .doc(blogID)
+        .get();
+
+    if (snapshot.exists) {
+      setState(() {
+        title = snapshot['title'];
+        text = snapshot['text'];
+        like = snapshot['like'];
+        profileUrl = snapshot['pictureURL'];
+      });
+    }
+  }
+
+  Future<void> _getComments(String blogID) async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('blogPosts')
+        .doc(blogID)
+        .collection('comments')
+        .get();
+
+    setState(() {
+      comments = snapshot.docs.map((doc) => doc.data()).toList();
+    });
+  }
+
+  Future<void> _addComment(String blogID, String commentText) async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser?.uid)
+        .get();
+
+    await FirebaseFirestore.instance
+        .collection('blogPosts')
+        .doc(blogID)
+        .collection('comments')
+        .add({
+      'commentText': commentText,
+      'profilePicture': snapshot['pictureURL'],
+      'userName': snapshot['userName'],
+    });
+
+    commentController.clear();
+    _getComments(blogID);
+  }
 }

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:bootcamp_google/blogFiles/blogProfile.dart';
+import 'package:bootcamp_google/blogFiles/blog_profile.dart';
 import 'package:bootcamp_google/helperFiles/app_colors.dart';
 import 'package:bootcamp_google/helperFiles/gemini_codes.dart';
 import 'package:bootcamp_google/helperFiles/info_cards.dart';
