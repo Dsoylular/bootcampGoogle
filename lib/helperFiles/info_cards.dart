@@ -1,13 +1,11 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'appColors.dart';
+import 'app_colors.dart';
 import '../myPetFiles/petPage.dart';
 
-Widget InfoCard(BuildContext context) {
+Widget infoCard(BuildContext context) {
   final FirebaseAuth auth = FirebaseAuth.instance;
   User? currentUser = auth.currentUser;
   String userID = currentUser!.uid;

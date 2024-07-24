@@ -1,7 +1,7 @@
-import 'package:bootcamp_google/helperFiles/appColors.dart';
-import 'package:bootcamp_google/helperFiles/myAppBar.dart';
+import 'package:bootcamp_google/helperFiles/app_colors.dart';
+import 'package:bootcamp_google/helperFiles/my_app_bar.dart';
 import 'package:bootcamp_google/myPetFiles/changePetInfo.dart';
-import 'package:bootcamp_google/myPetFiles/checkUpPage.dart';
+import 'package:bootcamp_google/myPetFiles/check_up_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 
-import '../helperFiles/photoAddFunctions.dart';
+import '../helperFiles/photo_add_functions.dart';
 
 
 
@@ -91,7 +91,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
       padding: const EdgeInsets.all(8.0),
       child: LineChart(
         LineChartData(
-          gridData: FlGridData(show: false),
+          gridData: const FlGridData(show: false),
           titlesData: FlTitlesData(
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
@@ -114,8 +114,8 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 },
               ),
             ),
-            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
           ),
           borderData: FlBorderData(
             show: true,
@@ -133,7 +133,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
               barWidth: 3,
               isStrokeCapRound: true,
               belowBarData: BarAreaData(show: false),
-              dotData: FlDotData(show: false),
+              dotData: const FlDotData(show: false),
             ),
           ],
         ),
@@ -452,7 +452,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                     ),
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: (){
                     zeroGraphs();
@@ -471,7 +471,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -560,7 +560,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
     DocumentSnapshot petDocSnapshot = await petDocRef.get();
 
     if (petDocSnapshot.exists) {
-      Map<String, dynamic> petData = petDocSnapshot.data() as Map<String, dynamic>;
 
       List<dynamic> foodList = [3, 3, 3, 3, 3, 3, 3];
       List<dynamic> exerciseList = [3, 3, 3, 3, 3, 3, 3];

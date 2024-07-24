@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../helperFiles/appColors.dart';
-import '../helperFiles/myAppBar.dart';
+import '../helperFiles/app_colors.dart';
+import '../helperFiles/my_app_bar.dart';
 
 class ChangePetScreen extends StatefulWidget {
   final String petID;
@@ -31,7 +31,7 @@ class _ChangePetScreenState extends State<ChangePetScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(5),
               child: Container(

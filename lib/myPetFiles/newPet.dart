@@ -1,11 +1,9 @@
-import 'package:bootcamp_google/helperFiles/myAppBar.dart';
-import 'package:bootcamp_google/myPetFiles/petPage.dart';
+import 'package:bootcamp_google/helperFiles/my_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../helperFiles/appColors.dart';
-import '../helperFiles/photoAddFunctions.dart';
+import '../helperFiles/app_colors.dart';
 
 class NewPet extends StatefulWidget {
   const NewPet({super.key});
@@ -31,7 +29,7 @@ class _NewPetState extends State<NewPet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(5),
               child: Container(

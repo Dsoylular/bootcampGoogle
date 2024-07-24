@@ -1,8 +1,7 @@
-import 'package:bootcamp_google/askMeFiles/savedChats.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:bootcamp_google/askMeFiles/saved_chats.dart';
 import 'package:flutter/material.dart';
 
-import 'appColors.dart';
+import 'app_colors.dart';
 
 PreferredSizeWidget appBar(BuildContext context){
   return AppBar(

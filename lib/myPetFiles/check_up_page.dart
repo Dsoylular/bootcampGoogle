@@ -1,12 +1,10 @@
-import 'package:bootcamp_google/helperFiles/myAppBar.dart';
-import 'package:bootcamp_google/loadingPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../helperFiles/appColors.dart';
+import '../helperFiles/app_colors.dart';
 
 class CheckUpPage extends StatefulWidget {
   final String petID;

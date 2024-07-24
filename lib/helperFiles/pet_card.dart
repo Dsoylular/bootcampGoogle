@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../myPetFiles/petPage.dart';
-import 'appColors.dart';
+import 'app_colors.dart';
 
-Widget PetCard(BuildContext context) {
+Widget petCard(BuildContext context) {
   final FirebaseAuth auth = FirebaseAuth.instance;
   User? currentUser = auth.currentUser;
   String userID = currentUser!.uid;

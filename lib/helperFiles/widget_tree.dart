@@ -1,7 +1,5 @@
-import 'package:bootcamp_google/MainPage.dart';
 import 'package:bootcamp_google/helperFiles/auth.dart';
-import 'package:bootcamp_google/loadingPage.dart';
-import 'package:bootcamp_google/pages/home_page.dart';
+import 'package:bootcamp_google/loading_page.dart';
 import 'package:bootcamp_google/pages/login_register_page.dart';
 import 'package:flutter/material.dart';
 

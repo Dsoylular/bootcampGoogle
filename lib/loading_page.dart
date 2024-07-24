@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bootcamp_google/MainPage.dart';
 import 'package:flutter/material.dart';
 
-import 'helperFiles/appColors.dart';
+import 'helperFiles/app_colors.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});

@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../helperFiles/appColors.dart';
-import '../helperFiles/myAppBar.dart';
+import '../helperFiles/app_colors.dart';
+import '../helperFiles/my_app_bar.dart';
 
 class BlogProfile extends StatefulWidget {
   final String? blogID;
   final dynamic user;
 
-  BlogProfile({Key? key, required this.blogID, required this.user}) : super(key: key);
+  const BlogProfile({Key? key, required this.blogID, required this.user}) : super(key: key);
 
   @override
   State<BlogProfile> createState() => _BlogProfileState();
@@ -88,7 +88,7 @@ class _BlogProfileState extends State<BlogProfile> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -110,7 +110,7 @@ class _BlogProfileState extends State<BlogProfile> {
                         child: Center(
                           child: Text(
                             title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontFamily: 'Baloo',
                               fontSize: 18,

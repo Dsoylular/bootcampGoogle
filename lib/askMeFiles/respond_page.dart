@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import '../helperFiles/appColors.dart';
+import '../helperFiles/app_colors.dart';
 
 class RespondPage extends StatefulWidget {
   final String respond;
@@ -49,7 +49,6 @@ class _RespondPageState extends State<RespondPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: appBar(context),
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
@@ -62,13 +61,6 @@ class _RespondPageState extends State<RespondPage> {
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(20.0),
-            // decoration: BoxDecoration(
-            //   gradient: LinearGradient(
-            //     begin: Alignment.topCenter,
-            //     end: Alignment.bottomCenter,
-            //     colors: [darkBlue.withOpacity(0.2), cream],
-            //   ),
-            // ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

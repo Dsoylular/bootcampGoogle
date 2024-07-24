@@ -2,13 +2,13 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:bootcamp_google/helperFiles/myAppBar.dart';
+import 'package:bootcamp_google/helperFiles/my_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'package:bootcamp_google/helperFiles/appColors.dart';
+import 'package:bootcamp_google/helperFiles/app_colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class NewBlogPost extends StatefulWidget {
@@ -154,13 +154,13 @@ class _NewBlogPostState extends State<NewBlogPost> {
                   } else {
                     // Handle the error of image upload failure
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Image upload failed")),
+                      const SnackBar(content: Text("Image upload failed")),
                     );
                   }
                 } else {
                   // Handle the case when no image is selected
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("No image selected")),
+                    const SnackBar(content: Text("No image selected")),
                   );
                 }
               },

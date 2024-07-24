@@ -1,14 +1,14 @@
 import 'dart:math';
 
 import 'package:bootcamp_google/blogFiles/blogProfile.dart';
-import 'package:bootcamp_google/helperFiles/appColors.dart';
-import 'package:bootcamp_google/helperFiles/geminiCodes.dart';
-import 'package:bootcamp_google/helperFiles/infoCards.dart';
-import 'package:bootcamp_google/helperFiles/petCard.dart';
-import 'package:bootcamp_google/helperFiles/profileButton.dart';
+import 'package:bootcamp_google/helperFiles/app_colors.dart';
+import 'package:bootcamp_google/helperFiles/gemini_codes.dart';
+import 'package:bootcamp_google/helperFiles/info_cards.dart';
+import 'package:bootcamp_google/helperFiles/pet_card.dart';
+import 'package:bootcamp_google/helperFiles/profile_button.dart';
 import 'package:bootcamp_google/myPetFiles/newPet.dart';
 import 'package:bootcamp_google/pages/login_register_page.dart';
-import 'package:bootcamp_google/askMeFiles/respondPage.dart';
+import 'package:bootcamp_google/askMeFiles/respond_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'blogFiles/newBlogPost.dart';
-import 'helperFiles/myAppBar.dart';
+import 'helperFiles/my_app_bar.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -815,7 +815,7 @@ class _MainPageState extends State<MainPage> {
             ],
           ),
           const SizedBox(height: 10),
-          PetCard(context),
+          petCard(context),
         ],
       ),
     );
@@ -837,7 +837,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
         const SizedBox(height: 20),
-        InfoCard(context),
+        infoCard(context),
       ],
     );
   }

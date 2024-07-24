@@ -1,10 +1,9 @@
-import 'package:bootcamp_google/MainPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore package
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../helperFiles/auth.dart';
-import '../helperFiles/appColors.dart';
-import '../loadingPage.dart';
+import '../helperFiles/app_colors.dart';
+import '../loading_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -54,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         errorMessage = '';
       });
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       setState(() {
         errorMessage = "Mail veya şifre hatalı!";
       });
@@ -118,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         errorMessage = '';
       });
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       setState(() {
         errorMessage = "Mail veya şifre hatalı!";
       });
