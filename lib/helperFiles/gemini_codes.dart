@@ -1,14 +1,17 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-final apiKey = dotenv.env['API_KEY'];
+final apiKey = dotenv.env['API_KEY']; // TODO: FIX THIS
 
 String petName = "";
 String petSpecies = "";
 String petBreed = "";
 String petAge = "";
+
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 Future<String?> talkWithGemini(String message, String petID) async {
@@ -23,7 +26,7 @@ Future<String?> talkWithGemini(String message, String petID) async {
     final response = await model.generateContent([content]);
     return response.text;
   } catch (e) {
-    print('Error talking with Gemini: $e');
+    log('Error talking with Gemini: $e');
     return null;
   }
 }

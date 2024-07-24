@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +41,7 @@ Widget petCard(BuildContext context) {
               final petName = pet['petName'] ?? 'No name';
               final petAge = pet['petAge'] ?? 'No age';
               final petVacDates = pet['vaccinationDates'] ?? [];
-              // final petVaccinationStatus = pet['vaccinationStatus'] ?? 'No status';
-              final petImage = pet['petImage'] ?? 'https://i.imgur.com/9l1A4OS.jpeg';
+              final petImage = pet['petImage'] ?? 'assets/images/kediIcon.png';
               final petID = petDoc.id;
 
               return GestureDetector(
@@ -53,7 +54,7 @@ Widget petCard(BuildContext context) {
                       ),
                     ),
                   );
-                  print("Directing to pet page");
+                  log("Directing to pet page");
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(10),

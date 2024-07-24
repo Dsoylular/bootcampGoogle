@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'app_colors.dart';
 import '../myPetFiles/petPage.dart';
 
 Widget infoCard(BuildContext context) {
+
   final FirebaseAuth auth = FirebaseAuth.instance;
   User? currentUser = auth.currentUser;
   String userID = currentUser!.uid;
@@ -54,7 +57,7 @@ Widget infoCard(BuildContext context) {
                       ),
                     ),
                   );
-                  print("Directing to pet page");
+                  log("Directing to pet page");
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 20),
@@ -109,7 +112,6 @@ String getPetSituation(int food, int weight, int sleep, int exercise) {
     }
     return minimum;
   }
-  print("kjsldkfs");
   if(minimum == ""){
     return maximum;
   }

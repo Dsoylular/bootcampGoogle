@@ -91,7 +91,7 @@ Future<String?> updatePetProfilePicture(BuildContext context, String petName, St
 
     return imageUrl;
   } catch (e) {
-    print("Error updating profile picture: $e");
+    log("Error updating profile picture: $e");
     return null;
   }
 }
@@ -109,17 +109,14 @@ Future<String?> uploadAndCropPetImage(File imageFile, String petName, String pet
       );
       ui.Image? croppedImage = await cropImage(image, square);
 
-      // Convert cropped image to bytes
       ByteData? byteData = await croppedImage!.toByteData(format: ui.ImageByteFormat.png);
       Uint8List? imageData = byteData?.buffer.asUint8List();
 
       if (imageData != null) {
-        // BE CAREFUL USER HAS TO BE INITIALIZED - BERK
         Reference ref = FirebaseStorage.instance.ref().child('pet_photos').child(petName);
         UploadTask uploadTask = ref.putData(imageData);
         TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
 
-        // Get download URL of uploaded image
         String imageUrl = await snapshot.ref.getDownloadURL();
 
         await FirebaseFirestore.instance.collection('users').doc(user?.uid).collection('pets').doc(petID).update({
@@ -130,7 +127,7 @@ Future<String?> uploadAndCropPetImage(File imageFile, String petName, String pet
       }
     }
   } catch (e) {
-    print("Error uploading and cropping image: $e");
+    log("Error uploading and cropping image: $e");
   }
   return null;
 }
@@ -190,7 +187,7 @@ Future<void> addNewBlogPicture(BuildContext context) async {
       },
     );
   } catch (e) {
-    print("Error selecting image: $e");
+    log("Error selecting image: $e");
   }
 }
 
@@ -222,6 +219,126 @@ Future<String?> uploadAndCropBlogImage(File imageFile) async {
     }
   } catch (e) {
     log("Error uploading and cropping image: $e");
+  }
+  return null;
+}
+
+Future<String?> updateProfilePicture(BuildContext context, Function(String) refreshProfilePhoto) async {
+  try {
+    final ImagePicker picker = ImagePicker();
+    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile == null) return null;
+
+    File imageFile = File(pickedFile.path);
+
+    String? imageUrl = await showDialog<String?>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        bool isLoading = false;
+
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text("Ön Gösterim"),
+              content: isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: FileImage(imageFile),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              actions: <Widget>[
+                if (!isLoading)
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(null);
+                    },
+                    child: Text(
+                      "İptal",
+                      style: TextStyle(
+                        color: darkBlue,
+                      ),
+                    ),
+                  ),
+                if (!isLoading)
+                  TextButton(
+                    onPressed: () async {
+                      setState(() {
+                        isLoading = true;
+                      });
+
+                      String? imageUrl = await uploadAndCropImage(imageFile);
+
+                      setState(() {
+                        isLoading = false;
+                      });
+
+                      if (imageUrl != null) {
+                        refreshProfilePhoto(imageUrl);
+                        Navigator.of(context).pop(imageUrl);
+                      } else {
+                        Navigator.of(context).pop(null);
+                      }
+                    },
+                    child: Text(
+                      "Seç",
+                      style: TextStyle(
+                        color: darkBlue,
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        );
+      },
+    );
+
+    return imageUrl;
+  } catch (e) {
+    print("Error updating profile picture: $e");
+    return null;
+  }
+}
+
+Future<String?> uploadAndCropImage(File imageFile) async {
+  User? user = FirebaseAuth.instance.currentUser;
+  try {
+    ui.Image? image = await loadImage(imageFile);
+    if (image != null) {
+      int size = image.width < image.height ? image.width : image.height;
+      ui.Rect square = ui.Rect.fromCenter(
+        center: Offset(image.width / 2, image.height / 2),
+        width: size.toDouble(),
+        height: size.toDouble(),
+      );
+      ui.Image? croppedImage = await cropImage(image, square);
+
+      ByteData? byteData = await croppedImage!.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List? imageData = byteData?.buffer.asUint8List();
+
+      if (imageData != null) {
+        Reference ref = FirebaseStorage.instance.ref().child('profile_pictures').child(user?.uid ?? "");
+        UploadTask uploadTask = ref.putData(imageData);
+        TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
+
+        String imageUrl = await snapshot.ref.getDownloadURL();
+
+        await FirebaseFirestore.instance.collection('users').doc(user?.uid).update({
+          'pictureURL': imageUrl,
+        });
+
+        return imageUrl;
+      }
+    }
+  } catch (e) {
+    print("Error uploading and cropping image: $e");
   }
   return null;
 }

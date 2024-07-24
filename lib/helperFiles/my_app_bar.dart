@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bootcamp_google/askMeFiles/saved_chats.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +29,7 @@ PreferredSizeWidget appBar(BuildContext context){
             color: Colors.white,
           ),
           onPressed: () {
-            print("saved chats");
+            log("Directing to saved chats");
             Navigator.push(
               context,
               MaterialPageRoute(
