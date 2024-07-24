@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import 'blogFiles/newBlogPost.dart';
+import 'blogFiles/new_blog_post.dart';
 import 'helperFiles/my_app_bar.dart';
 
 class MainPage extends StatefulWidget {

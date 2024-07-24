@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,6 +19,7 @@ class _SavedChatsState extends State<SavedChats> {
 
   @override
   Widget build(BuildContext context) {
+    log("saved_chats");
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -102,10 +105,12 @@ class _SavedChatsState extends State<SavedChats> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Chat deleted'), backgroundColor: Colors.green),
       );
+      log("Chat deleted");
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to delete chat: $error'), backgroundColor: Colors.red),
       );
+      log("Deletion of chat failed");
     });
   }
 }

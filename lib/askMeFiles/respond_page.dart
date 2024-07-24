@@ -29,6 +29,7 @@ class _RespondPageState extends State<RespondPage> {
 
   @override
   Widget build(BuildContext context) {
+    log("respond_page");
     return Scaffold(
       body: Container(
         height: double.infinity,

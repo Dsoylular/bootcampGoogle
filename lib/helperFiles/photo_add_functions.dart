@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bootcamp_google/helperFiles/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -134,7 +136,95 @@ Future<String?> uploadAndCropPetImage(File imageFile, String petName, String pet
 }
 
 
+Future<void> addNewBlogPicture(BuildContext context) async {
+  File? selectedImageFile;
 
+  try {
+    final ImagePicker picker = ImagePicker();
+    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile == null) return;
+
+    selectedImageFile = File(pickedFile.path);
+
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Ön Gösterim"),
+          content: Container(
+            width: 200,
+            height: 200,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: FileImage(selectedImageFile!),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                "İptal",
+                style: TextStyle(
+                  color: darkBlue,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                "Seç",
+                style: TextStyle(
+                  color: darkBlue,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  } catch (e) {
+    print("Error selecting image: $e");
+  }
+}
+
+Future<String?> uploadAndCropBlogImage(File imageFile) async {
+  User? user = FirebaseAuth.instance.currentUser;
+  try {
+    ui.Image? image = await loadImage(imageFile);
+    if (image != null) {
+      int size = image.width < image.height ? image.width : image.height;
+      ui.Rect square = ui.Rect.fromCenter(
+        center: Offset(image.width / 2, image.height / 2),
+        width: size.toDouble(),
+        height: size.toDouble(),
+      );
+      ui.Image? croppedImage = await cropImage(image, square);
+
+      ByteData? byteData = await croppedImage!.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List? imageData = byteData?.buffer.asUint8List();
+
+      if (imageData != null) {
+        Reference ref = FirebaseStorage.instance.ref().child('blog_pictures').child(user?.uid ?? "");
+        UploadTask uploadTask = ref.putData(imageData);
+        TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
+
+        String imageUrl = await snapshot.ref.getDownloadURL();
+
+        return imageUrl;
+      }
+    }
+  } catch (e) {
+    log("Error uploading and cropping image: $e");
+  }
+  return null;
+}
 
 Future<ui.Image?> loadImage(File imageFile) async {
   Uint8List bytes = await imageFile.readAsBytes();
