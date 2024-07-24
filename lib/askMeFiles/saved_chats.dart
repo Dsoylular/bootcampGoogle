@@ -104,7 +104,7 @@ class _SavedChatsState extends State<SavedChats> {
       );
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to delete chat: $error')),
+        SnackBar(content: Text('Failed to delete chat: $error'), backgroundColor: Colors.red),
       );
     });
   }
