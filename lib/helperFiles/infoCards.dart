@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +38,12 @@ Widget InfoCard(BuildContext context) {
             children: pets.map((petDoc) {
               final pet = petDoc.data() as Map<String, dynamic>;
               final petName = pet['petName'] ?? 'No name';
-              final petSituation = pet['petSituation'] ?? 'Uykulu'; // TODO: Connect with backend
+              final petSituation = getPetSituation(
+                (pet['foodList'].last as num).toInt(),
+                (pet['weightList'].last as num).toInt(),
+                (pet['sleepList'].last as num).toInt(),
+                (pet['exerciseList'].last as num).toInt(),
+              );
               final petID = petDoc.id;
 
               return GestureDetector(
@@ -45,7 +52,7 @@ Widget InfoCard(BuildContext context) {
                     context,
                     MaterialPageRoute(
                       builder: (context) => PetPage(
-                        petID: petID, // Pass the pet ID to PetPage
+                        petID: petID,
                       ),
                     ),
                   );
@@ -88,4 +95,85 @@ Widget InfoCard(BuildContext context) {
       ),
     ),
   );
+}
+
+String getPetSituation(int food, int weight, int sleep, int exercise) {
+  List<int> values = [food, weight, sleep, exercise];
+  values.sort();
+  int maxValue = values.last;
+  int minValue = values[0];
+  String minimum = getMinProblem(food, weight, sleep, exercise, minValue);
+  String maximum = getMaxProblem(food, weight, sleep, exercise, maxValue);
+
+  if(minimum == maximum){
+    if(minimum == ""){
+      return "Her şey yolunda!";
+    }
+    return minimum;
+  }
+  print("kjsldkfs");
+  if(minimum == ""){
+    return maximum;
+  }
+  if(maximum == ""){
+    return minimum;
+  }
+  if(maximum == "Dikkatli İnceleme Gerekli!" || minimum == "Dikkatli İnceleme Gerekli!") {
+    return "Dikkatli İnceleme Gerekli!";
+  }
+  return "$maximum $minimum";
+}
+
+String getMaxProblem(int food, int weight, int sleep, int exercise, int maxValue) {
+  String maximum = "";
+  if(maxValue > 3) {
+    int count = 0;
+    if (maxValue == food) {
+      count += 1;
+      maximum = 'Çok Yemek';
+    }
+    if (maxValue == weight) {
+      count += 1;
+      maximum = 'Çok Kilo';
+    }
+    if(maxValue == exercise){
+      count += 1;
+      maximum = "Çok Egzersiz";
+    }
+    if(maxValue == sleep){
+      count += 1;
+      maximum = "Çok Uyku";
+    }
+    if(count > 1){
+      return "Dikkatli İnceleme Gerekli!";
+    }
+  }
+  return maximum;
+}
+
+String getMinProblem(int food, int weight, int sleep, int exercise, int minValue) {
+  String minimum = "";
+  if(minValue < 3){
+    int count = 0;
+    if (minValue == food) {
+      count += 1;
+      minimum = 'Az Yemek';
+    }
+    if (minValue == weight) {
+      count += 1;
+      minimum = 'Az Kilo';
+    }
+    if(minValue == exercise){
+      count += 1;
+      minimum = "Az Egzersiz";
+    }
+    if(minValue == sleep){
+      count += 1;
+      minimum = "Az Uyku";
+    }
+    if(count > 1){
+      return "Dikkatli İnceleme Gerekli!";
+    }
+  }
+  return minimum;
 }

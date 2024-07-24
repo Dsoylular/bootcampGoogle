@@ -35,7 +35,6 @@ PreferredSizeWidget appBar(BuildContext context){
                 builder: (context) => const SavedChats(),
               ),
             );
-            // TODO: Connect to saved chats
           },
         ),
         const SizedBox(width: 10),

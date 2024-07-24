@@ -436,7 +436,7 @@ class _MainPageState extends State<MainPage> {
                   // print("$petsPicture");
                   setState(() {
                     petChosen = (pet != 'Hiçbiri') ? true : false;
-                    chosenPetName = (pet != 'Hiçbiri') ? pet : ""; // TODO: FIX HERE
+                    chosenPetName = (pet != 'Hiçbiri') ? pet : "";
                     chosenPetID = (pet != 'Hiçbiri') ? petsID[pet]! : "";
                   });
                 },

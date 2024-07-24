@@ -1,6 +1,8 @@
 import 'package:bootcamp_google/helperFiles/myAppBar.dart';
+import 'package:bootcamp_google/loadingPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -210,18 +212,33 @@ class _CheckUpPageState extends State<CheckUpPage> {
                 Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: darkBlue
+                        backgroundColor: darkBlue
                     ),
-                    onPressed: () {
-                      _updatePetCheckUpData(refreshGraph);
+                    onPressed: () async {
+                      await _updatePetCheckUpData(refreshGraph);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Bilgiler başarıyla gönderildi!',
+                            style: TextStyle(
+                              fontFamily: 'Baloo',
+                              color: Colors.white,
+                            ),
+                          ),
+                          backgroundColor: CupertinoColors.activeGreen,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+
+                      Navigator.pop(context);
                       Navigator.pop(context);
                     },
                     child: const Text(
                       'Gönder',
                       style: TextStyle(
-                          fontFamily: 'Baloo',
-                          fontSize: 18,
-                        color: Colors.white
+                        fontFamily: 'Baloo',
+                        fontSize: 18,
+                        color: Colors.white,
                       ),
                     ),
                   ),

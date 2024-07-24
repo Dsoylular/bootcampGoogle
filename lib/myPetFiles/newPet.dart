@@ -69,33 +69,6 @@ class _NewPetState extends State<NewPet> {
               ),
             ),
             const SizedBox(height: 20),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     // TODO: Implement photo upload functionality
-            //   },
-            //   style: ElevatedButton.styleFrom(
-            //     backgroundColor: lightBlue,
-            //     padding: const EdgeInsets.symmetric(vertical: 12.0),
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(30.0),
-            //     ),
-            //   ),
-            //   child: const Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       Text(
-            //         "Fotoğraf Ekle",
-            //         style: TextStyle(
-            //           fontSize: 18,
-            //           fontFamily: 'Baloo',
-            //           color: Colors.black,
-            //         ),
-            //       ),
-            //       SizedBox(width: 8.0),
-            //       Icon(Icons.add_photo_alternate_outlined, color: Colors.black),
-            //     ],
-            //   ),
-            // ),
             const SizedBox(height: 20.0),
             TextField(
               controller: _nameController,

@@ -350,7 +350,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                     }
                     _focusedDay = focusedDay;
                   });
-                  // print("${_preSelectedDays}     ${_userSelectedDay}      ${selectedDay}       ${_preSelectedDays.contains(selectedDay.toLocal())}");
                 },
                 onFormatChanged: (format) {
                   if (_calendarFormat != format) {
@@ -423,28 +422,50 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
             const SizedBox(height: 10),
             _createGraph(),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CheckUpPage(
-                      petID: petID,
-                      refreshGraph: refreshGraph,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CheckUpPage(
+                          petID: petID,
+                          refreshGraph: refreshGraph,
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: pink,
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                  ),
+                  child: const Text(
+                    "Check-Up",
+                    style: TextStyle(
+                        fontFamily: 'Baloo',
+                        color: Colors.white
                     ),
                   ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: pink,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-              ),
-              child: const Text(
-                "Check-Up",
-                style: TextStyle(
-                    fontFamily: 'Baloo',
-                    color: Colors.white
                 ),
-              ),
+                SizedBox(width: 20),
+                ElevatedButton(
+                  onPressed: (){
+                    zeroGraphs();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: pink,
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                  ),
+                  child: const Text(
+                    "Sıfırla",
+                    style: TextStyle(
+                        fontFamily: 'Baloo',
+                        color: Colors.white
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 20),
           ],
@@ -522,6 +543,42 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
       weightList = weight;
       exerciseList = exercise;
     });
+  }
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  void zeroGraphs() async {
+    DocumentReference petDocRef = _firestore.collection('users')
+        .doc(currentUser!.uid)
+        .collection('pets')
+        .doc(petID);
+
+    DocumentSnapshot petDocSnapshot = await petDocRef.get();
+
+    if (petDocSnapshot.exists) {
+      Map<String, dynamic> petData = petDocSnapshot.data() as Map<String, dynamic>;
+
+      List<dynamic> foodList = [3, 3, 3, 3, 3, 3, 3];
+      List<dynamic> exerciseList = [3, 3, 3, 3, 3, 3, 3];
+      List<dynamic> weightList = [3, 3, 3, 3, 3, 3, 3];
+      List<dynamic> sleepList = [3, 3, 3, 3, 3, 3, 3];
+
+      await petDocRef.update({
+        'foodList': foodList,
+        'exerciseList': exerciseList,
+        'weightList': weightList,
+        'sleepList': sleepList,
+      });
+
+      List<FlSpot> sleepSpots = sleepList.map((value) => FlSpot(sleepList.indexOf(value).toDouble(), value.toDouble())).toList();
+      List<FlSpot> foodSpots = foodList.map((value) => FlSpot(foodList.indexOf(value).toDouble(), value.toDouble())).toList();
+      List<FlSpot> weightSpots = weightList.map((value) => FlSpot(weightList.indexOf(value).toDouble(), value.toDouble())).toList();
+      List<FlSpot> exerciseSpots = exerciseList.map((value) => FlSpot(exerciseList.indexOf(value).toDouble(), value.toDouble())).toList();
+
+      refreshGraph(sleepSpots, foodSpots, weightSpots, exerciseSpots);
+    } else {
+      print("Pet document does not exist");
+    }
   }
 }
 
