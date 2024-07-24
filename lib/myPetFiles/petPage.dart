@@ -1,5 +1,6 @@
 import 'package:bootcamp_google/helperFiles/appColors.dart';
 import 'package:bootcamp_google/helperFiles/myAppBar.dart';
+import 'package:bootcamp_google/myPetFiles/changePetInfo.dart';
 import 'package:bootcamp_google/myPetFiles/checkUpPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -262,6 +263,10 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                         const Spacer(),
                         ElevatedButton(
                           onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ChangePetScreen(petID: petID))
+                            );
                             print("Profile Page");
                           },
                           style: ElevatedButton.styleFrom(
@@ -291,7 +296,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 Text(
                   "Aşı Takip",
                   style: TextStyle(
-                    // fontWeight: FontWeight.bold,
                       fontFamily: 'Baloo',
                       fontSize: 18
                   ),
