@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import '../helperFiles/app_colors.dart';
+import '../helperFiles/markdown_style_sheet.dart';
 
 class RespondPage extends StatefulWidget {
+
   final String respond;
   final String prompt;
 
@@ -16,35 +20,12 @@ class RespondPage extends StatefulWidget {
 }
 
 class _RespondPageState extends State<RespondPage> {
+
   String get respond => widget.respond;
   String get prompt => widget.prompt;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  Future<void> _saveToFirestore() async {
-    try {
-      final User? user = _auth.currentUser;
-      if (user != null) {
-        await _firestore.collection('users').doc(user.uid).collection('savedMessages').add({
-          'prompt': prompt,
-          'response': respond,
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Başarıyla kaydedildi!'), backgroundColor: Colors.green),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Kullanıcı giriş yapmadı!'), backgroundColor: Colors.red),
-        );
-      }
-    } catch (e) {
-      print('Error saving to Firestore: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Kayıtta sıkıntı yaşandı'), backgroundColor: Colors.red),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,42 +59,7 @@ class _RespondPageState extends State<RespondPage> {
                   ),
                   child: MarkdownBody(
                     data: respond,
-                    styleSheet: MarkdownStyleSheet(
-                      p: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'Baloo',
-                      ),
-                      h1: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      h2: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      h3: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      strong: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      blockquote: const TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.italic,
-                        decoration: TextDecoration.underline,
-                      ),
-                      code: const TextStyle(
-                        color: Colors.yellowAccent,
-                        backgroundColor: Colors.black,
-                        fontFamily: 'Monospace',
-                      ),
-                    ),
+                    styleSheet: markdownStyleSheet,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -137,4 +83,35 @@ class _RespondPageState extends State<RespondPage> {
       ),
     );
   }
+
+  Future<void> _saveToFirestore() async {
+    try {
+      final User? user = _auth.currentUser;
+      if (user != null) {
+        await _firestore.collection('users').doc(user.uid).collection('savedMessages').add({
+          'prompt': prompt,
+          'response': respond,
+        });
+        _showSnackBar('Başarıyla kaydedildi', Colors.green);
+        log("Respond is successfully saved");
+      } else {
+        _showSnackBar('Kullanıcı giriş yapmadı!', Colors.red);
+        log("The user is not signed in!");
+      }
+    } catch (e) {
+      _showSnackBar("Kayıtta sıkıntı yaşandı!", Colors.red);
+      log("Error saving in Firestore!");
+    }
+  }
+
+  void _showSnackBar(String text, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(text),
+        duration: const Duration(seconds: 1),
+        backgroundColor: color,
+      ),
+    );
+  }
+
 }
