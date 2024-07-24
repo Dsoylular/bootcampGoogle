@@ -250,7 +250,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                               maxWidth: 150,
                             ),
                             child: Text(
-                              "$petName, $petAge yaşında, $petBreed cinsinde akıllı bir ${petGender == 'erkek' ? 'beyefendidir' : 'hanımefendidir'}.",
+                              "$petName, $petAge yaşında, $petBreed cinsinde akıllı bir ${(petGender == 'erkek' || petGender == 'Erkek') ? 'beyefendidir' : 'hanımefendidir'}.",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 15,
