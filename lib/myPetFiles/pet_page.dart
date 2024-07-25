@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bootcamp_google/helperFiles/app_colors.dart';
 import 'package:bootcamp_google/helperFiles/my_app_bar.dart';
 import 'package:bootcamp_google/myPetFiles/change_pet_info.dart';
@@ -14,6 +16,7 @@ import '../helperFiles/photo_add_functions.dart';
 
 
 class PetPage extends StatefulWidget {
+
   final String petID;
 
   const PetPage({super.key, required this.petID});
@@ -23,18 +26,22 @@ class PetPage extends StatefulWidget {
 }
 
 class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
+
   late TabController _tabController;
   CalendarFormat _calendarFormat = CalendarFormat.month;
+
   DateTime _focusedDay = DateTime.now();
-  bool showAddButton = false;
   List<DateTime> _preSelectedDays = [];
   DateTime? _userSelectedDay;
+
   User? currentUser = FirebaseAuth.instance.currentUser;
+
   String petName = "";
   String petAge = "";
   String petBreed = "";
   String petImage = "";
   String petGender = "";
+  bool showAddButton = false;
 
   List<FlSpot> foodList = [];
   List<FlSpot> exerciseList = [];
@@ -68,7 +75,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
       weightList = getFlSpotList(snapshot['weightList']);
       sleepList = getFlSpotList(snapshot['sleepList']);
       petGender = snapshot['petGender'];
-      // print("Preselected Dates: $_preSelectedDays");
     });
   }
 
@@ -144,6 +150,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    log("pet_page");
     return Scaffold(
       appBar: appBar(context),
       body: SingleChildScrollView(
@@ -267,7 +274,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                                 context,
                                 MaterialPageRoute(builder: (context) => ChangePetScreen(petID: petID))
                             );
-                            print("Profile Page");
+                            log("Profile Page");
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: darkBlue,
@@ -277,7 +284,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                             "Düzenle",
                             style: TextStyle(
                               color: Colors.white,
-                              // fontWeight: FontWeight.bold,
                               fontFamily: 'Baloo',
                             ),
                           ),
@@ -310,7 +316,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 color: cream,
                 border: Border.all(color: brown, width: 2),
               ),
-              // child: Text(_preSelectedDays[0].toString()),
               child: TableCalendar(
                 availableCalendarFormats: const {
                   CalendarFormat.twoWeeks: 'Month',
@@ -337,7 +342,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
                     if (_preSelectedDays.contains(selectedDay.toLocal())) {
-                      // print("kfgjlkdjflşdgşfd");
                       _preSelectedDays.remove(selectedDay.toLocal());
                       _userSelectedDay = null;
                       showAddButton = true;
@@ -392,12 +396,10 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                             .collection("pets")
                             .doc(petID)
                             .update({'vaccinationDates': _preSelectedDays});
-                        print('Vaccination dates updated successfully.');
+                        log('Vaccination dates updated successfully.');
                       } catch (e) {
-                        print('Error updating vaccination dates: $e');
-                        // Handle error accordingly
+                        log('Error updating vaccination dates: $e');
                       }
-                      // print("AAAAAAAA $_preSelectedDays");
                     },
                     child: const Text(
                       'Kaydet',
@@ -416,7 +418,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 Text(
                   "Durum Analizi",
                   style: TextStyle(
-                      // fontWeight: FontWeight.bold,
                       fontFamily: 'Baloo',
                       fontSize: 18,
                   ),
@@ -580,7 +581,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
 
       refreshGraph(sleepSpots, foodSpots, weightSpots, exerciseSpots);
     } else {
-      print("Pet document does not exist");
+      log("Pet document does not exist");
     }
   }
 }
