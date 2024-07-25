@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore package
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +18,13 @@ class _LoginPageState extends State<LoginPage> {
   String? errorMessage = '';
   bool isLogin = true;
   bool _isPasswordVisible = false;
-  bool _isVet = false; // State variable to hold vet status
+  bool _isVet = false;
 
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
   final TextEditingController _controllerFirstName = TextEditingController();
   final TextEditingController _controllerLastName = TextEditingController();
-  final TextEditingController _controllerConfirmPassword =
-  TextEditingController();
+  final TextEditingController _controllerConfirmPassword = TextEditingController();
   final TextEditingController _controllerUserName = TextEditingController();
 
   Future<void> signInWithEmailAndPassword() async {
@@ -43,13 +44,7 @@ class _LoginPageState extends State<LoginPage> {
         password: password,
       );
 
-      // Navigate to another screen after successful login
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoadingScreen()),
-      );
-
-      // Clear error message upon successful login
+      navPushRep();
       setState(() {
         errorMessage = '';
       });
@@ -69,7 +64,6 @@ class _LoginPageState extends State<LoginPage> {
       String lastName = _controllerLastName.text.trim();
       String userName = _controllerUserName.text.trim();
 
-      // Validate empty fields
       if (email.isEmpty || password.isEmpty) {
         setState(() {
           errorMessage = 'Email ve şifre boş olamaz.';
@@ -77,7 +71,6 @@ class _LoginPageState extends State<LoginPage> {
         return;
       }
 
-      // Check if passwords match
       if (password != confirmPassword) {
         setState(() {
           errorMessage = 'Şifreler eşleşmiyor.';
@@ -85,14 +78,12 @@ class _LoginPageState extends State<LoginPage> {
         return;
       }
 
-      // Create user in Firebase Auth
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      // Save user data to Firestore
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user!.uid)
@@ -107,13 +98,7 @@ class _LoginPageState extends State<LoginPage> {
         'pets': [],
       });
 
-      // Navigate to loading screen after successful registration
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoadingScreen()),
-      );
-
-      // Clear error message upon successful registration
+      navPushRep();
       setState(() {
         errorMessage = '';
       });
@@ -122,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
         errorMessage = "Mail veya şifre hatalı!";
       });
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
       setState(() {
         errorMessage = "Bir hata oluştu, lütfen tekrar deneyin.";
       });
@@ -338,6 +323,13 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void navPushRep() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoadingScreen()),
     );
   }
 }
