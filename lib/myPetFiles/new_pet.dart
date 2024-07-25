@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bootcamp_google/helperFiles/my_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,15 +15,16 @@ class NewPet extends StatefulWidget {
 }
 
 class _NewPetState extends State<NewPet> {
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _speciesController = TextEditingController();
   final TextEditingController _breedController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
-  // final TextEditingController _ = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    log("new_pet");
     return Scaffold(
       appBar: appBar(context),
       body: SingleChildScrollView(
@@ -66,8 +69,7 @@ class _NewPetState extends State<NewPet> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 40),
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
@@ -83,65 +85,13 @@ class _NewPetState extends State<NewPet> {
               maxLines: null,
             ),
             const SizedBox(height: 20),
-            TextField(
-              controller: _speciesController,
-              decoration: InputDecoration(
-                hintText: 'Tür (Kedi, Köpek, Balık...)',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  borderSide: BorderSide(color: brown, width: 2.0),
-                ),
-                filled: true,
-                fillColor: cream,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-              ),
-              maxLines: null,
-            ),
+            myTextField(_speciesController, 'Tür (Kedi, Köpek, Balık...)'),
             const SizedBox(height: 20.0),
-            TextField(
-              controller: _breedController,
-              decoration: InputDecoration(
-                hintText: 'Cins (Labrador, Siyam, Balık...)',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  borderSide: BorderSide(color: brown, width: 2.0),
-                ),
-                filled: true,
-                fillColor: cream,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-              ),
-              maxLines: null,
-            ),
+            myTextField(_breedController, 'Cins (Labrador, Siyam, Balık'),
             const SizedBox(height: 20.0),
-            TextField(
-              controller: _ageController,
-              decoration: InputDecoration(
-                hintText: 'Yaş',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  borderSide: BorderSide(color: brown, width: 2.0),
-                ),
-                filled: true,
-                fillColor: cream,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-              ),
-              maxLines: null,
-            ),
+            myTextField(_ageController, 'Yaş'),
             const SizedBox(height: 20.0),
-            TextField(
-              controller: _genderController,
-              decoration: InputDecoration(
-                hintText: 'Cinsiyet',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  borderSide: BorderSide(color: brown, width: 2.0),
-                ),
-                filled: true,
-                fillColor: cream,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-              ),
-              maxLines: null,
-            ),
+            myTextField(_genderController, 'Cinsiyet'),
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () async {
@@ -163,7 +113,8 @@ class _NewPetState extends State<NewPet> {
 
                   // TODO: ADD OTHER PARTS
                 });
-                Navigator.pop(context);
+                log("Yeni hayvan eklendi");
+                _navPop();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: pink,
@@ -185,5 +136,25 @@ class _NewPetState extends State<NewPet> {
         ),
       ),
     );
+  }
+
+  Widget myTextField(TextEditingController controller, String hintText) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        hintText: hintText,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          borderSide: BorderSide(color: brown, width: 2.0),
+        ),
+        filled: true,
+        fillColor: cream,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+      ),
+      maxLines: null,
+    );
+  }
+  void _navPop() {
+    Navigator.pop(context);
   }
 }
