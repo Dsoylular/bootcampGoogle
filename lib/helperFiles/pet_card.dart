@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../myPetFiles/petPage.dart';
+import '../myPetFiles/pet_page.dart';
 import 'app_colors.dart';
 
 Widget petCard(BuildContext context) {

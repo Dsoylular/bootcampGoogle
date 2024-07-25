@@ -6,7 +6,7 @@ import 'package:bootcamp_google/helperFiles/gemini_codes.dart';
 import 'package:bootcamp_google/helperFiles/info_cards.dart';
 import 'package:bootcamp_google/helperFiles/pet_card.dart';
 import 'package:bootcamp_google/helperFiles/profile_button.dart';
-import 'package:bootcamp_google/myPetFiles/newPet.dart';
+import 'package:bootcamp_google/myPetFiles/new_pet.dart';
 import 'package:bootcamp_google/pages/login_register_page.dart';
 import 'package:bootcamp_google/askMeFiles/respond_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

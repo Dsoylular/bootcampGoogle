@@ -1,12 +1,14 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../helperFiles/app_colors.dart';
 
 class CheckUpPage extends StatefulWidget {
+
   final String petID;
   final Function(List<FlSpot>, List<FlSpot>, List<FlSpot>, List<FlSpot>) refreshGraph;
   const CheckUpPage({super.key, required this.petID, required this.refreshGraph});
@@ -16,6 +18,7 @@ class CheckUpPage extends StatefulWidget {
 }
 
 class _CheckUpPageState extends State<CheckUpPage> {
+
   double sleepValue = 3;
   double exerciseValue = 3;
   double weightValue = 3;
@@ -67,15 +70,14 @@ class _CheckUpPageState extends State<CheckUpPage> {
 
       refreshGraph(sleepSpots, foodSpots, weightSpots, exerciseSpots);
     } else {
-      print("Pet document does not exist");
+      log("Pet document does not exist");
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    log("check_up_page");
     return Scaffold(
-      // appBar: (title: 'Pet Check-Up'),
-
       body: Column(
         children: [
           Container(
@@ -136,76 +138,28 @@ class _CheckUpPageState extends State<CheckUpPage> {
                       fontFamily: 'Baloo'
                   ),
                 ),
-                Slider(
-                  activeColor: brown,
-                  value: sleepValue,
-                  min: 1,
-                  max: 5,
-                  divisions: 4,
-                  label: sleepValue.round().toString(),
-                  onChanged: (value) {
-                    setState(() {
-                      sleepValue = value;
-                    });
-                  },
-                ),
+                customSlider(sleepValue),
                 const Text(
                   'Egzersiz Durumu',
                   style: TextStyle(
                       fontFamily: 'Baloo'
                   ),
                 ),
-                Slider(
-                  activeColor: brown,
-                  value: exerciseValue,
-                  min: 1,
-                  max: 5,
-                  divisions: 4,
-                  label: exerciseValue.round().toString(),
-                  onChanged: (value) {
-                    setState(() {
-                      exerciseValue = value;
-                    });
-                  },
-                ),
+                customSlider(exerciseValue),
                 const Text(
                   'Kilo Durumu',
                   style: TextStyle(
                       fontFamily: 'Baloo'
                   ),
                 ),
-                Slider(
-                  activeColor: brown,
-                  value: weightValue,
-                  min: 1,
-                  max: 5,
-                  divisions: 4,
-                  label: weightValue.round().toString(),
-                  onChanged: (value) {
-                    setState(() {
-                      weightValue = value;
-                    });
-                  },
-                ),
+                customSlider(weightValue),
                 const Text(
                   'Yemek Yeme Durumu',
                   style: TextStyle(
                       fontFamily: 'Baloo'
                   ),
                 ),
-                Slider(
-                  activeColor: brown,
-                  value: foodConsumptionValue,
-                  min: 1,
-                  max: 5,
-                  divisions: 4,
-                  label: foodConsumptionValue.round().toString(),
-                  onChanged: (value) {
-                    setState(() {
-                      foodConsumptionValue = value;
-                    });
-                  },
-                ),
+                customSlider(foodConsumptionValue),
                 const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
@@ -214,22 +168,8 @@ class _CheckUpPageState extends State<CheckUpPage> {
                     ),
                     onPressed: () async {
                       await _updatePetCheckUpData(refreshGraph);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Bilgiler başarıyla gönderildi!',
-                            style: TextStyle(
-                              fontFamily: 'Baloo',
-                              color: Colors.white,
-                            ),
-                          ),
-                          backgroundColor: CupertinoColors.activeGreen,
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
-
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+                      _showSnackBar();
+                      _navTwicePop();
                     },
                     child: const Text(
                       'Gönder',
@@ -246,6 +186,42 @@ class _CheckUpPageState extends State<CheckUpPage> {
           ),
         ],
       ),
+    );
+  }
+
+  void _navTwicePop(){
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
+
+  void _showSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Bilgiler başarıyla gönderildi!',
+          style: TextStyle(
+            fontFamily: 'Baloo',
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+  Widget customSlider(double value){
+    return Slider(
+      activeColor: brown,
+      value: value,
+      min: 1,
+      max: 5,
+      divisions: 4,
+      label: value.round().toString(),
+      onChanged: (newValue) {
+        setState(() {
+          value = newValue;
+        });
+      },
     );
   }
 }

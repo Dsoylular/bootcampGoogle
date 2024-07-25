@@ -1,6 +1,6 @@
 import 'package:bootcamp_google/helperFiles/app_colors.dart';
 import 'package:bootcamp_google/helperFiles/my_app_bar.dart';
-import 'package:bootcamp_google/myPetFiles/changePetInfo.dart';
+import 'package:bootcamp_google/myPetFiles/change_pet_info.dart';
 import 'package:bootcamp_google/myPetFiles/check_up_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
