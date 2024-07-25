@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'dart:math';
 
 import 'package:bootcamp_google/blogFiles/blog_profile.dart';
@@ -8,13 +9,12 @@ import 'package:bootcamp_google/helperFiles/pet_card.dart';
 import 'package:bootcamp_google/helperFiles/profile_button.dart';
 import 'package:bootcamp_google/myPetFiles/new_pet.dart';
 import 'package:bootcamp_google/pages/login_register_page.dart';
-import 'package:bootcamp_google/askMeFiles/respond_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
+import 'askMeFiles/chat_bubble.dart';
 import 'blogFiles/new_blog_post.dart';
 import 'helperFiles/my_app_bar.dart';
 
@@ -27,10 +27,15 @@ class MainPage extends StatefulWidget {
 
 
 class _MainPageState extends State<MainPage> {
-  int _selectedIndex = 0;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _messageController = TextEditingController();
-  final List<Map<String, String>> _messages = [{'type': 'user', 'message': 'Aklınızdaki soruyu sorun.'},
-    {'type': 'response', 'message': 'Cevabını yapay zekadan alın!'}];
+  final List<Map<String, String>> _messages = [
+    {'type': 'user', 'message': 'Aklınızdaki soruyu sorun.'},
+    {'type': 'response', 'message': 'Cevabını yapay zekadan alın!'}
+  ];
+
+  int _selectedIndex = 0;
   String? profilePictureUrl;
   String? userName;
   String? name;
@@ -39,15 +44,15 @@ class _MainPageState extends State<MainPage> {
   String? curUserId;
   String chosenPetName = "";
   String chosenPetID = "";
+
   bool? isVet;
   bool _isLoading = false;
+  bool isLogin = false;
   bool petChosen = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   Map<String, String> userPets = {};
   Map<String, String> petsID = {};
   Map<String, String> petsPicture = {};
-
-  bool isLogin = false;
 
   @override
   void dispose() {
@@ -142,7 +147,6 @@ class _MainPageState extends State<MainPage> {
       _selectedIndex = index;
     });
   }
-
 
   Widget _buildAskMe() {
     return SingleChildScrollView(
@@ -305,7 +309,6 @@ class _MainPageState extends State<MainPage> {
       }).toList(),
     );
   }
-
   Widget _messagingInterface() {
     return Container(
       decoration: BoxDecoration(
@@ -432,8 +435,7 @@ class _MainPageState extends State<MainPage> {
                 title: Text(pet),
                 onTap: () {
                   Navigator.pop(context);
-                  print('Selected pet: $pet');
-                  // print("$petsPicture");
+                  developer.log('Selected pet: $pet');
                   setState(() {
                     petChosen = (pet != 'Hiçbiri') ? true : false;
                     chosenPetName = (pet != 'Hiçbiri') ? pet : "";
@@ -582,7 +584,7 @@ class _MainPageState extends State<MainPage> {
                                             'likedPeople': FieldValue.arrayUnion([curUserId]),
                                           });
                                         } catch (e) {
-                                          print('Error updating like count: $e');
+                                          developer.log('Error updating like count: $e');
                                           post['like'] -= 1;
                                         }
                                       }
@@ -600,7 +602,7 @@ class _MainPageState extends State<MainPage> {
                                             'likedPeople': FieldValue.arrayRemove([curUserId]),
                                           });
                                         } catch (e) {
-                                          print('Error updating like count: $e');
+                                          developer.log('Error updating like count: $e');
                                           post['like'] += 1;
                                         }
                                       }
@@ -781,14 +783,13 @@ class _MainPageState extends State<MainPage> {
                 "Evcil Hayvanlarım",
                 style: TextStyle(
                   fontSize: 20,
-                  // fontWeight: FontWeight.bold,
                   fontFamily: 'Baloo',
                 ),
               ),
               const Spacer(),
               ElevatedButton(
                 onPressed: () async {
-                  print("Clicked ADD");
+                  developer.log("Clicked Add");
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -829,7 +830,6 @@ class _MainPageState extends State<MainPage> {
             Text(
               " Durum",
               style: TextStyle(
-                // fontWeight: FontWeight.bold,
                 fontFamily: 'Baloo',
                 fontSize: 20,
               ),
@@ -954,7 +954,7 @@ class _MainPageState extends State<MainPage> {
                   child: SizedBox(
                     width: double.infinity,
                     child: Text(
-                      about ?? "No information provided",
+                      about ?? "Bilgi yok!",
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black,
@@ -1123,63 +1123,4 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-
 }
-
-class ChatBubble extends StatelessWidget {
-  final String message;
-  final List<Map<String, String>> messages;
-  final bool isUserMessage;
-  final TextEditingController controller;
-
-  const ChatBubble({
-    super.key,
-    required this.message,
-    required this.isUserMessage,
-    required this.controller,
-    required this.messages,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    String displayMessage = message.length > 200 ? "${message.substring(0, 200)}..." : message;
-
-    return GestureDetector(
-      onTap: isUserMessage
-          ? (){
-            controller.text = message;
-          }
-          : () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => RespondPage(respond: message, prompt: messages[0]['message'] ?? ""),
-          ),
-        );
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: isUserMessage ? pink.withOpacity(0.9) : darkBlue.withOpacity(0.9),
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(20),
-            topRight: const Radius.circular(20),
-            bottomLeft: isUserMessage ? const Radius.circular(20) : Radius.zero,
-            bottomRight: isUserMessage ? Radius.zero : const Radius.circular(20),
-          ),
-        ),
-        child: MarkdownBody(
-          data: displayMessage,
-          styleSheet: MarkdownStyleSheet(
-            p: const TextStyle(
-              color: Colors.white,
-              fontSize: 15,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
