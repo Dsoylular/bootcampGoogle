@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'askMeFiles/chat_bubble.dart';
+import 'askMeFiles/saved_chats.dart';
 import 'blogFiles/new_blog_post.dart';
 import 'helperFiles/my_app_bar.dart';
 
@@ -333,24 +334,46 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
             )
-                : ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                final message = _messages[index];
-                return Align(
-                  alignment: message['type'] == 'user'
-                      ? Alignment.centerRight
-                      : Alignment.centerLeft,
-                  child: ChatBubble(
-                    message: message['message']!,
-                    messages: _messages,
-                    isUserMessage: message['type'] == 'user',
-                    controller: _messageController,
+                : Stack(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: _messages.length,
+                  itemBuilder: (context, index) {
+                    final message = _messages[index];
+                    return Align(
+                      alignment: message['type'] == 'user'
+                          ? Alignment.centerRight
+                          : Alignment.centerLeft,
+                      child: ChatBubble(
+                        message: message['message']!,
+                        messages: _messages,
+                        isUserMessage: message['type'] == 'user',
+                        controller: _messageController,
+                      ),
+                    );
+                  },
+                ),
+                Positioned(
+                  top: -10,
+                  right: 0,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.collections_bookmark,
+                    ),
+                    onPressed: () {
+                      developer.log("Directing to saved chats");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SavedChats(),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
             ),
             if (_isLoading) const Center(child: CircularProgressIndicator()),
             const Divider(),
@@ -362,12 +385,17 @@ class _MainPageState extends State<MainPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  if(isLogin)...[(!petChosen) ? IconButton(
-                    icon: const Icon(Icons.add_circle_outline),
-                    onPressed: () {
-                      _showPetSelectionMenu(context);
-                    },
-                  ) : Row(
+                  if(isLogin)...[
+                    (!petChosen) ? Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.add_circle_outline),
+                          onPressed: () {
+                            _showPetSelectionMenu(context);
+                          },
+                        ),
+                      ],
+                    ) : Row(
                     children: [
                       GestureDetector(
                         onTap: (){
@@ -537,29 +565,49 @@ class _MainPageState extends State<MainPage> {
                             children: [
                               Row(
                                 children: [
-                                  ClipOval(
-                                    child: FadeInImage.assetNetwork(
-                                      placeholder: 'assets/images/kediIcon.png',
-                                      image: profilePicture,
-                                      fit: BoxFit.cover,
-                                      width: 40,
-                                      height: 40,
-                                      imageErrorBuilder: (context, error, stackTrace) {
-                                        return Image.asset(
-                                          'assets/images/kediIcon.png',
-                                          fit: BoxFit.cover,
-                                          width: 40,
-                                          height: 40,
-                                        );
-                                      },
+                                  GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
+                                        ),
+                                      );
+                                    },
+                                    child: ClipOval(
+                                      child: FadeInImage.assetNetwork(
+                                        placeholder: 'assets/images/kediIcon.png',
+                                        image: profilePicture,
+                                        fit: BoxFit.cover,
+                                        width: 40,
+                                        height: 40,
+                                        imageErrorBuilder: (context, error, stackTrace) {
+                                          return Image.asset(
+                                            'assets/images/kediIcon.png',
+                                            fit: BoxFit.cover,
+                                            width: 40,
+                                            height: 40,
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(width: 10),
-                                  Text(
-                                    username,
-                                    style: const TextStyle(
-                                      fontFamily: 'Baloo',
-                                      fontSize: 16,
+                                  GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      username,
+                                      style: const TextStyle(
+                                        fontFamily: 'Baloo',
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
                                   if (isVet) ...[
@@ -668,12 +716,22 @@ class _MainPageState extends State<MainPage> {
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              Text(
-                                "${post['text'].toString().substring(0, min(40, post['text'].toString().length))}...",
-                                style: const TextStyle(
-                                  fontFamily: 'Baloo',
-                                  fontSize: 14,
-                                  color: Colors.black,
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "${post['text'].toString().substring(0, min(40, post['text'].toString().length))}...",
+                                  style: const TextStyle(
+                                    fontFamily: 'Baloo',
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                             ],

@@ -131,32 +131,33 @@ class _NewBlogPostState extends State<NewBlogPost> {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () async {
-                User? currentUser = _auth.currentUser;
-
-                if (selectedImageFile != null) {
-                  String? photoURL = await uploadAndCropBlogImage(selectedImageFile!);
-
-                  if (photoURL != null) {
-                    var docRef = await FirebaseFirestore.instance.collection('blogPosts').add({
-                      'title': _titleController.text,
-                      'text': _contentController.text,
-                      'author': currentUser?.uid.toString(),
-                      'pictureURL': photoURL,
-                      'like': 0,
-                      'likedPeople': [],
-                      'blogId': '',
-                      'isVet': false,
-                      'timestamp': Timestamp.now(),
-                    });
-
-                    await docRef.update({'blogId': docRef.id});
-                    _navPop();
-                  } else {
-                    _showSnackBar("Image upload failed", Colors.red);
-                  }
-                } else {
-                  _showSnackBar("No image selected", Colors.red);
+                if(_titleController.text.isEmpty){
+                  _showSnackBar("Başlık boş olamaz!", Colors.red);
                 }
+                else if(_contentController.text.isEmpty){
+                  _showSnackBar("İçerik boş olamaz!", Colors.red);
+                }
+
+                User? currentUser = _auth.currentUser;
+                String? photoURL;
+
+                if(selectedImageFile != null) {
+                  photoURL = await uploadAndCropBlogImage(selectedImageFile!);
+                }
+                var docRef = await FirebaseFirestore.instance.collection('blogPosts').add({
+                  'title': _titleController.text,
+                  'text': _contentController.text,
+                  'author': currentUser?.uid.toString(),
+                  'pictureURL': photoURL ?? "",
+                  'like': 0,
+                  'likedPeople': [],
+                  'blogId': '',
+                  'isVet': false,
+                  'timestamp': Timestamp.now(),
+                });
+
+                await docRef.update({'blogId': docRef.id});
+                _navPop();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: pink,
