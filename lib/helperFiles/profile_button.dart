@@ -43,7 +43,10 @@ Widget profileButton(String name, String explanation, Icon icon, int type, Build
     style: ElevatedButton.styleFrom(
       backgroundColor: type == 0 ? darkBlue : pink,
       fixedSize: Size(screenSize.width * 0.85, 50),
-      elevation: 8
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
