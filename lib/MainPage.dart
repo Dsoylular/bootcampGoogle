@@ -800,12 +800,14 @@ class _MainPageState extends State<MainPage> {
 
 
   Widget _buildMyPets() {
-    return Column(
-      children: [
-        _myPetsUpperBar(),
-        const SizedBox(height: 30),
-        _myPetsSituation(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _myPetsUpperBar(),
+          const SizedBox(height: 30),
+          _myPetsSituation(),
+        ],
+      ),
     );
   }
   Widget _myPetsUpperBar(){
@@ -813,7 +815,7 @@ class _MainPageState extends State<MainPage> {
       height: 360,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: cream,
+        color: cream.withOpacity(0.6),
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
@@ -851,9 +853,9 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
                 child: const Text(
-                  "+   Ekle",
+                  "+",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 24,
                     fontFamily: 'Baloo',
                     color: Colors.white,
                   ),

@@ -60,7 +60,7 @@ Widget petCard(BuildContext context) {
                   padding: const EdgeInsets.all(10),
                   child: Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(25),
                     ),
                     color: cream,
                     elevation: 5,
