@@ -505,9 +505,7 @@ class _MainPageState extends State<MainPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            if(!isLogin)...[
-              const SizedBox(height: 40),
-            ],
+            if (!isLogin) const SizedBox(height: 40),
             _journalUpperDesign(),
             _journalPosts(),
           ],
@@ -515,15 +513,75 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-  Widget _journalPosts(){
+
+  Widget _journalUpperDesign() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 60,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: darkBlue.withOpacity(0.8),
+          borderRadius: const BorderRadius.all(Radius.circular(30)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 300,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: darkBlue,
+                borderRadius: const BorderRadius.all(Radius.circular(30)),
+              ),
+              child: const Center(
+                child: Text(
+                  "PawBlog",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Pacifico',
+                    fontSize: 22,
+                  ),
+                ),
+              ),
+            ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Visibility(
+                visible: isLogin,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NewBlogPost(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(15),
+                    backgroundColor: Colors.orangeAccent,
+                  ),
+                  child: const Icon(Icons.add, color: Colors.white, size: 25),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _journalPosts() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('blogPosts').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Text('No blog posts available');
+          return const Center(child: Text('No blog posts available'));
         }
         final blogPosts = snapshot.data!.docs;
         return Column(
@@ -534,7 +592,7 @@ class _MainPageState extends State<MainPage> {
               future: FirebaseFirestore.instance.collection('users').doc(userId).get(),
               builder: (context, userSnapshot) {
                 if (userSnapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
                 final user = userSnapshot.data!.data() as Map<String, dynamic>;
                 String profilePicture = user['pictureURL'] ?? " ";
@@ -555,9 +613,9 @@ class _MainPageState extends State<MainPage> {
                       padding: const EdgeInsets.all(10),
                       child: Card(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        elevation: 5,
+                        elevation: 8,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
                           child: Column(
@@ -566,7 +624,7 @@ class _MainPageState extends State<MainPage> {
                               Row(
                                 children: [
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -579,22 +637,22 @@ class _MainPageState extends State<MainPage> {
                                         placeholder: 'assets/images/kediIcon.png',
                                         image: profilePicture,
                                         fit: BoxFit.cover,
-                                        width: 40,
-                                        height: 40,
+                                        width: 50,
+                                        height: 50,
                                         imageErrorBuilder: (context, error, stackTrace) {
                                           return Image.asset(
                                             'assets/images/kediIcon.png',
                                             fit: BoxFit.cover,
-                                            width: 40,
-                                            height: 40,
+                                            width: 50,
+                                            height: 50,
                                           );
                                         },
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 10),
+                                  const SizedBox(width: 15),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -602,62 +660,54 @@ class _MainPageState extends State<MainPage> {
                                         ),
                                       );
                                     },
-                                    child: Text(
-                                      username,
-                                      style: const TextStyle(
-                                        fontFamily: 'Baloo',
-                                        fontSize: 16,
-                                      ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          username,
+                                          style: const TextStyle(
+                                            fontFamily: 'Baloo',
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        if (isVet) ...[
+                                          const SizedBox(height: 2),
+                                          const Icon(Icons.check_circle, color: Colors.blue, size: 16),
+                                        ],
+                                      ],
                                     ),
                                   ),
-                                  if (isVet) ...[
-                                    const SizedBox(width: 5),
-                                    const Icon(Icons.check_circle, color: Colors.blue, size: 16),
-                                  ],
                                   const Spacer(),
                                   GestureDetector(
                                     onTap: () async {
-                                      if(!isLogin){}
-                                      else if (post['likedPeople'] != null && !post['likedPeople'].contains(curUserId)) {
-                                        setState(() {
-                                          post['like'] += 1;
-                                          post['likedPeople'].add(curUserId);
-                                        });
-                                        try {
-                                          await FirebaseFirestore.instance
-                                              .collection('blogPosts')
-                                              .doc(doc.id)
-                                              .update({
-                                            'like': FieldValue.increment(1),
-                                            'likedPeople': FieldValue.arrayUnion([curUserId]),
-                                          });
-                                        } catch (e) {
-                                          developer.log('Error updating like count: $e');
-                                          post['like'] -= 1;
-                                        }
-                                      }
-                                      else {
-                                        setState(() {
-                                          post['like'] -= 1;
+                                      if (!isLogin) return;
+                                      bool liked = post['likedPeople']?.contains(curUserId) ?? false;
+                                      setState(() {
+                                        post['like'] += liked ? -1 : 1;
+                                        if (liked) {
                                           post['likedPeople'].remove(curUserId);
-                                        });
-                                        try {
-                                          await FirebaseFirestore.instance
-                                              .collection('blogPosts')
-                                              .doc(doc.id)
-                                              .update({
-                                            'like': FieldValue.increment(-1),
-                                            'likedPeople': FieldValue.arrayRemove([curUserId]),
-                                          });
-                                        } catch (e) {
-                                          developer.log('Error updating like count: $e');
-                                          post['like'] += 1;
+                                        } else {
+                                          post['likedPeople'].add(curUserId);
                                         }
+                                      });
+                                      try {
+                                        await FirebaseFirestore.instance
+                                            .collection('blogPosts')
+                                            .doc(doc.id)
+                                            .update({
+                                          'like': FieldValue.increment(liked ? -1 : 1),
+                                          'likedPeople': FieldValue.arrayUnion([curUserId]),
+                                        });
+                                      } catch (e) {
+                                        developer.log('Error updating like count: $e');
+                                        setState(() {
+                                          post['like'] += liked ? 1 : -1;
+                                        });
                                       }
                                     },
                                     child: Row(
                                       children: [
-                                        Icon(Icons.thumb_up, color: post['likedPeople'].contains(curUserId) ? Colors.blue : Colors.grey, size: 20),
+                                        Icon(Icons.thumb_up, color: post['likedPeople'].contains(curUserId) ? Colors.blue : Colors.grey, size: 22),
                                         const SizedBox(width: 5),
                                         Text(
                                           post['likedPeople'].length.toString(),
@@ -673,15 +723,15 @@ class _MainPageState extends State<MainPage> {
                                   Row(
                                     children: [
                                       GestureDetector(
-                                          onTap: (){
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
-                                              ),
-                                            );
-                                          },
-                                          child: const Icon(Icons.chat_bubble_outline, color: Colors.grey, size: 20)
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => BlogProfile(blogID: post['blogId'], user: user),
+                                            ),
+                                          );
+                                        },
+                                        child: const Icon(Icons.chat_bubble_outline, color: Colors.grey, size: 22),
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
@@ -709,15 +759,14 @@ class _MainPageState extends State<MainPage> {
                                   post['title'],
                                   style: TextStyle(
                                     fontFamily: 'Baloo',
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     color: darkBlue,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
                               const SizedBox(height: 10),
                               GestureDetector(
-                                onTap: (){
+                                onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -726,11 +775,10 @@ class _MainPageState extends State<MainPage> {
                                   );
                                 },
                                 child: Text(
-                                  "${post['text'].toString().substring(0, min(40, post['text'].toString().length))}...",
-                                  style: const TextStyle(
+                                  "${post['text'].toString().substring(0, min(100, post['text'].toString().length))}...",           style: const TextStyle(
                                     fontFamily: 'Baloo',
                                     fontSize: 14,
-                                    color: Colors.black,
+                                    color: Colors.black87,
                                   ),
                                 ),
                               ),
@@ -748,66 +796,7 @@ class _MainPageState extends State<MainPage> {
       },
     );
   }
-  Widget _journalUpperDesign(){
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: 60,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: darkBlue.withOpacity(0.6),
-          borderRadius: const BorderRadius.all(Radius.circular(30)),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 300,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                color: darkBlue,
-                borderRadius: const BorderRadius.all(Radius.circular(30)),
-              ),
-              child: const Row(
-                children: [
-                  SizedBox(width: 20),
-                  Text(
-                    "PawBlog",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Pacifico',
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Visibility(
-                visible: isLogin,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NewBlogPost(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(10),
-                    backgroundColor: Colors.orangeAccent,
-                  ),
-                  child: const Icon(Icons.add, color: Colors.white),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
 
 
   Widget _buildMyPets() {

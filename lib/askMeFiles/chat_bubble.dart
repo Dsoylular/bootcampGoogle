@@ -52,6 +52,7 @@ class ChatBubble extends StatelessWidget {
           styleSheet: MarkdownStyleSheet(
             p: const TextStyle(
               color: Colors.white,
+              fontFamily: 'Baloo',
               fontSize: 15,
             ),
           ),

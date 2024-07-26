@@ -9,7 +9,6 @@ import '../helperFiles/app_colors.dart';
 import '../helperFiles/markdown_style_sheet.dart';
 
 class RespondPage extends StatefulWidget {
-
   final String respond;
   final String prompt;
 
@@ -20,7 +19,6 @@ class RespondPage extends StatefulWidget {
 }
 
 class _RespondPageState extends State<RespondPage> {
-
   String get respond => widget.respond;
   String get prompt => widget.prompt;
 
@@ -31,6 +29,17 @@ class _RespondPageState extends State<RespondPage> {
   Widget build(BuildContext context) {
     log("respond_page");
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+            'Response Details',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Baloo'
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: pink,
+      ),
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
@@ -41,44 +50,45 @@ class _RespondPageState extends State<RespondPage> {
           ),
         ),
         child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: SizedBox(height: 20),
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(20.0),
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                  color: darkBlue.withOpacity(0.9),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: brown),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(20.0),
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  decoration: BoxDecoration(
-                    color: darkBlue.withOpacity(0.9),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: brown),
-                  ),
-                  child: MarkdownBody(
-                    data: respond,
-                    styleSheet: markdownStyleSheet,
-                  ),
+                child: MarkdownBody(
+                  data: respond,
+                  styleSheet: markdownStyleSheet,
                 ),
-                const SizedBox(height: 20),
-                if(FirebaseAuth.instance.currentUser != null)...[Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: _saveToFirestore,
-                      icon: const Icon(
-                        Icons.save,
-                        size: 30,
-                        color: Colors.black,
+              ),
+              const SizedBox(height: 20),
+              if (FirebaseAuth.instance.currentUser != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: ElevatedButton.icon(
+                    onPressed: _saveToFirestore,
+                    icon: const Icon(
+                      Icons.save,
+                      size: 20,
+                    ),
+                    label: const Text('Save'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: darkBlue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                  ],
-                )],
-              ],
-            ),
+                  ),
+                ),
+            ],
           ),
         ),
       ),
@@ -114,5 +124,4 @@ class _RespondPageState extends State<RespondPage> {
       ),
     );
   }
-
 }
