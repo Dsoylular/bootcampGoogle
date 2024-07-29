@@ -263,32 +263,43 @@ class _BlogProfileState extends State<BlogProfile> {
   }
 
   Future<void> _getBlogData(String blogID) async {
-    DocumentSnapshot snapshot = await FirebaseFirestore.instance
-        .collection('blogPosts')
-        .doc(blogID)
-        .get();
+    try {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('blogPosts')
+          .doc(blogID)
+          .get();
 
-    if (snapshot.exists) {
-      setState(() {
-        title = snapshot['title'];
-        text = snapshot['text'];
-        like = snapshot['like'];
-        profileUrl = snapshot['pictureURL'];
-      });
+      if (snapshot.exists && mounted) {
+        setState(() {
+          title = snapshot['title'];
+          text = snapshot['text'];
+          like = snapshot['like'];
+          profileUrl = snapshot['pictureURL'];
+        });
+      }
+    } catch (e) {
+      log('Error fetching blog data: $e');
     }
   }
 
   Future<void> _getComments(String blogID) async {
-    QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection('blogPosts')
-        .doc(blogID)
-        .collection('comments')
-        .get();
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('blogPosts')
+          .doc(blogID)
+          .collection('comments')
+          .get();
 
-    setState(() {
-      comments = snapshot.docs.map((doc) => doc.data()).toList();
-    });
+      if (mounted) {
+        setState(() {
+          comments = snapshot.docs.map((doc) => doc.data()).toList();
+        });
+      }
+    } catch (e) {
+      log('Error fetching comments: $e');
+    }
   }
+
 
   Future<void> _addComment(String blogID, String commentText) async {
     User? currentUser = FirebaseAuth.instance.currentUser;

@@ -31,7 +31,7 @@ class _RespondPageState extends State<RespondPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-            'Response Details',
+            'Cevap Detayları',
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'Baloo'
@@ -77,7 +77,12 @@ class _RespondPageState extends State<RespondPage> {
                       Icons.save,
                       size: 20,
                     ),
-                    label: const Text('Save'),
+                    label: const Text(
+                        'Kaydet',
+                      style: TextStyle(
+                        fontFamily: 'Baloo'
+                      ),
+                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: darkBlue,
                       foregroundColor: Colors.white,

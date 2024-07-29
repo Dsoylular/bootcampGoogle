@@ -35,6 +35,7 @@ class _MainPageState extends State<MainPage> {
     {'type': 'user', 'message': 'Aklınızdaki soruyu sorun.'},
     {'type': 'response', 'message': 'Cevabını yapay zekadan alın!'}
   ];
+  final ScrollController _scrollController = ScrollController();
 
   int _selectedIndex = 0;
   String? profilePictureUrl;
@@ -151,6 +152,7 @@ class _MainPageState extends State<MainPage> {
 
   Widget _buildAskMe() {
     return SingleChildScrollView(
+      controller: _scrollController,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -296,12 +298,14 @@ class _MainPageState extends State<MainPage> {
           children: entry.value.map((question) {
             return Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: brown)
+                border: Border.all(color: brown),
               ),
               child: ListTile(
                 title: Text(question, style: const TextStyle(fontWeight: FontWeight.w300)),
                 onTap: () {
                   _messageController.text = question;
+                  // Scroll to the top of the page
+                  _scrollController.jumpTo(0);
                 },
               ),
             );
@@ -581,7 +585,7 @@ class _MainPageState extends State<MainPage> {
           return const Center(child: CircularProgressIndicator());
         }
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Center(child: Text('No blog posts available'));
+          return const Center(child: Text('Hiçbir blog yazısı bulunmamakta'));
         }
         final blogPosts = snapshot.data!.docs;
         return Column(
@@ -940,9 +944,7 @@ class _MainPageState extends State<MainPage> {
                 ),
                 child: CircleAvatar(
                   radius: 80,
-                  backgroundImage: profilePictureUrl != null
-                      ? NetworkImage(profilePictureUrl!)
-                      : const AssetImage('assets/images/kediIcon.png') as ImageProvider<Object>,
+                  backgroundImage: getProfileImage(profilePictureUrl),
                 ),
               ),
               const SizedBox(width: 16),
@@ -1027,7 +1029,7 @@ class _MainPageState extends State<MainPage> {
         profileButton(
           'Profil Fotoğrafı',
           'Profil resmini değiştir',
-          const Icon(Icons.person_outline_outlined, color: Colors.white),
+          const Icon(Icons.account_circle, color: Colors.white),
           0,
           context,
           refreshProfilePhoto
@@ -1052,6 +1054,15 @@ class _MainPageState extends State<MainPage> {
         ),
         const SizedBox(height: 30),
         profileButton(
+            'Kullanıcı İsmi',
+            'Kullanıcı ismini değiştir',
+            const Icon(Icons.edit, color: Colors.white),
+            0,
+          context,
+          refreshUserName
+        ),
+        const SizedBox(height: 30),
+        profileButton(
             "Hakkında",
             "Hakkında kısmını değiştir",
             const Icon(Icons.info_outlined, color: Colors.white),
@@ -1062,9 +1073,9 @@ class _MainPageState extends State<MainPage> {
         const SizedBox(height: 20),
         const Row(
           children: [
-            SizedBox(width: 50),
+            SizedBox(width: 40),
             Text(
-              "Hesap Ayarları",
+              "Ek Alanlar",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -1074,19 +1085,19 @@ class _MainPageState extends State<MainPage> {
         ),
         const SizedBox(height: 15),
         profileButton(
-            'Çıkış',
-            'Hesaptan çıkış yap',
-            const Icon(Icons.exit_to_app, color: Colors.white),
+            'Pawdi Hakkında',
+            '',
+            const Icon(Icons.pets, color: Colors.white),
             1,
           context,
           refreshProfilePhoto
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 15),
         profileButton(
-          'Hesabı Sil',
-          'Hesabı kalıcı bir şekilde sil',
-          const Icon(Icons.cancel_presentation_sharp, color: Colors.white),
-          1,
+            'Çıkış',
+            'Hesaptan çıkış yap',
+            const Icon(Icons.exit_to_app, color: Colors.white),
+            1,
           context,
           refreshProfilePhoto
         ),
@@ -1107,6 +1118,11 @@ class _MainPageState extends State<MainPage> {
   void refreshSurname(String newSurname){
     setState(() {
       surname = newSurname;
+    });
+  }
+  void refreshUserName(String newUserName){
+    setState(() {
+      userName = newUserName;
     });
   }
   void refreshAbout(String newAbout){
@@ -1172,4 +1188,16 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+}
+
+getProfileImage(String? profilePictureUrl) {
+  if(profilePictureUrl != null && profilePictureUrl != ""){
+    try{
+      return NetworkImage(profilePictureUrl);
+    }
+    catch(e){
+      return const AssetImage('assets/images/kediIcon.png') as ImageProvider<Object>;
+    }
+  }
+  return const AssetImage('assets/images/kediIcon.png') as ImageProvider<Object>;
 }

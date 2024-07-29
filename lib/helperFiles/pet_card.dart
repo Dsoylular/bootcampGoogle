@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../myPetFiles/new_pet.dart';
 import '../myPetFiles/pet_page.dart';
 import 'app_colors.dart';
 
@@ -28,9 +29,30 @@ Widget petCard(BuildContext context) {
             return const Center(child: CircularProgressIndicator());
           }
           if (!petsSnapshot.hasData || petsSnapshot.data!.docs.isEmpty) {
-            return const Padding(
-              padding: EdgeInsets.all(10),
-              child: Text('No pets available for this user'),
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: Center(
+                child: ElevatedButton(
+                    onPressed: () async{
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NewPet(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cream
+                    ),
+                    child: Text(
+                      "Evcil hayvanınız yok, eklemek için tıklayın!",
+                      style: TextStyle(
+                        fontFamily: 'Baloo',
+                        color: darkBlue
+                      ),
+                    )
+                ),
+              ),
             );
           }
           final pets = petsSnapshot.data!.docs;
