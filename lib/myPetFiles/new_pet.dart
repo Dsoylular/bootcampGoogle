@@ -18,6 +18,7 @@ class _NewPetState extends State<NewPet> {
   final TextEditingController _breedController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   String _selectedGender = 'Dişi';
+  bool _vaccinationTracking = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -166,7 +167,24 @@ class _NewPetState extends State<NewPet> {
                   fillColor: cream,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
                 ),
-                dropdownColor: cream, // Optional: Set the dropdown menu background color
+                dropdownColor: cream,
+              ),
+              const SizedBox(height: 20.0),
+              SwitchListTile(
+                title: const Text(
+                    'Aşı Takibi İstiyorum',
+                  style: TextStyle(
+                    fontFamily: 'Baloo',
+                    fontSize: 14
+                  ),
+                ),
+                value: _vaccinationTracking,
+                onChanged: (bool value) {
+                  setState(() {
+                    _vaccinationTracking = value;
+                  });
+                },
+                activeColor: pink, // Set the toggle switch color to pink
               ),
               const SizedBox(height: 50),
               ElevatedButton(
@@ -182,7 +200,8 @@ class _NewPetState extends State<NewPet> {
                       'petImage': '',
                       'petGender': _selectedGender,
                       'timestamp': Timestamp.now(),
-                      'vaccinationDates': [],
+                      'isVaccinationTracking': _vaccinationTracking,
+                      'vaccinationDates': _vaccinationTracking ? [] : null,
                       'foodList': [3, 3, 3, 3, 3, 3, 3],
                       'sleepList': [3, 3, 3, 3, 3, 3, 3],
                       'weightList': [3, 3, 3, 3, 3, 3, 3],

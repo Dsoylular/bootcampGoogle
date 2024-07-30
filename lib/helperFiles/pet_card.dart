@@ -64,6 +64,7 @@ Widget petCard(BuildContext context) {
               final petAge = pet['petAge'] ?? 'No age';
               final petVacDates = pet['vaccinationDates'] ?? [];
               final petImage = pet['petImage'] ?? 'assets/images/kediIcon.png';
+              final isVaccinationTracking = pet['isVaccinationTracking'] ?? false;
               final petID = petDoc.id;
 
               return GestureDetector(
@@ -127,7 +128,11 @@ Widget petCard(BuildContext context) {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            !petVacDates.isEmpty ? 'Aşı: ${DateFormat('dd/MM/yyyy').format((petVacDates[0].toDate()))}' : 'Yakında aşı yok',
+                            (!isVaccinationTracking)
+                            ? ''
+                            : (petVacDates.isNotEmpty && petVacDates[0].toDate().isAfter(DateTime.now()))
+                                ? 'Aşı: ${DateFormat('dd/MM/yyyy').format((petVacDates[0].toDate()))}'
+                                : 'Yakında aşı yok',
                             style: const TextStyle(
                               fontSize: 16,
                             ),

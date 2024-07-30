@@ -42,6 +42,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
   String petImage = "";
   String petGender = "";
   bool showAddButton = false;
+  bool isVaccinationTracking = false;
 
   List<FlSpot> foodList = [];
   List<FlSpot> exerciseList = [];
@@ -75,6 +76,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
       weightList = getFlSpotList(snapshot['weightList']);
       sleepList = getFlSpotList(snapshot['sleepList']);
       petGender = snapshot['petGender'];
+      isVaccinationTracking = snapshot['isVaccinationTracking'];
     });
   }
 
@@ -274,122 +276,123 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            const Row(
-              children: [
-                SizedBox(width: 30),
-                Text(
-                  "Aşı Takip",
-                  style: TextStyle(
-                      fontFamily: 'Baloo',
-                      fontSize: 18
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(30)),
-                color: cream,
-                border: Border.all(color: brown, width: 2),
-              ),
-              child: TableCalendar(
-                availableCalendarFormats: const {
-                  CalendarFormat.twoWeeks: 'Month',
-                  CalendarFormat.week: '2 weeks',
-                  CalendarFormat.month: 'Week',
-                },
-                calendarStyle: CalendarStyle(
-                    selectedDecoration: BoxDecoration(
-                        color: darkBlue,
-                        shape: BoxShape.circle
-                    ),
-                    todayDecoration: BoxDecoration(
-                        color: pink.withOpacity(0.6),
-                        shape: BoxShape.circle
-                    )
-                ),
-                firstDay: DateTime.utc(2010, 10, 16),
-                lastDay: DateTime.utc(2030, 3, 14),
-                focusedDay: _focusedDay,
-                calendarFormat: _calendarFormat,
-                selectedDayPredicate: (day) {
-                  return _preSelectedDays.contains(day.toLocal()) || isSameDay(_userSelectedDay, day);
-                },
-                onDaySelected: (selectedDay, focusedDay) {
-                  setState(() {
-                    if (_preSelectedDays.contains(selectedDay.toLocal())) {
-                      _preSelectedDays.remove(selectedDay.toLocal());
-                      _userSelectedDay = null;
-                      showAddButton = true;
-                    }
-                    else {
-                      if(_userSelectedDay == selectedDay.toLocal()){
-                        _userSelectedDay = null;
-                        showAddButton = true;
-                      }
-                      else{
-                        _userSelectedDay = selectedDay.toLocal();
-                        showAddButton = true;
-                      }
-                    }
-                    _focusedDay = focusedDay;
-                  });
-                },
-                onFormatChanged: (format) {
-                  if (_calendarFormat != format) {
-                    setState(() {
-                      _calendarFormat = format;
-                    });
-                  }
-                },
-                onPageChanged: (focusedDay) {
-                  _focusedDay = focusedDay;
-                },
-              ),
-            ),
-            const SizedBox(height: 10),
-            if (showAddButton)
-              Row(
+            if(isVaccinationTracking)...[
+              const SizedBox(height: 20),
+              const Row(
                 children: [
-                  const SizedBox(width: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: darkBlue,
-                    ),
-                    onPressed: () async {
-                      // print("AAAAAAAA $_preSelectedDays");
-                      setState(() {
-                        if(_userSelectedDay != null){
-                          _preSelectedDays.add(_userSelectedDay!);
-                        }
-                        showAddButton = false;
-                      });
-
-                      try {
-                        await FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(currentUser!.uid)
-                            .collection("pets")
-                            .doc(petID)
-                            .update({'vaccinationDates': _preSelectedDays});
-                        log('Vaccination dates updated successfully.');
-                      } catch (e) {
-                        log('Error updating vaccination dates: $e');
-                      }
-                    },
-                    child: const Text(
-                      'Kaydet',
-                      style: TextStyle(
+                  SizedBox(width: 30),
+                  Text(
+                    "Aşı Takip",
+                    style: TextStyle(
                         fontFamily: 'Baloo',
-                        color: Colors.white,
-                      ),
+                        fontSize: 18
                     ),
                   ),
                 ],
               ),
+              const SizedBox(height: 10),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(30)),
+                  color: cream,
+                  border: Border.all(color: brown, width: 2),
+                ),
+                child: TableCalendar(
+                  availableCalendarFormats: const {
+                    CalendarFormat.twoWeeks: 'Month',
+                    CalendarFormat.week: '2 weeks',
+                    CalendarFormat.month: 'Week',
+                  },
+                  calendarStyle: CalendarStyle(
+                      selectedDecoration: BoxDecoration(
+                          color: darkBlue,
+                          shape: BoxShape.circle
+                      ),
+                      todayDecoration: BoxDecoration(
+                          color: pink.withOpacity(0.6),
+                          shape: BoxShape.circle
+                      )
+                  ),
+                  firstDay: DateTime.utc(2010, 10, 16),
+                  lastDay: DateTime.utc(2030, 3, 14),
+                  focusedDay: _focusedDay,
+                  calendarFormat: _calendarFormat,
+                  selectedDayPredicate: (day) {
+                    return _preSelectedDays.contains(day.toLocal()) || isSameDay(_userSelectedDay, day);
+                  },
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      if (_preSelectedDays.contains(selectedDay.toLocal())) {
+                        _preSelectedDays.remove(selectedDay.toLocal());
+                        _userSelectedDay = null;
+                        showAddButton = true;
+                      }
+                      else {
+                        if(_userSelectedDay == selectedDay.toLocal()){
+                          _userSelectedDay = null;
+                          showAddButton = true;
+                        }
+                        else{
+                          _userSelectedDay = selectedDay.toLocal();
+                          showAddButton = true;
+                        }
+                      }
+                      _focusedDay = focusedDay;
+                    });
+                  },
+                  onFormatChanged: (format) {
+                    if (_calendarFormat != format) {
+                      setState(() {
+                        _calendarFormat = format;
+                      });
+                    }
+                  },
+                  onPageChanged: (focusedDay) {
+                    _focusedDay = focusedDay;
+                  },
+                ),
+              ),
+              const SizedBox(height: 10),
+              if (showAddButton)
+                Row(
+                  children: [
+                    const SizedBox(width: 20),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: darkBlue,
+                      ),
+                      onPressed: () async {
+                        setState(() {
+                          if(_userSelectedDay != null){
+                            _preSelectedDays.add(_userSelectedDay!);
+                          }
+                          showAddButton = false;
+                        });
+
+                        try {
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(currentUser!.uid)
+                              .collection("pets")
+                              .doc(petID)
+                              .update({'vaccinationDates': _preSelectedDays});
+                          log('Vaccination dates updated successfully.');
+                        } catch (e) {
+                          log('Error updating vaccination dates: $e');
+                        }
+                      },
+                      child: const Text(
+                        'Kaydet',
+                        style: TextStyle(
+                          fontFamily: 'Baloo',
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+            ],
             const SizedBox(height: 20),
             const Row(
               children: [

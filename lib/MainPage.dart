@@ -165,8 +165,8 @@ class _MainPageState extends State<MainPage> {
               Text(
                 "Sıkça Sorulan Sorular",
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18
+                  fontFamily: 'Baloo',
+                  fontSize: 18
                 ),
               ),
             ],
@@ -216,7 +216,7 @@ class _MainPageState extends State<MainPage> {
                   "    Sor Bana    ",
                   style: TextStyle(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Pacifico',
                     color: Colors.white,
                   ),
                 ),
@@ -963,7 +963,7 @@ class _MainPageState extends State<MainPage> {
                     Text(
                       "$name $surname",
                       style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Baloo',
                         fontSize: 24,
                         color: Colors.black,
                       ),
@@ -974,7 +974,7 @@ class _MainPageState extends State<MainPage> {
                     Text(
                       "@$userName",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Baloo',
                         color: Colors.grey[700],
                       ),
                     ),
@@ -982,8 +982,9 @@ class _MainPageState extends State<MainPage> {
                     Text(
                       isVet! ? "Veteriner" : "Evcil Hayvan Sahibi",
                       style: TextStyle(
-                        fontSize: 16,
-                        color: darkBlue,
+                        fontSize: 14,
+                        fontFamily: 'Baloo',
+                        color: brown,
                       ),
                     ),
                   ],

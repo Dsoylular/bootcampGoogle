@@ -227,6 +227,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Row(
         children: [
           Checkbox(
+            activeColor: pink,
             value: _isVet,
             onChanged: (newValue) {
               setState(() {
