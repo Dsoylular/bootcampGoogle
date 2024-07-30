@@ -95,7 +95,7 @@ Widget petCard(BuildContext context) {
                             radius: 50,
                             child: ClipOval(
                               child: FadeInImage.assetNetwork(
-                                placeholder: 'assets/images/kediIcon.png', // TODO: Connect with backend
+                                placeholder: 'assets/images/kediIcon.png',
                                 image: petImage,
                                 fit: BoxFit.cover,
                                 width: 160,
