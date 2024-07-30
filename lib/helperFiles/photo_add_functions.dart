@@ -29,7 +29,12 @@ Future<String?> updatePetProfilePicture(BuildContext context, String petName, St
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text("Ön Gösterim"),
+              title: const Text(
+                  "Ön Gösterim",
+                style: TextStyle(
+                  fontFamily: 'Baloo'
+                ),
+              ),
               content: isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : Container(
@@ -52,6 +57,7 @@ Future<String?> updatePetProfilePicture(BuildContext context, String petName, St
                       "İptal",
                       style: TextStyle(
                         color: darkBlue,
+                        fontFamily: 'Baloo'
                       ),
                     ),
                   ),
@@ -79,6 +85,7 @@ Future<String?> updatePetProfilePicture(BuildContext context, String petName, St
                       "Seç",
                       style: TextStyle(
                         color: darkBlue,
+                        fontFamily: 'Baloo'
                       ),
                     ),
                   ),

@@ -209,7 +209,7 @@ class _MainPageState extends State<MainPage> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: darkBlue,
+                  color: darkBlue.withOpacity(0.8),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Text(

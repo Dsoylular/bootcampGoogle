@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bootcamp_google/helperFiles/app_colors.dart';
+import 'package:bootcamp_google/helperFiles/gemini_codes.dart';
 import 'package:bootcamp_google/helperFiles/my_app_bar.dart';
 import 'package:bootcamp_google/myPetFiles/change_pet_info.dart';
 import 'package:bootcamp_google/myPetFiles/check_up_page.dart';
@@ -39,6 +40,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
   String petName = "";
   String petAge = "";
   String petBreed = "";
+  String petSpecies = "";
   String petImage = "";
   String petGender = "";
   bool showAddButton = false;
@@ -71,12 +73,13 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
       petAge = snapshot['petAge'].toString();
       petBreed = snapshot['petBreed'];
       petImage = snapshot['petImage'];
+      petSpecies = snapshot['petSpecies'];
       foodList = getFlSpotList(snapshot['foodList']);
       exerciseList = getFlSpotList(snapshot['exerciseList']);
       weightList = getFlSpotList(snapshot['weightList']);
       sleepList = getFlSpotList(snapshot['sleepList']);
       petGender = snapshot['petGender'];
-      isVaccinationTracking = snapshot['isVaccinationTracking'];
+      isVaccinationTracking = snapshot['isVaccinationTracking'] ?? false;
     });
   }
 
@@ -253,7 +256,14 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                           onPressed: () {
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ChangePetScreen(petID: petID))
+                                MaterialPageRoute(builder: (context) => ChangePetScreen(
+                                    petID: petID,
+                                  petAge: petAge,
+                                  petBreed: petBreed,
+                                  petSpecies: petSpecies,
+                                  petGender: petGender,
+                                  petName: petName,
+                                ))
                             );
                             log("Profile Page");
                           },
