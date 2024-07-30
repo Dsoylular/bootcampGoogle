@@ -130,9 +130,9 @@ class PawdiInfo extends StatelessWidget {
                       color: Colors.black54,
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 25),
                   const Text(
-                    "İletişim:",
+                    "İletişim (kopyalamak için tıklayınız):",
                     style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'Baloo',
@@ -140,39 +140,83 @@ class PawdiInfo extends StatelessWidget {
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () => _copyToClipboard(context,
                         "https://www.linkedin.com/in/pawdi-pawdi-06941a320?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(Icons.link, color: Colors.blue),
-                        SizedBox(width: 10),
+                        Icon(Icons.link, color: pink),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: Text(
                             "LinkedIn",
                             style: TextStyle(
                               fontSize: 16,
-                              color: Colors.blue,
+                              fontFamily: 'Baloo',
+                              color: darkBlue,
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
+                  GestureDetector(
+                    onTap: () => _copyToClipboard(context,
+                        "https://www.instagram.com/pawdiouaf56?igsh=MXI3YThsdmxvanUyeA%3D%3D"),
+                    child: Row(
+                      children: [
+                        Icon(Icons.link, color: pink),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            "Instagram",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Baloo',
+                              color: darkBlue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 25),
                   GestureDetector(
                     onTap: () => _copyToClipboard(context, "pawdi.oua.f56@gmail.com"),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(Icons.email, color: Colors.blue),
-                        SizedBox(width: 10),
+                        Icon(Icons.email, color: pink),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: Text(
                             "Mail",
                             style: TextStyle(
                               fontSize: 16,
-                              color: Colors.blue,
+                              fontFamily: 'Baloo',
+                              color: darkBlue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  GestureDetector(
+                    onTap: () => _copyToClipboard(context,
+                        "https://github.com/Dsoylular/bootcampGoogle"),
+                    child: Row(
+                      children: [
+                        Icon(Icons.code, color: pink),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            "Github",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Baloo',
+                              color: darkBlue,
                             ),
                           ),
                         ),
@@ -180,25 +224,6 @@ class PawdiInfo extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () => _copyToClipboard(context,
-                        "https://github.com/Dsoylular/bootcampGoogle"),
-                    child: const Row(
-                      children: [
-                        Icon(Icons.code, color: Colors.blue),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Text(
-                            "Github",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
