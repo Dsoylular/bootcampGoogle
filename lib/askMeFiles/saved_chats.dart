@@ -47,7 +47,7 @@ class _SavedChatsState extends State<SavedChats> {
           }
 
           if (snapshot.hasData && snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No saved chats found.'));
+            return const Center(child: Text('Kaydedilen sohbet yok.'));
           }
 
           return ListView(
@@ -103,12 +103,12 @@ class _SavedChatsState extends State<SavedChats> {
         .delete()
         .then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Chat deleted'), backgroundColor: Colors.green),
+        const SnackBar(content: Text('Sohbet silindi'), backgroundColor: Colors.green),
       );
       log("Chat deleted");
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to delete chat: $error'), backgroundColor: Colors.red),
+        SnackBar(content: Text('Sohbeti silerken hata oluştu: $error'), backgroundColor: Colors.red),
       );
       log("Deletion of chat failed");
     });

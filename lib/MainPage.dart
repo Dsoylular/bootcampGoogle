@@ -178,6 +178,8 @@ class _MainPageState extends State<MainPage> {
     );
   }
   Widget _askMeUpperDesign() {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
       height: 200,
       decoration: BoxDecoration(
@@ -187,7 +189,7 @@ class _MainPageState extends State<MainPage> {
           bottomRight: Radius.circular(30),
         ),
       ),
-      width: double.infinity,
+      width: screenWidth,
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(30),
@@ -199,7 +201,7 @@ class _MainPageState extends State<MainPage> {
             Image.asset(
               'assets/images/cuteCat.jpeg',
               fit: BoxFit.cover,
-              width: double.infinity,
+              width: screenWidth,
               alignment: Alignment.topCenter,
             ),
             Positioned(
@@ -504,38 +506,40 @@ class _MainPageState extends State<MainPage> {
   }
 
 
+
   Widget _buildJournal() {
+    final screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            if (!isLogin) const SizedBox(height: 40),
-            _journalUpperDesign(),
+            if (!isLogin) SizedBox(height: screenSize.height * 0.05),
+            _journalUpperDesign(screenSize),
             _journalPosts(),
           ],
         ),
       ),
     );
   }
-
-  Widget _journalUpperDesign() {
+  Widget _journalUpperDesign(Size screenSize) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(screenSize.width * 0.02),
       child: Container(
-        height: 60,
+        height: screenSize.height * 0.08,
         width: double.infinity,
         decoration: BoxDecoration(
           color: darkBlue.withOpacity(0.8),
-          borderRadius: const BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.circular(screenSize.width * 0.07),
         ),
         child: Row(
           children: [
             Container(
-              width: 300,
+              width: screenSize.width * 0.6,
               height: double.infinity,
               decoration: BoxDecoration(
                 color: darkBlue,
-                borderRadius: const BorderRadius.all(Radius.circular(30)),
+                borderRadius: BorderRadius.circular(screenSize.width * 0.07),
               ),
               child: const Center(
                 child: Text(
@@ -550,7 +554,7 @@ class _MainPageState extends State<MainPage> {
             ),
             const Spacer(),
             Padding(
-              padding: const EdgeInsets.all(5),
+              padding: EdgeInsets.all(screenSize.width * 0.02), // Adjust padding based on screen size
               child: Visibility(
                 visible: isLogin,
                 child: ElevatedButton(
@@ -564,7 +568,7 @@ class _MainPageState extends State<MainPage> {
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(15),
+                    padding: EdgeInsets.all(screenSize.width * 0.03), // Adjust padding based on screen size
                     backgroundColor: Colors.orangeAccent,
                   ),
                   child: const Icon(Icons.add, color: Colors.white, size: 25),
@@ -576,7 +580,6 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-
   Widget _journalPosts() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('blogPosts').snapshots(),
@@ -588,6 +591,8 @@ class _MainPageState extends State<MainPage> {
           return const Center(child: Text('Hiçbir blog yazısı bulunmamakta'));
         }
         final blogPosts = snapshot.data!.docs;
+        final screenSize = MediaQuery.of(context).size;
+
         return Column(
           children: blogPosts.map((doc) {
             final post = doc.data() as Map<String, dynamic>;
@@ -602,6 +607,7 @@ class _MainPageState extends State<MainPage> {
                 String profilePicture = user['pictureURL'] ?? " ";
                 String username = user['userName'];
                 bool isVet = user['isVet'];
+
                 return StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('blogPosts')
@@ -614,14 +620,14 @@ class _MainPageState extends State<MainPage> {
                         : 0;
 
                     return Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: EdgeInsets.all(screenSize.width * 0.03),
                       child: Card(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(screenSize.width * 0.05),
                         ),
                         elevation: 8,
                         child: Padding(
-                          padding: const EdgeInsets.all(15),
+                          padding: EdgeInsets.all(screenSize.width * 0.04),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -641,14 +647,14 @@ class _MainPageState extends State<MainPage> {
                                         placeholder: 'assets/images/kediIcon.png',
                                         image: profilePicture,
                                         fit: BoxFit.cover,
-                                        width: 50,
-                                        height: 50,
+                                        width: screenSize.width * 0.1,
+                                        height: screenSize.width * 0.1,
                                         imageErrorBuilder: (context, error, stackTrace) {
                                           return Image.asset(
                                             'assets/images/kediIcon.png',
                                             fit: BoxFit.cover,
-                                            width: 50,
-                                            height: 50,
+                                            width: screenSize.width * 0.1,
+                                            height: screenSize.width * 0.1,
                                           );
                                         },
                                       ),
@@ -669,9 +675,9 @@ class _MainPageState extends State<MainPage> {
                                       children: [
                                         Text(
                                           username,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontFamily: 'Baloo',
-                                            fontSize: 16,
+                                            fontSize: screenSize.width * 0.04,
                                           ),
                                         ),
                                         if (isVet) ...[
@@ -715,9 +721,9 @@ class _MainPageState extends State<MainPage> {
                                         const SizedBox(width: 5),
                                         Text(
                                           post['likedPeople'].length.toString(),
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontFamily: 'Baloo',
-                                            fontSize: 14,
+                                            fontSize: screenSize.width * 0.04,
                                           ),
                                         ),
                                       ],
@@ -740,9 +746,9 @@ class _MainPageState extends State<MainPage> {
                                       const SizedBox(width: 5),
                                       Text(
                                         commentsLength.toString(),
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontFamily: 'Baloo',
-                                          fontSize: 14,
+                                          fontSize: screenSize.width * 0.04,
                                         ),
                                       ),
                                     ],
@@ -763,7 +769,7 @@ class _MainPageState extends State<MainPage> {
                                   post['title'],
                                   style: TextStyle(
                                     fontFamily: 'Baloo',
-                                    fontSize: 20,
+                                    fontSize: screenSize.width * 0.05,
                                     color: darkBlue,
                                   ),
                                 ),
@@ -779,9 +785,10 @@ class _MainPageState extends State<MainPage> {
                                   );
                                 },
                                 child: Text(
-                                  "${post['text'].toString().substring(0, min(100, post['text'].toString().length))}...",           style: const TextStyle(
+                                  "${post['text'].toString().substring(0, min(100, post['text'].toString().length))}...",
+                                  style: TextStyle(
                                     fontFamily: 'Baloo',
-                                    fontSize: 14,
+                                    fontSize: screenSize.width * 0.035,
                                     color: Colors.black87,
                                   ),
                                 ),
@@ -800,6 +807,7 @@ class _MainPageState extends State<MainPage> {
       },
     );
   }
+
 
 
 
