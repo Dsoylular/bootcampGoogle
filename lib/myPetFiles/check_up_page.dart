@@ -8,21 +8,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../helperFiles/app_colors.dart';
 
 class CheckUpPage extends StatefulWidget {
-
   final String petID;
   final Function(List<FlSpot>, List<FlSpot>, List<FlSpot>, List<FlSpot>) refreshGraph;
-  const CheckUpPage({super.key, required this.petID, required this.refreshGraph});
+
+  const CheckUpPage({
+    super.key,
+    required this.petID,
+    required this.refreshGraph,
+  });
 
   @override
   State<CheckUpPage> createState() => _CheckUpPageState();
 }
 
 class _CheckUpPageState extends State<CheckUpPage> {
-
-  double sleepValue = 3;
-  double exerciseValue = 3;
-  double weightValue = 3;
-  double foodConsumptionValue = 3;
+  final ValueNotifier<double> _sleepValueNotifier = ValueNotifier<double>(3);
+  final ValueNotifier<double> _exerciseValueNotifier = ValueNotifier<double>(3);
+  final ValueNotifier<double> _weightValueNotifier = ValueNotifier<double>(3);
+  final ValueNotifier<double> _foodConsumptionValueNotifier = ValueNotifier<double>(3);
 
   String get petID => widget.petID;
   Function(List<FlSpot>, List<FlSpot>, List<FlSpot>, List<FlSpot>) get refreshGraph => widget.refreshGraph;
@@ -30,7 +33,7 @@ class _CheckUpPageState extends State<CheckUpPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   User? currentUser = FirebaseAuth.instance.currentUser;
 
-  Future<void> _updatePetCheckUpData(Function(List<FlSpot>, List<FlSpot>, List<FlSpot>, List<FlSpot>) refreshGraph) async {
+  Future<void> _updatePetCheckUpData() async {
     DocumentReference petDocRef = _firestore.collection('users')
         .doc(currentUser!.uid)
         .collection('pets')
@@ -46,15 +49,15 @@ class _CheckUpPageState extends State<CheckUpPage> {
       List<dynamic> weightList = petData['weightList'] ?? [];
       List<dynamic> sleepList = petData['sleepList'] ?? [];
 
-      foodList.add(foodConsumptionValue);
-      exerciseList.add(exerciseValue);
-      weightList.add(weightValue);
-      sleepList.add(sleepValue);
+      foodList.add(_foodConsumptionValueNotifier.value);
+      exerciseList.add(_exerciseValueNotifier.value);
+      weightList.add(_weightValueNotifier.value);
+      sleepList.add(_sleepValueNotifier.value);
 
-      foodList.removeAt(0);
-      exerciseList.removeAt(0);
-      weightList.removeAt(0);
-      sleepList.removeAt(0);
+      if (foodList.length > 5) foodList.removeAt(0);
+      if (exerciseList.length > 5) exerciseList.removeAt(0);
+      if (weightList.length > 5) weightList.removeAt(0);
+      if (sleepList.length > 5) sleepList.removeAt(0);
 
       await petDocRef.update({
         'foodList': foodList,
@@ -63,10 +66,10 @@ class _CheckUpPageState extends State<CheckUpPage> {
         'sleepList': sleepList,
       });
 
-      List<FlSpot> sleepSpots = sleepList.map((value) => FlSpot(sleepList.indexOf(value).toDouble(), value.toDouble())).toList();
-      List<FlSpot> foodSpots = foodList.map((value) => FlSpot(foodList.indexOf(value).toDouble(), value.toDouble())).toList();
-      List<FlSpot> weightSpots = weightList.map((value) => FlSpot(weightList.indexOf(value).toDouble(), value.toDouble())).toList();
-      List<FlSpot> exerciseSpots = exerciseList.map((value) => FlSpot(exerciseList.indexOf(value).toDouble(), value.toDouble())).toList();
+      List<FlSpot> sleepSpots = sleepList.asMap().entries.map((entry) => FlSpot(entry.key.toDouble(), entry.value.toDouble())).toList();
+      List<FlSpot> foodSpots = foodList.asMap().entries.map((entry) => FlSpot(entry.key.toDouble(), entry.value.toDouble())).toList();
+      List<FlSpot> weightSpots = weightList.asMap().entries.map((entry) => FlSpot(entry.key.toDouble(), entry.value.toDouble())).toList();
+      List<FlSpot> exerciseSpots = exerciseList.asMap().entries.map((entry) => FlSpot(entry.key.toDouble(), entry.value.toDouble())).toList();
 
       refreshGraph(sleepSpots, foodSpots, weightSpots, exerciseSpots);
     } else {
@@ -135,39 +138,39 @@ class _CheckUpPageState extends State<CheckUpPage> {
                 const Text(
                   'Uyku Durumu',
                   style: TextStyle(
-                      fontFamily: 'Baloo'
+                    fontFamily: 'Baloo',
                   ),
                 ),
-                customSlider(sleepValue),
+                customSlider(_sleepValueNotifier),
                 const Text(
                   'Egzersiz Durumu',
                   style: TextStyle(
-                      fontFamily: 'Baloo'
+                    fontFamily: 'Baloo',
                   ),
                 ),
-                customSlider(exerciseValue),
+                customSlider(_exerciseValueNotifier),
                 const Text(
                   'Kilo Durumu',
                   style: TextStyle(
-                      fontFamily: 'Baloo'
+                    fontFamily: 'Baloo',
                   ),
                 ),
-                customSlider(weightValue),
+                customSlider(_weightValueNotifier),
                 const Text(
                   'Yemek Yeme Durumu',
                   style: TextStyle(
-                      fontFamily: 'Baloo'
+                    fontFamily: 'Baloo',
                   ),
                 ),
-                customSlider(foodConsumptionValue),
+                customSlider(_foodConsumptionValueNotifier),
                 const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: darkBlue
+                      backgroundColor: darkBlue,
                     ),
                     onPressed: () async {
-                      await _updatePetCheckUpData(refreshGraph);
+                      await _updatePetCheckUpData();
                       _showSnackBar();
                       _navTwicePop();
                     },
@@ -189,7 +192,7 @@ class _CheckUpPageState extends State<CheckUpPage> {
     );
   }
 
-  void _navTwicePop(){
+  void _navTwicePop() {
     Navigator.pop(context);
     Navigator.pop(context);
   }
@@ -209,19 +212,32 @@ class _CheckUpPageState extends State<CheckUpPage> {
       ),
     );
   }
-  Widget customSlider(double value){
-    return Slider(
-      activeColor: brown,
-      value: value,
-      min: 1,
-      max: 5,
-      divisions: 4,
-      label: value.round().toString(),
-      onChanged: (newValue) {
-        setState(() {
-          value = newValue;
-        });
+
+  Widget customSlider(ValueNotifier<double> valueNotifier) {
+    return ValueListenableBuilder<double>(
+      valueListenable: valueNotifier,
+      builder: (context, value, child) {
+        return Slider(
+          activeColor: brown,
+          value: value,
+          min: 1,
+          max: 5,
+          divisions: 4,
+          label: value.round().toString(),
+          onChanged: (newValue) {
+            valueNotifier.value = newValue;
+          },
+        );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _sleepValueNotifier.dispose();
+    _exerciseValueNotifier.dispose();
+    _weightValueNotifier.dispose();
+    _foodConsumptionValueNotifier.dispose();
+    super.dispose();
   }
 }
