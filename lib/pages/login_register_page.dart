@@ -137,10 +137,10 @@ class _LoginPageState extends State<LoginPage> {
         decoration: InputDecoration(
           labelText: title,
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide(color: brown)),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide(color: brown)),
           suffixIcon: isPassword
               ? IconButton(
