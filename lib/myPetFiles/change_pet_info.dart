@@ -8,7 +8,6 @@ import '../helperFiles/app_colors.dart';
 import '../helperFiles/my_app_bar.dart';
 
 class ChangePetScreen extends StatefulWidget {
-
   final String petID;
   const ChangePetScreen({super.key, required this.petID});
 
@@ -17,7 +16,6 @@ class ChangePetScreen extends StatefulWidget {
 }
 
 class _ChangePetScreenState extends State<ChangePetScreen> {
-
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _speciesController = TextEditingController();
   final TextEditingController _breedController = TextEditingController();
@@ -74,15 +72,15 @@ class _ChangePetScreenState extends State<ChangePetScreen> {
               ),
             ),
             const SizedBox(height: 40),
-            customTextField(_nameController, 'İsim'),
+            customTextField(_nameController, 'İsim', 30),
             const SizedBox(height: 20),
-            customTextField(_speciesController, 'Tür (Kedi, Köpek, Balık...)'),
+            customTextField(_speciesController, 'Tür (Kedi, Köpek, Balık...)', 40),
             const SizedBox(height: 20.0),
-            customTextField(_breedController, 'Cins (Labrador, Siyam, Balık...)'),
+            customTextField(_breedController, 'Cins (Labrador, Siyam, Balık...)', 40),
             const SizedBox(height: 20.0),
-            customTextField(_ageController, 'Yaş'),
+            customTextField(_ageController, 'Yaş', 3),
             const SizedBox(height: 20.0),
-            customTextField(_genderController, 'Cinsiyet'),
+            customTextField(_genderController, 'Cinsiyet (Erkek/Dişi)', 5),
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () async {
@@ -103,21 +101,54 @@ class _ChangePetScreenState extends State<ChangePetScreen> {
 
                 final existingData = petDocSnapshot.data() ?? {};
 
-                final updatedData = {
-                  'petName': _nameController.text.isNotEmpty ? _nameController.text : existingData['petName'],
-                  'petSpecies': _speciesController.text.isNotEmpty ? _speciesController.text : existingData['petSpecies'],
-                  'petBreed': _breedController.text.isNotEmpty ? _breedController.text : existingData['petBreed'],
-                  'petAge': _ageController.text.isNotEmpty ? _ageController.text : existingData['petAge'],
-                  'petGender': _genderController.text.isNotEmpty ? _genderController.text : existingData['petGender'],
-                  'timestamp': Timestamp.now(),
-                  'vaccinationDates': existingData['vaccinationDates'] ?? [],
-                  'foodList': existingData['foodList'] ?? [3, 3, 3, 3, 3, 3, 3],
-                  'sleepList': existingData['sleepList'] ?? [3, 3, 3, 3, 3, 3, 3],
-                  'weightList': existingData['weightList'] ?? [3, 3, 3, 3, 3, 3, 3],
-                  'exerciseList': existingData['exerciseList'] ?? [3, 3, 3, 3, 3, 3, 3],
-                };
+                final newName = _nameController.text.trim();
+                final newSpecies = _speciesController.text.trim();
+                final newBreed = _breedController.text.trim();
+                final newAgeText = _ageController.text.trim();
+                final newGender = _genderController.text.trim();
 
-                await petDocRef.update(updatedData);
+                // Validate age input
+                if (newAgeText.isNotEmpty && (int.tryParse(newAgeText) == null || int.parse(newAgeText) < 0 || int.parse(newAgeText) > 100)) {
+                  _showErrorDialog("Yaş 0 ile 100 arasında bir değer olmalıdır.");
+                  return;
+                }
+                // Validate gender input
+                if (newGender.isNotEmpty && newGender != 'Erkek' && newGender != 'Dişi') {
+                  _showErrorDialog("Cinsiyet yalnızca 'Erkek' veya 'Dişi' olabilir.");
+                  return;
+                }
+
+                // Check if new info is different and not empty
+                final updatedData = <String, dynamic>{};
+                if (newName.isNotEmpty && newName != existingData['petName']) {
+                  updatedData['petName'] = newName;
+                }
+                if (newSpecies.isNotEmpty && newSpecies != existingData['petSpecies']) {
+                  updatedData['petSpecies'] = newSpecies;
+                }
+                if (newBreed.isNotEmpty && newBreed != existingData['petBreed']) {
+                  updatedData['petBreed'] = newBreed;
+                }
+                if (newAgeText.isNotEmpty && newAgeText != existingData['petAge']) {
+                  updatedData['petAge'] = newAgeText;
+                }
+                if (newGender.isNotEmpty && newGender != existingData['petGender']) {
+                  updatedData['petGender'] = newGender;
+                }
+
+                // Add additional unchanged fields to the update data
+                updatedData['timestamp'] = Timestamp.now();
+                updatedData['vaccinationDates'] = existingData['vaccinationDates'] ?? [];
+                updatedData['foodList'] = existingData['foodList'] ?? [3, 3, 3, 3, 3, 3, 3];
+                updatedData['sleepList'] = existingData['sleepList'] ?? [3, 3, 3, 3, 3, 3, 3];
+                updatedData['weightList'] = existingData['weightList'] ?? [3, 3, 3, 3, 3, 3, 3];
+                updatedData['exerciseList'] = existingData['exerciseList'] ?? [3, 3, 3, 3, 3, 3, 3];
+
+                // Only update if there are changes
+                if (updatedData.isNotEmpty) {
+                  await petDocRef.update(updatedData);
+                }
+
                 _navTwicePop();
               },
               style: ElevatedButton.styleFrom(
@@ -141,13 +172,34 @@ class _ChangePetScreenState extends State<ChangePetScreen> {
       ),
     );
   }
-  void _navTwicePop(){
+
+  void _navTwicePop() {
     Navigator.pop(context);
     Navigator.pop(context);
   }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Hata"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              child: const Text("Tamam"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
-Widget customTextField(TextEditingController controller, String hintText){
+Widget customTextField(TextEditingController controller, String hintText, int maxLength) {
   return TextField(
     controller: controller,
     decoration: InputDecoration(
@@ -160,6 +212,7 @@ Widget customTextField(TextEditingController controller, String hintText){
       fillColor: cream,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
     ),
-    maxLines: null,
+    maxLength: maxLength,
+    keyboardType: maxLength == 3 ? TextInputType.number : TextInputType.text,
   );
 }

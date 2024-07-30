@@ -187,28 +187,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                             child: CircleAvatar(
                               radius: 80,
                               child: ClipOval(
-                                child: petImage.isNotEmpty
-                                    ? FadeInImage.assetNetwork(
-                                  placeholder: 'assets/images/kediIcon.png',
-                                  image: petImage,
-                                  fit: BoxFit.cover,
-                                  width: 160,
-                                  height: 160,
-                                  imageErrorBuilder: (context, error, stackTrace) {
-                                    return Image.asset(
-                                      'assets/images/kediIcon.png',
-                                      fit: BoxFit.cover,
-                                      width: 160,
-                                      height: 160,
-                                    );
-                                  },
-                                )
-                                    : Image.asset(
-                                  'assets/images/kediIcon.png',
-                                  fit: BoxFit.cover,
-                                  width: 160,
-                                  height: 160,
-                                ),
+                                child: getPetImage(petImage),
                               ),
                             ),
                           ),
@@ -584,5 +563,41 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
       log("Pet document does not exist");
     }
   }
+}
+
+getPetImage(String petImage) {
+  if(petImage != ""){
+    try{
+      return FadeInImage.assetNetwork(
+        placeholder: 'assets/images/kediIcon.png',
+        image: petImage,
+        fit: BoxFit.cover,
+        width: 160,
+        height: 160,
+        imageErrorBuilder: (context, error, stackTrace) {
+          return Image.asset(
+            'assets/images/kediIcon.png',
+            fit: BoxFit.cover,
+            width: 160,
+            height: 160,
+          );
+        },
+      );
+    }
+    catch(e){
+      return Image.asset(
+        'assets/images/kediIcon.png',
+        fit: BoxFit.cover,
+        width: 160,
+        height: 160,
+      );
+    }
+  }
+  return Image.asset(
+    'assets/images/kediIcon.png',
+    fit: BoxFit.cover,
+    width: 160,
+    height: 160,
+  );
 }
 
