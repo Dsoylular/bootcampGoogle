@@ -31,7 +31,7 @@ class _ChangePetScreenState extends State<ChangePetScreen> {
   String get petID => widget.petID;
   String get petName => widget.petName;
   String get petBreed => widget.petBreed;
-  String get petSpecies=> widget.petSpecies;
+  String get petSpecies => widget.petSpecies;
   String get petGender => widget.petGender;
   String get petAge => widget.petAge;
 
@@ -172,9 +172,97 @@ class _ChangePetScreenState extends State<ChangePetScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                final bool? confirmDelete = await _showDeleteConfirmationDialog();
+                if (confirmDelete == true) {
+                  await _deletePet();
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+              ),
+              child: const Text(
+                "Evcil Hayvanı Sil",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Baloo',
+                  fontSize: 18,
+                ),
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _deletePet() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User? currentUser = auth.currentUser;
+
+    if (currentUser == null) return;
+
+    final petDocRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('pets')
+        .doc(petID);
+
+    await petDocRef.delete();
+    _navTwicePop();
+  }
+
+  Future<bool?> _showDeleteConfirmationDialog() {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+              "Silme Onayı",
+            style: TextStyle(
+                fontFamily: 'Baloo'
+            ),
+          ),
+          content: const Text(
+              "Evcil hayvanı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.",
+            style: TextStyle(
+                fontFamily: 'Baloo'
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: Text(
+                  "Hayır",
+                style: TextStyle(
+                    fontFamily: 'Baloo',
+                  color: darkBlue
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text(
+                  "Evet",
+                style: TextStyle(
+                    fontFamily: 'Baloo',
+                  color: darkBlue
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -188,11 +276,21 @@ class _ChangePetScreenState extends State<ChangePetScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Hata"),
+          title: const Text(
+              "Hata",
+            style: TextStyle(
+              fontFamily: 'Baloo'
+            ),
+          ),
           content: Text(message),
           actions: [
             TextButton(
-              child: const Text("Tamam"),
+              child: const Text(
+                  "Tamam",
+                style: TextStyle(
+                    fontFamily: 'Baloo'
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },

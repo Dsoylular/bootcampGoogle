@@ -40,6 +40,9 @@ flutter:
     - assets/images/cuteCat.jpeg
     - assets/images/notLoginPageDesign.png
     - assets/images/cozyCats.jpg
+    - assets/images/takvim_foto.jpg
+    - assets/images/check_up_photo.jpg
+    - assets/images/situation_photo.jpg
     - assets/icons/chat.png
     - assets/icons/circle.png
     - .env

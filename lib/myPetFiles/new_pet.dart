@@ -184,7 +184,7 @@ class _NewPetState extends State<NewPet> {
                     _vaccinationTracking = value;
                   });
                 },
-                activeColor: pink, // Set the toggle switch color to pink
+                activeColor: pink,
               ),
               const SizedBox(height: 50),
               ElevatedButton(

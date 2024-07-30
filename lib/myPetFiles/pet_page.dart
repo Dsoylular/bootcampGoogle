@@ -1,10 +1,11 @@
 import 'dart:developer';
 
 import 'package:bootcamp_google/helperFiles/app_colors.dart';
-import 'package:bootcamp_google/helperFiles/gemini_codes.dart';
 import 'package:bootcamp_google/helperFiles/my_app_bar.dart';
 import 'package:bootcamp_google/myPetFiles/change_pet_info.dart';
 import 'package:bootcamp_google/myPetFiles/check_up_page.dart';
+import 'package:bootcamp_google/myPetFiles/situation_analysis_info.dart';
+import 'package:bootcamp_google/myPetFiles/vaccinationInfoPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -68,18 +69,22 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
         .doc(petID)
         .get();
     setState(() {
-      _preSelectedDays = List<DateTime>.from(snapshot['vaccinationDates'].map((timestamp) => (timestamp as Timestamp).toDate()));
-      petName = snapshot['petName'];
-      petAge = snapshot['petAge'].toString();
-      petBreed = snapshot['petBreed'];
-      petImage = snapshot['petImage'];
-      petSpecies = snapshot['petSpecies'];
-      foodList = getFlSpotList(snapshot['foodList']);
-      exerciseList = getFlSpotList(snapshot['exerciseList']);
-      weightList = getFlSpotList(snapshot['weightList']);
-      sleepList = getFlSpotList(snapshot['sleepList']);
-      petGender = snapshot['petGender'];
-      isVaccinationTracking = snapshot['isVaccinationTracking'] ?? false;
+        petName = snapshot['petName'];
+        petAge = snapshot['petAge'].toString();
+        petBreed = snapshot['petBreed'];
+        petImage = snapshot['petImage'] ?? "";
+        petSpecies = snapshot['petSpecies'];
+        foodList = getFlSpotList(snapshot['foodList']);
+        exerciseList = getFlSpotList(snapshot['exerciseList']);
+        weightList = getFlSpotList(snapshot['weightList']);
+        sleepList = getFlSpotList(snapshot['sleepList']);
+        petGender = snapshot['petGender'];
+        isVaccinationTracking = snapshot['isVaccinationTracking'] ?? false;
+        if(isVaccinationTracking) {
+          _preSelectedDays = List<DateTime>.from(
+            snapshot['vaccinationDates'].map((timestamp) =>
+                (timestamp as Timestamp).toDate()));
+        }
     });
   }
 
@@ -288,15 +293,25 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
             ),
             if(isVaccinationTracking)...[
               const SizedBox(height: 20),
-              const Row(
+              Row(
                 children: [
-                  SizedBox(width: 30),
-                  Text(
+                  const SizedBox(width: 30),
+                  const Text(
                     "Aşı Takip",
                     style: TextStyle(
                         fontFamily: 'Baloo',
                         fontSize: 18
                     ),
+                  ),
+                  const SizedBox(width: 25),
+                  IconButton(
+                      onPressed: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const VaccinationInfoPage())
+                        );
+                      },
+                      icon: Icon(Icons.info_outlined, color: pink),
                   ),
                 ],
               ),
@@ -404,15 +419,25 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 ),
             ],
             const SizedBox(height: 20),
-            const Row(
+            Row(
               children: [
-                SizedBox(width: 30),
-                Text(
+                const SizedBox(width: 30),
+                const Text(
                   "Durum Analizi",
                   style: TextStyle(
                       fontFamily: 'Baloo',
                       fontSize: 18,
                   ),
+                ),
+                const SizedBox(width: 25),
+                IconButton(
+                  onPressed: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SituationAnalysisInfo())
+                    );
+                  },
+                  icon: Icon(Icons.info_outlined, color: pink),
                 ),
               ],
             ),
@@ -575,6 +600,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
     } else {
       log("Pet document does not exist");
     }
+    Navigator.pop(context);
   }
 }
 
