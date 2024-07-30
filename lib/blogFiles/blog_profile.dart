@@ -83,24 +83,48 @@ class _BlogProfileState extends State<BlogProfile> {
             if (profileUrl.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: Image.network(
-                    profileUrl,
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        'assets/images/kediIcon.png',
-                        height: 150,
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: Image.network(
+                        profileUrl,
+                        height: 200,
                         width: double.infinity,
                         fit: BoxFit.cover,
-                      );
-                    },
-                  ),
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            'assets/images/kediIcon.png',
+                            height: 150,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          );
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            // Image has finished loading
+                            return child;
+                          } else {
+                            // Image is loading
+                            return Center(
+                              child: SizedBox(
+                                height: 200,
+                                width: double.infinity,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: pink,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
+
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -142,7 +166,14 @@ class _BlogProfileState extends State<BlogProfile> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      Text(text),
+                      Text(
+                          text,
+                        style: TextStyle(
+                          fontFamily: 'Baloo',
+                          fontSize: 16,
+                          color: brown
+                        ),
+                      ),
                       const SizedBox(height: 20),
                     ],
                   ),
@@ -250,7 +281,13 @@ class _BlogProfileState extends State<BlogProfile> {
                         _addComment(widget.blogID!, commentController.text);
                       }
                     },
-                    child: const Text('Yorum Yap'),
+                    child: Text(
+                        'Yorum Yap',
+                      style: TextStyle(
+                        fontFamily: 'Baloo',
+                        color: darkBlue
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -148,7 +148,12 @@ Future<void> addNewBlogPicture(BuildContext context) async {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Ön Gösterim"),
+          title: const Text(
+              "Ön Gösterim",
+            style: TextStyle(
+              fontFamily: 'Baloo'
+            ),
+          ),
           content: Container(
             width: 200,
             height: 200,
@@ -168,17 +173,20 @@ Future<void> addNewBlogPicture(BuildContext context) async {
                 "İptal",
                 style: TextStyle(
                   color: darkBlue,
+                  fontFamily: 'Baloo'
                 ),
               ),
             ),
             TextButton(
               onPressed: () {
+                uploadAndCropBlogImage(selectedImageFile!);
                 Navigator.of(context).pop();
               },
               child: Text(
                 "Seç",
                 style: TextStyle(
                   color: darkBlue,
+                  fontFamily: 'Baloo'
                 ),
               ),
             ),
@@ -302,7 +310,7 @@ Future<String?> updateProfilePicture(BuildContext context, Function(String) refr
 
     return imageUrl;
   } catch (e) {
-    print("Error updating profile picture: $e");
+    log("Error updating profile picture: $e");
     return null;
   }
 }
@@ -338,7 +346,7 @@ Future<String?> uploadAndCropImage(File imageFile) async {
       }
     }
   } catch (e) {
-    print("Error uploading and cropping image: $e");
+    log("Error uploading and cropping image: $e");
   }
   return null;
 }

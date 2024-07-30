@@ -568,8 +568,8 @@ class _MainPageState extends State<MainPage> {
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
-                    padding: EdgeInsets.all(screenSize.width * 0.03), // Adjust padding based on screen size
-                    backgroundColor: Colors.orangeAccent,
+                    padding: EdgeInsets.all(screenSize.width * 0.03),
+                    backgroundColor: pink,
                   ),
                   child: const Icon(Icons.add, color: Colors.white, size: 25),
                 ),
