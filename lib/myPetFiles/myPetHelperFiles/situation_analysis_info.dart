@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../helperFiles/app_colors.dart';
+import '../../helperFiles/app_colors.dart';
 
 class SituationAnalysisInfo extends StatelessWidget {
   const SituationAnalysisInfo({super.key});

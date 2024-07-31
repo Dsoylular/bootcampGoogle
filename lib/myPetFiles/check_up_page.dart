@@ -82,6 +82,7 @@ class _CheckUpPageState extends State<CheckUpPage> {
     log("check_up_page");
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             height: 200,
@@ -132,42 +133,23 @@ class _CheckUpPageState extends State<CheckUpPage> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text("3 normali temsil etmektedir", style: TextStyle(color: brown, fontStyle: FontStyle.italic)),
                 const SizedBox(height: 20),
-                const Text(
-                  'Uyku Durumu',
-                  style: TextStyle(
-                    fontFamily: 'Baloo',
-                  ),
-                ),
-                customSlider(_sleepValueNotifier),
-                const Text(
-                  'Egzersiz Durumu',
-                  style: TextStyle(
-                    fontFamily: 'Baloo',
-                  ),
-                ),
-                customSlider(_exerciseValueNotifier),
-                const Text(
-                  'Kilo Durumu',
-                  style: TextStyle(
-                    fontFamily: 'Baloo',
-                  ),
-                ),
-                customSlider(_weightValueNotifier),
-                const Text(
-                  'Yemek Yeme Durumu',
-                  style: TextStyle(
-                    fontFamily: 'Baloo',
-                  ),
-                ),
-                customSlider(_foodConsumptionValueNotifier),
+                _buildSliderSection('Uyku Durumu', _sleepValueNotifier),
+                _buildSliderSection('Egzersiz Durumu', _exerciseValueNotifier),
+                _buildSliderSection('Kilo Durumu', _weightValueNotifier),
+                _buildSliderSection('Yemek Yeme Durumu', _foodConsumptionValueNotifier),
                 const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: darkBlue,
+                      backgroundColor: pink,
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      elevation: 5,
                     ),
                     onPressed: () async {
                       await _updatePetCheckUpData();
@@ -177,7 +159,6 @@ class _CheckUpPageState extends State<CheckUpPage> {
                     child: const Text(
                       'Gönder',
                       style: TextStyle(
-                        fontFamily: 'Baloo',
                         fontSize: 18,
                         color: Colors.white,
                       ),
@@ -186,6 +167,35 @@ class _CheckUpPageState extends State<CheckUpPage> {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSliderSection(String title, ValueNotifier<double> valueNotifier) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontFamily: 'Baloo',
+              fontSize: 18,
+              color: brown,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Text("1", style: TextStyle(fontFamily: 'Baloo', fontSize: 20, color: darkBlue)),
+              Expanded(
+                child: customSlider(valueNotifier),
+              ),
+              Text("5", style: TextStyle(fontFamily: 'Baloo', fontSize: 20, color: darkBlue)),
+            ],
           ),
         ],
       ),
@@ -203,7 +213,6 @@ class _CheckUpPageState extends State<CheckUpPage> {
         content: Text(
           'Bilgiler başarıyla gönderildi!',
           style: TextStyle(
-            fontFamily: 'Baloo',
             color: Colors.white,
           ),
         ),
@@ -218,7 +227,9 @@ class _CheckUpPageState extends State<CheckUpPage> {
       valueListenable: valueNotifier,
       builder: (context, value, child) {
         return Slider(
+          thumbColor: brown,
           activeColor: brown,
+          inactiveColor: Colors.grey.shade300,
           value: value,
           min: 1,
           max: 5,

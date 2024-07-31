@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:bootcamp_google/MainPage.dart';
 import 'package:bootcamp_google/helperFiles/app_colors.dart';
 import 'package:bootcamp_google/helperFiles/photo_add_functions.dart';
-import 'package:bootcamp_google/helperFiles/profile_button_firebase_functions.dart';
+import 'package:bootcamp_google/profileFiles/profile_button_firebase_functions.dart';
 import 'package:flutter/material.dart';
 
-import '../profileFiles/PawdiInfo.dart';
-import 'auth.dart';
+import 'PawdiInfo.dart';
+import '../helperFiles/auth.dart';
 import '../pages/login_register_page.dart';
 
 Widget profileButton(String name, String explanation, Icon icon, int type, BuildContext context, Function(String) refresh) {
@@ -107,13 +107,21 @@ Future<void> _updateUserName(BuildContext context, Function(String) refreshUsern
           controller: userNameController,
           context: context,
           title: 'Kullanıcı Adını Değiştir',
-          hintText: 'Kullanıcı İsmi',
+          hintText: 'Yeni kullanıcı ismi...',
           refreshInfo: refreshUsername,
           updateFirebase: updateUserNameInFirebase,
           maxLength: 25,
           validationFunction: (value) {
             if (value.length > 25) return 'Kullanıcı adı 25 karakterden uzun olamaz.';
-            if (!RegExp(r'^[a-z]+$').hasMatch(value)) return 'Kullanıcı adı sadece küçük harflerden oluşmalıdır.';
+            if(value.contains(" ")){
+              return "Kullanıcı adı boşluk içeremez.";
+            }
+            if (RegExp(r'[^\x00-\x7F]').hasMatch(value)) {
+              return 'Kullanıcı adı sadece İngilizce harflerden oluşmalıdır.';
+            }
+            if (!RegExp(r'^[a-z.]+$').hasMatch(value)) {
+              return 'Kullanıcı adı sadece küçük harfler ve nokta içerebilir.';
+            }
             return null;
           }
       );
@@ -130,7 +138,7 @@ Future<void> _updateName(BuildContext context, Function(String) refreshName) asy
           controller: nameController,
           context: context,
           title: 'İsmini değiştir',
-          hintText: 'İsim',
+          hintText: 'Yeni isim...',
           refreshInfo: refreshName,
           updateFirebase: updateNameInFirebase,
           maxLength: 25,
@@ -152,7 +160,7 @@ Future<void> _updateSurname(BuildContext context, Function(String) refreshSurnam
           controller: surnameController,
           context: context,
           title: 'Soyismini değiştir',
-          hintText: 'Soyisim',
+          hintText: 'Yeni soyisim...',
           refreshInfo: refreshSurname,
           updateFirebase: updateSurnameInFirebase,
           maxLength: 25,
@@ -174,7 +182,7 @@ Future<void> _updateAbout(BuildContext context, Function(String) refreshAbout) a
           controller: aboutController,
           context: context,
           title: "Hakkında bilgini değiştir",
-          hintText: "Hakkında",
+          hintText: "Yeni hakkında...",
           refreshInfo: refreshAbout,
           updateFirebase: updateAboutInFirebase,
           maxLength: 350,
