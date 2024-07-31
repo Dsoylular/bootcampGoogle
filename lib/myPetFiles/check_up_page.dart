@@ -81,46 +81,86 @@ class _CheckUpPageState extends State<CheckUpPage> {
   Widget build(BuildContext context) {
     log("check_up_page");
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              color: cream,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                color: cream,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+              ),
+              width: double.infinity,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/cozyCats.jpg',
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      alignment: Alignment.topCenter,
+                    ),
+                    Positioned(
+                      bottom: 20,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: darkBlue.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Text(
+                          "    Kontrol Et    ",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            width: double.infinity,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-              child: Stack(
-                alignment: Alignment.center,
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
                 children: [
-                  Image.asset(
-                    'assets/images/cozyCats.jpg',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    alignment: Alignment.topCenter,
-                  ),
-                  Positioned(
-                    bottom: 20,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: darkBlue.withOpacity(0.8),
-                        borderRadius: BorderRadius.circular(20),
+                  Text("3 normali temsil etmektedir", style: TextStyle(color: brown, fontStyle: FontStyle.italic)),
+                  const SizedBox(height: 20),
+                  _buildSliderSection('Uyku Durumu', _sleepValueNotifier),
+                  _buildSliderSection('Egzersiz Durumu', _exerciseValueNotifier),
+                  _buildSliderSection('Kilo Durumu', _weightValueNotifier),
+                  _buildSliderSection('Yemek Yeme Durumu', _foodConsumptionValueNotifier),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: pink,
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: 5,
                       ),
+                      onPressed: () async {
+                        await _updatePetCheckUpData();
+                        _showSnackBar();
+                        _navTwicePop();
+                      },
                       child: const Text(
-                        "    Kontrol Et    ",
+                        'Gönder',
                         style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
                           color: Colors.white,
                         ),
                       ),
@@ -129,46 +169,8 @@ class _CheckUpPageState extends State<CheckUpPage> {
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Text("3 normali temsil etmektedir", style: TextStyle(color: brown, fontStyle: FontStyle.italic)),
-                const SizedBox(height: 20),
-                _buildSliderSection('Uyku Durumu', _sleepValueNotifier),
-                _buildSliderSection('Egzersiz Durumu', _exerciseValueNotifier),
-                _buildSliderSection('Kilo Durumu', _weightValueNotifier),
-                _buildSliderSection('Yemek Yeme Durumu', _foodConsumptionValueNotifier),
-                const SizedBox(height: 20),
-                Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: pink,
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      elevation: 5,
-                    ),
-                    onPressed: () async {
-                      await _updatePetCheckUpData();
-                      _showSnackBar();
-                      _navTwicePop();
-                    },
-                    child: const Text(
-                      'Gönder',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
