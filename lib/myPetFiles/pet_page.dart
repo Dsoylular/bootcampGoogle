@@ -1,11 +1,13 @@
 import 'dart:developer';
 
 import 'package:bootcamp_google/helperFiles/app_colors.dart';
+import 'package:bootcamp_google/helperFiles/gemini_codes.dart';
 import 'package:bootcamp_google/helperFiles/my_app_bar.dart';
 import 'package:bootcamp_google/myPetFiles/change_pet_info.dart';
 import 'package:bootcamp_google/myPetFiles/check_up_page.dart';
 import 'package:bootcamp_google/myPetFiles/myPetHelperFiles/situation_analysis_info.dart';
 import 'package:bootcamp_google/myPetFiles/myPetHelperFiles/vaccinationInfoPage.dart';
+import 'package:bootcamp_google/myPetFiles/pet_detailed_info_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -45,6 +47,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
   String petImage = "";
   String petGender = "";
   bool isLoading = true;
+  bool isGeminiLoading = false;
   bool showAddButton = false;
   bool isVaccinationTracking = false;
 
@@ -315,7 +318,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                         fontSize: 18
                     ),
                   ),
-                  const SizedBox(width: 25),
+                  const SizedBox(width: 15),
                   IconButton(
                       onPressed: (){
                         Navigator.push(
@@ -437,16 +440,16 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                 const Text(
                   "Durum Analizi",
                   style: TextStyle(
-                      fontFamily: 'Baloo',
-                      fontSize: 18,
+                    fontFamily: 'Baloo',
+                    fontSize: 18,
                   ),
                 ),
-                const SizedBox(width: 25),
+                const SizedBox(width: 10),
                 IconButton(
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SituationAnalysisInfo())
+                      context,
+                      MaterialPageRoute(builder: (context) => const SituationAnalysisInfo()),
                     );
                   },
                   icon: Icon(Icons.info_outlined, color: pink),
@@ -498,6 +501,29 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                         color: Colors.white
                     ),
                   ),
+                ),
+                const SizedBox(width: 25),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: pink),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: !isGeminiLoading
+                      ? IconButton(
+                          onPressed: () async{
+                            print(petID);
+                            setState(() {
+                              isGeminiLoading = true;
+                            });
+                            String? response = await getDetailedInfo(petID);
+                            setState(() {
+                              isGeminiLoading = false;
+                            });
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => PetDetailedInfoPage(respond: response ?? "Durum Analizi Hatası!")));
+                          },
+                          icon: Icon(Icons.smart_toy_outlined, color: pink)
+                      )
+                      : CircularProgressIndicator(color: pink)
                 ),
               ],
             ),

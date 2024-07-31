@@ -10,16 +10,20 @@ String petName = "";
 String petSpecies = "";
 String petBreed = "";
 String petAge = "";
+List<dynamic> foodList = [];
+List<dynamic> sleepList = [];
+List<dynamic> exerciseList = [];
+List<dynamic> weightList = [];
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 Future<String?> talkWithGemini(String message, String petID) async {
   try {
     final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
-    String finalMessage = "Sen evcil hayvanlar konusunda uzman bir kişisin. $message .Bu soruyu evcil hayvan konusunda kalarak cevapla. Cevabı Türkçe ver ve olası tehlikeler konusunda bilgi ver ve yapılacak adımları söyle.";
+    String finalMessage = "Sen evcil hayvanlar konusunda uzman bir kişisin. $message. Bu soruyu evcil hayvan konusunda kalarak cevapla. Cevabı Türkçe ver ve olası tehlikeler konusunda bilgi ver ve yapılacak adımları söyle.";
     if(petID != ""){
-      _getPetData(petID);
-      finalMessage += " Bu soruyu, sana bilgilerini vereceğim evcil hayvana göre cevapla: Evcil hayvan ismi: $petName, evcil hayvan türü: $petSpecies, cinsi: $petBreed, yaşı: $petAge. Cevap sırasında hayvandan bahsedeceğin zmana direkt ismini kullan ve Türkçe cevap ver.";
+      await getPetData(petID);
+      finalMessage += " Bu soruyu, sana bilgilerini vereceğim evcil hayvana göre cevapla: Evcil hayvan ismi: $petName, evcil hayvan türü: $petSpecies, cinsi: $petBreed, yaşı: $petAge. Cevap sırasında hayvandan bahsedeceğin zaman direkt ismini kullan ve Türkçe cevap ver.";
     }
     final content = Content.text(finalMessage);
     final response = await model.generateContent([content]);
@@ -30,7 +34,35 @@ Future<String?> talkWithGemini(String message, String petID) async {
   }
 }
 
-void _getPetData(String petID) async {
+Future<String?> getDetailedInfo(String petID) async {
+  try {
+    final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+    await getPetData(petID);
+    String finalMessage = "Sen evcil hayvanlar konusunda uzman bir kişisin. "
+        "Bu soruyu evcil hayvan konusunda kalarak cevapla. Cevabı Türkçe ver "
+        "ve olası tehlikeler konusunda bilgi ver ve yapılacak adımları söyle. "
+        "Şimdi sana cevap vereceğin evcil hayvanın bilgilerini vereceğim:"
+        "Bu soruyu, sana bilgilerini vereceğim evcil hayvana göre cevapla: "
+        "Evcil hayvan ismi: $petName, "
+        "evcil hayvan türü: $petSpecies, "
+        "cinsi: $petBreed, "
+        "yaşı: $petAge "
+        "Son 7 günkü yemek yeme durumu (3 normal, 5 çok, 1 az anlamına geliyor. Listenin son elemanı en güncel veridir.): $foodList "
+        "Son 7 günkü uyku durumu (3 normal, 5 çok, 1 az anlamına geliyor. Listenin son elemanı en güncel veridir.): $sleepList "
+        "Son 7 günkü kilo durumu (3 normal, 5 çok, 1 az anlamına geliyor. Listenin son elemanı en güncel veridir.): $weightList "
+        "Son 7 günkü egzersiz durumu (3 normal, 5 çok, 1 az anlamına geliyor. Listenin son elemanı en güncel veridir.): $exerciseList "
+        "Cevap sırasında hayvandan bahsedeceğin zamana direkt ismini kullan ve Türkçe cevap ver.";
+    print(finalMessage);
+    final content = Content.text(finalMessage);
+    final response = await model.generateContent([content]);
+    return response.text;
+  } catch (e) {
+    log('Error talking with Gemini: $e');
+    return null;
+  }
+}
+
+Future<void> getPetData(String petID) async {
   User? currentUser = _auth.currentUser;
   DocumentSnapshot snapshot = await FirebaseFirestore.instance
       .collection('users')
@@ -44,5 +76,9 @@ void _getPetData(String petID) async {
     petAge = snapshot['petAge'].toString();
     petBreed = snapshot['petBreed'];
     petSpecies = snapshot['petSpecies'];
+    foodList = snapshot['foodList'];
+    exerciseList = snapshot['exerciseList'];
+    weightList = snapshot['weightList'];
+    sleepList = snapshot['sleepList'];
   }
 }
