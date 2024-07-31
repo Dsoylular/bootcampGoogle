@@ -118,7 +118,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
               sideTitles: SideTitles(
                 showTitles: true,
                 reservedSize: 32,
-                // margin: 10,
                 interval: 1,
                 getTitlesWidget: (value, meta) {
                   return Text(days[value.toInt() % days.length]);
@@ -129,7 +128,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
               sideTitles: SideTitles(
                 showTitles: true,
                 reservedSize: 28,
-                // margin: 10,
                 getTitlesWidget: (value, meta) {
                   return Text(value.toInt().toString());
                 },
@@ -245,7 +243,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                         style: const TextStyle(
                           fontSize: 24,
                           fontFamily: 'Baloo',
-                          // fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
@@ -266,7 +263,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontFamily: 'Baloo',
-                                // fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -277,7 +273,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => ChangePetScreen(
-                                    petID: petID,
+                                  petID: petID,
                                   petAge: petAge,
                                   petBreed: petBreed,
                                   petSpecies: petSpecies,
@@ -511,7 +507,6 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
                   child: !isGeminiLoading
                       ? IconButton(
                           onPressed: () async{
-                            print(petID);
                             setState(() {
                               isGeminiLoading = true;
                             });

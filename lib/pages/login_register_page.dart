@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore package
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../helperFiles/auth.dart';
@@ -20,12 +20,12 @@ class _LoginPageState extends State<LoginPage> {
   bool _isPasswordVisible = false;
   bool _isVet = false;
 
-  final TextEditingController _controllerEmail = TextEditingController();
-  final TextEditingController _controllerPassword = TextEditingController();
-  final TextEditingController _controllerFirstName = TextEditingController();
-  final TextEditingController _controllerLastName = TextEditingController();
   final TextEditingController _controllerConfirmPassword = TextEditingController();
+  final TextEditingController _controllerFirstName = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+  final TextEditingController _controllerLastName = TextEditingController();
   final TextEditingController _controllerUserName = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
 
   Future<void> signInWithEmailAndPassword() async {
     try {
@@ -57,9 +57,9 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> createUserWithEmailAndPassword() async {
     try {
+      String confirmPassword = _controllerConfirmPassword.text.trim();
       String email = _controllerEmail.text.trim();
       String password = _controllerPassword.text.trim();
-      String confirmPassword = _controllerConfirmPassword.text.trim();
       String firstName = _controllerFirstName.text.trim();
       String lastName = _controllerLastName.text.trim();
       String userName = _controllerUserName.text.trim();
@@ -209,11 +209,11 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             TextSpan(
               text: isLogin ? 'Hesabın yok mu? ' : 'Zaten hesabınız var mı? ',
-              style: const TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black, fontFamily: 'Baloo'),
             ),
             TextSpan(
               text: isLogin ? 'Kayıt ol!' : 'Giriş yap!',
-              style: TextStyle(color: darkBlue),
+              style: TextStyle(color: darkBlue, fontFamily: 'Baloo'),
             ),
           ],
         ),
@@ -237,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           const Text(
             'Veteriner misiniz?',
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16, fontFamily: 'Baloo'),
           ),
         ],
       ),
@@ -317,10 +317,12 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text(
                 "Giriş yapmadan devam et",
                 style: TextStyle(
-                  fontSize: 12
+                  fontSize: 12,
+                  fontFamily: 'Baloo'
                 ),
               ),
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),

@@ -22,8 +22,8 @@ class _RespondPageState extends State<RespondPage> {
   String get respond => widget.respond;
   String get prompt => widget.prompt;
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {

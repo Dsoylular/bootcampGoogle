@@ -8,32 +8,39 @@ import '../helperFiles/app_colors.dart';
 import '../helperFiles/my_app_bar.dart';
 
 class ChangePetScreen extends StatefulWidget {
-  final String petID;
-  final String petName;
   final String petSpecies;
-  final String petBreed;
   final String petGender;
+  final String petBreed;
+  final String petName;
   final String petAge;
+  final String petID;
 
-  const ChangePetScreen({super.key, required this.petID, required this.petName, required this.petSpecies, required this.petBreed, required this.petGender, required this.petAge});
+  const ChangePetScreen({super.key,
+    required this.petSpecies,
+    required this.petGender,
+    required this.petBreed,
+    required this.petName,
+    required this.petAge,
+    required this.petID,
+  });
 
   @override
   State<ChangePetScreen> createState() => _ChangePetScreenState();
 }
 
 class _ChangePetScreenState extends State<ChangePetScreen> {
-  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _speciesController = TextEditingController();
-  final TextEditingController _breedController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _breedController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
 
-  String get petID => widget.petID;
-  String get petName => widget.petName;
-  String get petBreed => widget.petBreed;
   String get petSpecies => widget.petSpecies;
   String get petGender => widget.petGender;
+  String get petBreed => widget.petBreed;
+  String get petName => widget.petName;
   String get petAge => widget.petAge;
+  String get petID => widget.petID;
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +119,11 @@ class _ChangePetScreenState extends State<ChangePetScreen> {
 
                 final existingData = petDocSnapshot.data() ?? {};
 
-                final newName = _nameController.text.trim();
                 final newSpecies = _speciesController.text.trim();
+                final newGender = _genderController.text.trim();
                 final newBreed = _breedController.text.trim();
                 final newAgeText = _ageController.text.trim();
-                final newGender = _genderController.text.trim();
+                final newName = _nameController.text.trim();
 
                 if (newAgeText.isNotEmpty && (int.tryParse(newAgeText) == null || int.parse(newAgeText) < 0 || int.parse(newAgeText) > 100)) {
                   _showErrorDialog("Yaş 0 ile 100 arasında bir değer olmalıdır.");

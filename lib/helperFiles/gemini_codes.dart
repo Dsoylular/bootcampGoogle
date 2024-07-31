@@ -6,14 +6,14 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 
 const apiKey = "AIzaSyAUZ69b1Hr-7_gIfKh-HlfvMX8P1Gk_QF0";
 
-String petName = "";
 String petSpecies = "";
 String petBreed = "";
+String petName = "";
 String petAge = "";
-List<dynamic> foodList = [];
-List<dynamic> sleepList = [];
 List<dynamic> exerciseList = [];
 List<dynamic> weightList = [];
+List<dynamic> sleepList = [];
+List<dynamic> foodList = [];
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -52,7 +52,6 @@ Future<String?> getDetailedInfo(String petID) async {
         "Son 7 günkü kilo durumu (3 normal, 5 çok, 1 az anlamına geliyor. Listenin son elemanı en güncel veridir.): $weightList "
         "Son 7 günkü egzersiz durumu (3 normal, 5 çok, 1 az anlamına geliyor. Listenin son elemanı en güncel veridir.): $exerciseList "
         "Cevap sırasında hayvandan bahsedeceğin zamana direkt ismini kullan ve Türkçe cevap ver.";
-    print(finalMessage);
     final content = Content.text(finalMessage);
     final response = await model.generateContent([content]);
     return response.text;

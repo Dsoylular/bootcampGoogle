@@ -18,11 +18,11 @@ class NewBlogPost extends StatefulWidget {
 }
 
 class _NewBlogPostState extends State<NewBlogPost> {
-  final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
-  File? selectedImageFile;
+  final TextEditingController _titleController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  bool _isLoading = false; // Add loading state
+  File? selectedImageFile;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -134,19 +134,19 @@ class _NewBlogPostState extends State<NewBlogPost> {
                 ElevatedButton(
                   onPressed: _isLoading ? null : () async {
                     setState(() {
-                      _isLoading = true; // Start loading
+                      _isLoading = true;
                     });
 
                     if (_titleController.text.isEmpty) {
                       _showSnackBar("Başlık boş olamaz!", Colors.red);
                       setState(() {
-                        _isLoading = false; // Stop loading
+                        _isLoading = false;
                       });
                       return;
                     } else if (_contentController.text.isEmpty) {
                       _showSnackBar("İçerik boş olamaz!", Colors.red);
                       setState(() {
-                        _isLoading = false; // Stop loading
+                        _isLoading = false;
                       });
                       return;
                     }
@@ -199,7 +199,7 @@ class _NewBlogPostState extends State<NewBlogPost> {
           if (_isLoading)
             Center(
               child: CircularProgressIndicator(
-                color: pink, // Set the color of the progress indicator
+                color: pink,
               ),
             ),
         ],

@@ -13,12 +13,12 @@ class NewPet extends StatefulWidget {
 }
 
 class _NewPetState extends State<NewPet> {
-  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _speciesController = TextEditingController();
   final TextEditingController _breedController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
-  String _selectedGender = 'Dişi';
   bool _vaccinationTracking = false;
+  String _selectedGender = 'Dişi';
 
   final _formKey = GlobalKey<FormState>();
 

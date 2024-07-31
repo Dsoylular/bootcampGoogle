@@ -306,7 +306,6 @@ class _MainPageState extends State<MainPage> {
                 title: Text(question, style: const TextStyle(fontWeight: FontWeight.w300)),
                 onTap: () {
                   _messageController.text = question;
-                  // Scroll to the top of the page
                   _scrollController.jumpTo(0);
                 },
               ),
@@ -554,7 +553,7 @@ class _MainPageState extends State<MainPage> {
             ),
             const Spacer(),
             Padding(
-              padding: EdgeInsets.all(screenSize.width * 0.02), // Adjust padding based on screen size
+              padding: EdgeInsets.all(screenSize.width * 0.02),
               child: Visibility(
                 visible: isLogin,
                 child: ElevatedButton(
@@ -1167,7 +1166,6 @@ class _MainPageState extends State<MainPage> {
                     fontSize: 18,
                     color: brown,
                     fontFamily: 'Baloo'
-                    // fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),

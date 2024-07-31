@@ -5,18 +5,19 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import '../helperFiles/app_colors.dart';
 
 class ChatBubble extends StatelessWidget {
-  final String message;
   final List<Map<String, String>> messages;
-  final bool isUserMessage;
   final TextEditingController controller;
+  final bool isUserMessage;
 
   const ChatBubble({
     super.key,
-    required this.message,
     required this.isUserMessage,
     required this.controller,
     required this.messages,
+    required this.message,
   });
+
+  final String message;
 
   @override
   Widget build(BuildContext context) {

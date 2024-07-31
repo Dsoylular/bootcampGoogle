@@ -22,10 +22,10 @@ class CheckUpPage extends StatefulWidget {
 }
 
 class _CheckUpPageState extends State<CheckUpPage> {
-  final ValueNotifier<double> _sleepValueNotifier = ValueNotifier<double>(3);
+  final ValueNotifier<double> _foodConsumptionValueNotifier = ValueNotifier<double>(3);
   final ValueNotifier<double> _exerciseValueNotifier = ValueNotifier<double>(3);
   final ValueNotifier<double> _weightValueNotifier = ValueNotifier<double>(3);
-  final ValueNotifier<double> _foodConsumptionValueNotifier = ValueNotifier<double>(3);
+  final ValueNotifier<double> _sleepValueNotifier = ValueNotifier<double>(3);
 
   String get petID => widget.petID;
   Function(List<FlSpot>, List<FlSpot>, List<FlSpot>, List<FlSpot>) get refreshGraph => widget.refreshGraph;
@@ -44,10 +44,10 @@ class _CheckUpPageState extends State<CheckUpPage> {
     if (petDocSnapshot.exists) {
       Map<String, dynamic> petData = petDocSnapshot.data() as Map<String, dynamic>;
 
-      List<dynamic> foodList = petData['foodList'] ?? [];
       List<dynamic> exerciseList = petData['exerciseList'] ?? [];
       List<dynamic> weightList = petData['weightList'] ?? [];
       List<dynamic> sleepList = petData['sleepList'] ?? [];
+      List<dynamic> foodList = petData['foodList'] ?? [];
 
       foodList.add(_foodConsumptionValueNotifier.value);
       exerciseList.add(_exerciseValueNotifier.value);
@@ -245,10 +245,10 @@ class _CheckUpPageState extends State<CheckUpPage> {
 
   @override
   void dispose() {
-    _sleepValueNotifier.dispose();
+    _foodConsumptionValueNotifier.dispose();
     _exerciseValueNotifier.dispose();
     _weightValueNotifier.dispose();
-    _foodConsumptionValueNotifier.dispose();
+    _sleepValueNotifier.dispose();
     super.dispose();
   }
 }

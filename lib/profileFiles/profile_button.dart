@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:bootcamp_google/MainPage.dart';
 import 'package:bootcamp_google/helperFiles/app_colors.dart';
 import 'package:bootcamp_google/helperFiles/photo_add_functions.dart';
 import 'package:bootcamp_google/profileFiles/profile_button_firebase_functions.dart';

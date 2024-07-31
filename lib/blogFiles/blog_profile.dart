@@ -25,8 +25,8 @@ class _BlogProfileState extends State<BlogProfile> {
   String text = "";
   int like = 0;
 
-  List<dynamic> comments = [];
   TextEditingController commentController = TextEditingController();
+  List<dynamic> comments = [];
 
   @override
   void initState() {
@@ -71,6 +71,7 @@ class _BlogProfileState extends State<BlogProfile> {
                               fontFamily: 'Baloo',
                               fontSize: 18,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),
