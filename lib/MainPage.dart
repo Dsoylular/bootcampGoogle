@@ -113,7 +113,7 @@ class _MainPageState extends State<MainPage> {
       body: _selectedIndex == 0
           ? _buildAskMe()
           : _selectedIndex == 1
-          ? _buildJournal()
+          ? _buildBlog()
           : _selectedIndex == 2
           ? (isLogin ? _buildMyPets() : _buildNotLogin())
           : (isLogin ? _buildProfile() : _buildNotLogin()),
@@ -507,7 +507,7 @@ class _MainPageState extends State<MainPage> {
 
 
 
-  Widget _buildJournal() {
+  Widget _buildBlog() {
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -515,14 +515,14 @@ class _MainPageState extends State<MainPage> {
         child: Column(
           children: [
             if (!isLogin) SizedBox(height: screenSize.height * 0.05),
-            _journalUpperDesign(screenSize),
-            _journalPosts(),
+            _blogUpperDesign(screenSize),
+            _blogPosts(),
           ],
         ),
       ),
     );
   }
-  Widget _journalUpperDesign(Size screenSize) {
+  Widget _blogUpperDesign(Size screenSize) {
     return Padding(
       padding: EdgeInsets.all(screenSize.width * 0.02),
       child: Container(
@@ -580,7 +580,7 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-  Widget _journalPosts() {
+  Widget _blogPosts() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('blogPosts').snapshots(),
       builder: (context, snapshot) {
@@ -706,12 +706,17 @@ class _MainPageState extends State<MainPage> {
                                             .doc(doc.id)
                                             .update({
                                           'like': FieldValue.increment(liked ? -1 : 1),
-                                          'likedPeople': FieldValue.arrayUnion([curUserId]),
+                                          'likedPeople': liked ? FieldValue.arrayRemove([curUserId]) : FieldValue.arrayUnion([curUserId]),
                                         });
                                       } catch (e) {
                                         developer.log('Error updating like count: $e');
                                         setState(() {
                                           post['like'] += liked ? 1 : -1;
+                                          if (liked) {
+                                            post['likedPeople'].add(curUserId);
+                                          } else {
+                                            post['likedPeople'].remove(curUserId);
+                                          }
                                         });
                                       }
                                     },
@@ -720,7 +725,7 @@ class _MainPageState extends State<MainPage> {
                                         Icon(Icons.thumb_up, color: post['likedPeople'].contains(curUserId) ? Colors.blue : Colors.grey, size: 22),
                                         const SizedBox(width: 5),
                                         Text(
-                                          post['likedPeople'].length.toString(),
+                                          post['like'].toString(),
                                           style: TextStyle(
                                             fontFamily: 'Baloo',
                                             fontSize: screenSize.width * 0.04,
