@@ -44,6 +44,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
   String petSpecies = "";
   String petImage = "";
   String petGender = "";
+  bool isLoading = true;
   bool showAddButton = false;
   bool isVaccinationTracking = false;
 
@@ -85,6 +86,7 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
             snapshot['vaccinationDates'].map((timestamp) =>
                 (timestamp as Timestamp).toDate()));
         }
+        isLoading = false;
     });
   }
 
@@ -161,6 +163,16 @@ class _PetPageState extends State<PetPage> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     log("pet_page");
+    if (isLoading) {
+      return Scaffold(
+        appBar: appBar(context),
+        body: Center(
+          child: CircularProgressIndicator(
+            color: pink,
+          ),
+        ),
+      );
+    }
     return Scaffold(
       appBar: appBar(context),
       body: SingleChildScrollView(
