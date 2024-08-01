@@ -191,7 +191,9 @@ Participants: Deniz SOYLULAR, Fatmanur GENAR, Funda YILDIZHAN
 
 Genel olarak planlandığı gibi 3..sprint tamamlanmıştır. 2.sprintte tamamlanan özelliklerin testi tamamlanmış ve hatalar giderilmiştir. Uygulama kullanılabilir durumdadır.
 
+</details>
 
 
-![Details](https://github.com/user-attachments/assets/868b19d8-544f-4dda-9e2b-799f584482f7)
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/868b19d8-544f-4dda-9e2b-799f584482f7" width="650" />
+</p>
