@@ -27,8 +27,9 @@ https://trello.com/b/8X118Esa/ouabootcamp2024fluttergroup56-sprint1
     <summary><h2>Pazar Araştırması ve Hedefler</h2></summary>
   Sektördeki evcil hayvanlar ile ilgili uygulamalar analiz edildiğinde çeşitli satın alım platformları ve aşı takip uygulamaları göze çarpmaktadır. Fakat uyku, hareketlilik gibi davranışsal değişimleri    kullanıcının kapsamlı bir şekilde takip edebileceği bir uygulama bulunmamaktadır. Bununla birlikte sektördeki uygulamalar sıkça sahiplenilen köpek ve kedi gibi hayvanlar üzerinde özelleşmişlerdir. Bu da yaygın olmayan hayvanlara sahip kullanıcılar için bilgiye ulaşmayı oldukça zorlaştırmaktadır.
     
- Evcil hayvan sahiplerinin karşılaştığı bir başka önemli sorun da evcil hayvanın gösterdiği bir semptoma karşı nasıl aksiyon alınması gerektiğinin bilinememesi ve "Veterinere gitmeli miyim?" konusunda bir   
- belirsizlik yaşamalarıdır. Veterinerler bu konuda beklenmedik bir kaynağın oldukça yararlı olabileceğini iddia ediyor: Yapay zeka:
+
+ Evcil hayvan sahiplerinin karşılaştığı bir başka önemli sorun da evcil hayvanın gösterdiği bir semptoma karşı nasıl aksiyon alınması gerektiğinin bilinememesi ve "Veterinere gitmeli miyim?" konusunda bir belirsizlik yaşamalarıdır. Veterinerler bu konuda beklenmedik bir kaynağın oldukça yararlı olabileceğini iddia ediyor: Yapay zeka:
+
 
 (https://bestlifeleashes.org/blogs/news/chatgpt-guide-for-dog-owners#:~:text=ChatGPT%20doesn't%20just%20excel,or%20harsh%20reactions%20from%20people)
 
