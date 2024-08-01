@@ -1,4 +1,3 @@
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/649c85e3-480f-45ab-aeaa-d205f974e073" width="650" />
 </p>
@@ -54,6 +53,9 @@ Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın
 
 
 ![Sprints](https://github.com/user-attachments/assets/bae20e77-8abb-4d6f-affb-d6f4c989eb4f)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/bae20e77-8abb-4d6f-affb-d6f4c989eb4f" width="650" />
+</p>
 
 <details>
   <summary><h1>Sprint 1</h1></summary>
