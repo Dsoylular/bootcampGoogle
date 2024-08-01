@@ -180,7 +180,8 @@ Uygulamanın hedeflediği iki ana profil vardır.
 
   ## Sprint 3 Ekranlar
   
-![KişiselKoçluk (1)](https://github.com/user-attachments/assets/181457a9-cd93-46d9-a394-dc686ac44d9b)
+ <img width="364" alt="Ekran görüntüsü 2024-08-02 004353" src="https://github.com/user-attachments/assets/e330bed4-b224-48cc-8247-095adbbcdaeb">
+
 
  ## Sprint 3 İçin Sprint Board: 
  
