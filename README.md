@@ -179,7 +179,7 @@ Uygulamanın hedeflediği iki ana profil vardır.
   <summary><h1>Sprint 3</h1></summary>
 
  ## Sprint 3 Ekranlar
-![KişiselKoçluk (1)](https://github.com/user-attachments/assets/c7c11e79-9f3e-4034-8fa0-d19d6456ce12)
+![pawdi](https://github.com/user-attachments/assets/14424987-c2c5-47c1-9f87-c737588f9386)
 
  ## Sprint 3 İçin Sprint Board: 
  
