@@ -21,7 +21,17 @@ https://trello.com/b/8X118Esa/ouabootcamp2024fluttergroup56-sprint1
 
 <details>
   <summary><h1>Ürün Açıklaması</h1></summary>
-  Pawdi evcil hayvanının hareketliliği, yemek yemesi veya uyku durumunu takip edebildiğimiz ve bir sıkıntı ile karşılaştığında "veterinere gitmeli miyim?" veya gitmeden önce ne yapmalıyım gibi sorulara yapay zeka ile cevap alabileceğimiz bir uygulamadır.  
+  Pawdi, bir evcil hayvan durum takip uygulamasıdır. Günümüzde egzersizlerimizi, diyetlerimizi, sağlığımızı takip etmek için çeşitli uygulamalar kullanıyoruz fakat ailemizin parçası olan küçük dostlarımız için kapsamlı bir takip ve eylem uygulaması bulunmamaktadır (bkz. Pazar Araştırması ve Hedefler). Burada Pawdi, evcil hayvanınızın hareketliliğini, yemek yeme miktarını, uyku durumunu ve benzeri metrikleri takip edebildiğiniz ve yapay zeka desteği sayesinde almanız gereken adımları öğrenebildiğiniz bir uygulama olarak öne çıkmaktadır.   
+
+  <details>
+    <summary><h2>Pazar Araştırması ve Hedefler</h2></summary>
+  Sektördeki evcil hayvanlar ile ilgili uygulamalar analiz edildiğinde çeşitli satın alım platformları ve aşı takip uygulamaları göze çarpmaktadır. Fakat uyku, hareketlilik gibi davranışsal değişimleri  kullanıcının kapsamlı bir şekilde takip edebileceği bir uygulama bulunmamaktadır. Bununla birlikte sektördeki uygulamalar sıkça sahiplenilen köpek ve kedi gibi hayvanlar üzerinde özelleşmişlerdir. Bu da yaygın olmayan hayvanlara sahip kullanıcılar için bilgiye ulaşmayı oldukça zorlaştırmaktadır.
+    Evcil hayvan sahiplerinin karşılaştığı bir başka önemli sorun da evcil hayvanın gösterdiği bir semptoma karşı nasıl aksiyon alınması gerektiğinin bilinememesi ve "Veterinere gitmeli miyim?" konusunda bir belirsizlik yaşamalarıdır. Veterinerler bu konuda beklenmedik bir kaynağın oldukça yararlı olabileceğini iddia ediyor: Yapay zeka:
+
+(https://bestlifeleashes.org/blogs/news/chatgpt-guide-for-dog-owners#:~:text=ChatGPT%20doesn't%20just%20excel,or%20harsh%20reactions%20from%20people)
+(https://figopetinsurance.com/blog/pet-parenting-with-chat-gpt)
+Örnek: ChatGPT doesn't just excel in innovative dog care tips & shopping, it also plays a crucial role in helping people through the adoption process and being a safe place where people can ask questions they have about dog adoption without the fear of judgment or harsh reactions from people
+  </details>
     
   <h2>Ürün Birincil Fonksiyonu</h2>
   
