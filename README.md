@@ -182,8 +182,17 @@ Günlük Toplantılar: Günlük toplantıları yine google meet üzerinden devam
 
 <img width="1007" alt="Ekran görüntüsü 2024-08-01 162507" src="https://github.com/user-attachments/assets/1b7c0842-6693-4115-9354-e5d747b8e06b">
 
+
+
+
 Sprint Review:
 
 Participants: Deniz SOYLULAR, Fatmanur GENAR, Funda YILDIZHAN
 
 Genel olarak planlandığı gibi 3..sprint tamamlanmıştır. 2.sprintte tamamlanan özelliklerin testi tamamlanmış ve hatalar giderilmiştir. Uygulama kullanılabilir durumdadır.
+
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6ccc8a74-401f-467e-ad18-b1db469e4d0d" width="650" />
+</p>
+
