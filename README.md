@@ -197,3 +197,10 @@ Genel olarak planlandığı gibi 3..sprint tamamlanmıştır. 2.sprintte tamamla
 <p align="center">
   <img src="https://github.com/user-attachments/assets/868b19d8-544f-4dda-9e2b-799f584482f7" width="650" />
 </p>
+
+
+<h1>Renk Şeması</h1>
+
+![pawdi_color_palette](https://github.com/user-attachments/assets/7af8f4fd-7513-4c77-bc2c-461601f3d3af)
+
+
