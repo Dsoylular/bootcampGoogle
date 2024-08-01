@@ -178,10 +178,8 @@ Uygulamanın hedeflediği iki ana profil vardır.
 <details>
   <summary><h1>Sprint 3</h1></summary>
 
-  ## Sprint 3 Ekranlar
-  
-<img width="781" alt="pawdiekranlar" src="https://github.com/user-attachments/assets/905d15c1-bb99-4f70-9ff5-764bae2cab8d">
-
+ ## Sprint 3 Ekranlar
+  ![KişiselKoçluk (1)](https://github.com/user-attachments/assets/6a462d21-75d8-42a2-8389-026927a239d9)
 
  ## Sprint 3 İçin Sprint Board: 
  
