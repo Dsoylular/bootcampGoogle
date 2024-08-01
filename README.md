@@ -204,3 +204,8 @@ Genel olarak planlandığı gibi 3..sprint tamamlanmıştır. 2.sprintte tamamla
 ![pawdi_color_palette](https://github.com/user-attachments/assets/7af8f4fd-7513-4c77-bc2c-461601f3d3af)
 
 
+<h1>Kullanılan Teknolojiler ve Versiyonlar</h1>
+
+<h2>Flutter Versiyonu</h2>
+`Flutter` 3.22.3 •
+`Tools` • `Dart 3.4.4` • DevTools 2.34.3
