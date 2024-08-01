@@ -151,9 +151,39 @@ Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın
   3. Sprint için uygulama testlerinin yapılmasına ve eksiklerin tamamlanmasına karar verildi. 
 </details>
 
+<details>
+  <summary><h1>Sprint 3</h1></summary>
 
+  ## Sprint 3 Ekranlar
+  
+![KişiselKoçluk (1)](https://github.com/user-attachments/assets/181457a9-cd93-46d9-a394-dc686ac44d9b)
 
+ ## Sprint 3 İçin Sprint Board: 
+ 
+ Trello Linki:https://trello.com/b/8X118Esa/ouabootcamp2024fluttergroup56-sprint3
+ 
+<img width="1178" alt="Ekran görüntüsü 2024-08-01 093610" src="https://github.com/user-attachments/assets/d705a163-5d77-464f-8d93-cbbebc4b5247">
 
+ # Sprint Notları:
 
+Uygulama farklı cihaz boyutlarında çalışabilir hale getirildi, 
+Input safety önlemleri alındı.
+Son olarak hata düzeltme ve test aşamalarıyla uygulamamızda ortaya çıkabilecek tüm sorunlar çözüldğ ve süreçi tamamlandı.
 
+Sprint İçinde Beklenen Puan Tamamlama: 200 Puan
 
+Tamamlanan Puan: 202 -Hedeflenen sprint puanı sağlanmıştır.
+
+Günlük Toplantılar: Günlük toplantıları yine google meet üzerinden devam etti. Bazı günler müsaitliğimize göre whatsapp grubumuz üzerinden de haberleştik.
+
+<img width="1066" alt="Ekran görüntüsü 2024-08-01 161923" src="https://github.com/user-attachments/assets/1947e9af-6eec-476f-9def-b78338541fd1">
+
+<img width="971" alt="Ekran görüntüsü 2024-08-01 162012" src="https://github.com/user-attachments/assets/c41a0246-574b-4506-9ce3-0a2ab693256a">
+
+<img width="1007" alt="Ekran görüntüsü 2024-08-01 162507" src="https://github.com/user-attachments/assets/1b7c0842-6693-4115-9354-e5d747b8e06b">
+
+Sprint Review:
+
+Participants: Deniz SOYLULAR, Fatmanur GENAR, Funda YILDIZHAN
+
+Genel olarak planlandığı gibi 3..sprint tamamlanmıştır. 2.sprintte tamamlanan özelliklerin testi tamamlanmış ve hatalar giderilmiştir. Uygulama kullanılabilir durumdadır.
