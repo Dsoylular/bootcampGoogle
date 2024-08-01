@@ -180,7 +180,7 @@ Uygulamanın hedeflediği iki ana profil vardır.
 
   ## Sprint 3 Ekranlar
   
- <img width="364" alt="Ekran görüntüsü 2024-08-02 004353" src="https://github.com/user-attachments/assets/e330bed4-b224-48cc-8247-095adbbcdaeb">
+<img width="781" alt="pawdiekranlar" src="https://github.com/user-attachments/assets/905d15c1-bb99-4f70-9ff5-764bae2cab8d">
 
 
  ## Sprint 3 İçin Sprint Board: 
