@@ -132,7 +132,7 @@ Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın
 
   Sprint İçinde Beklenen Puan Tamamlama: 180 Puan
 
-  Tamamlanan Puan: 180 (Hedeflenen sprint puanı sağlanmıştır.)
+  Tamamlanan Puan: 188 (Hedeflenen sprint puanı sağlanmıştır.)
 
   Günlük Topantılar:  Günlük toplantılar yine google meet üzerinden devam etti. Bazı günler müsaitliğimize göre whatsapp grubumuz üzerinden de haberleştik.
 
