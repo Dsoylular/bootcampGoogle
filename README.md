@@ -52,7 +52,6 @@ https://trello.com/b/8X118Esa/ouabootcamp2024fluttergroup56-sprint1
 Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın hedef kitlesinde bulunmaktadır.
 
 
-![Sprints](https://github.com/user-attachments/assets/bae20e77-8abb-4d6f-affb-d6f4c989eb4f)
 <p align="center">
   <img src="https://github.com/user-attachments/assets/bae20e77-8abb-4d6f-affb-d6f4c989eb4f" width="650" />
 </p>
