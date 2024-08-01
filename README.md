@@ -214,6 +214,10 @@ Participants: Deniz SOYLULAR, Fatmanur GENAR, Funda YILDIZHAN
 
 Genel olarak planlandığı gibi 3..sprint tamamlanmıştır. 2.sprintte tamamlanan özelliklerin testi tamamlanmış ve hatalar giderilmiştir. Uygulama kullanılabilir durumdadır.
 
+Sprint Retrospective:
+
+Yarışmanın başında belirlenen proje hedefleri tamamlandı.
+
 </details>
 
 
