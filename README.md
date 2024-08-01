@@ -21,7 +21,7 @@ https://trello.com/b/8X118Esa/ouabootcamp2024fluttergroup56-sprint1
 
 <details>
   <summary><h1>Ürün Açıklaması</h1></summary>
-  Pawdi evcil hayvanının hareketliliği, yemek yemesi veya uyku durumunu takip edebildiğimiz ve bir sıkıntı ile karşılaştığında "veterinere gitmeli miyim?" veya gitmeden önce ne yapmalıyım gibi sorulara yapay zeka ile cevap alabileceğimiz bir uygulama.  
+  Pawdi evcil hayvanının hareketliliği, yemek yemesi veya uyku durumunu takip edebildiğimiz ve bir sıkıntı ile karşılaştığında "veterinere gitmeli miyim?" veya gitmeden önce ne yapmalıyım gibi sorulara yapay zeka ile cevap alabileceğimiz bir uygulamadır.  
     
   <h2>Ürün Birincil Fonksiyonu</h2>
   
@@ -48,7 +48,7 @@ https://trello.com/b/8X118Esa/ouabootcamp2024fluttergroup56-sprint1
 
 
 # Hedef Kitle :
-Öncelikli olarak evcil hayvan sahipleri olmak üzere veterinerler, pet shoplar,hayvan barınakları(barınaktaki hayvanların sağlık durumunu izlemek için kullanılabilir —bu aslında uygulamanın sonraki hedeflerinden biri olabilir)
+Öncelikli olarak evcil hayvan sahipleri olmak üzere veterinerler, pet shoplar, hayvan barınakları(barınaktaki hayvanların sağlık durumunu izlemek için kullanılabilir —bu aslında uygulamanın sonraki hedeflerinden biri olabilir)
 Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın hedef kitlesinde bulunmaktadır.
 
 
@@ -60,7 +60,7 @@ Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın
   <summary><h1>Sprint 1</h1></summary>
 
   Uygulama ekran görüntüleri
-  Figa üzerinde ilgili sayfaların tasarımı aşağıdaki gibidir.
+  Figma üzerinde ilgili sayfaların tasarımı aşağıdaki gibidir.
   ![WhatsApp Image 2024-07-07 at 14 56 46](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/9d15d87b-3816-4f7a-80a7-3a2a1b999e53)
 
 
@@ -69,18 +69,18 @@ Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın
 
   # Sprint Notları:
 
-  - Proje yönetimi için Trello kullanılmasına karar verildi.
-  - UI tasarımları için Figma kullanılmasına karar verildi
-  - Database olarak Firebase kullanılmasına karar verildi.
-  - Yapay zeka kısmı için Gemini API kullanılmasına karar verildi.
-  - Giriş sistemi için e-posta girişi kullanılmasına karar verildi.
+  - Proje yönetimi için `Trello` kullanılmasına karar verildi.
+  - UI tasarımları için `Figma` kullanılmasına karar verildi
+  - Database olarak `Firebase` kullanılmasına karar verildi.
+  - Yapay zeka kısmı için `Gemini API` kullanılmasına karar verildi.
+  - Giriş sistemi için `e-posta girişi` kullanılmasına karar verildi.
   
    Sprint İçinde Beklenen Puan Tamamlama: 200 Puan 
  
   Puan Tamamlama Mantığı: İlk sprint için 200 puan, ikinci sprint için 180 puan ve üçüncü sprint için 200 puan hedefi vardır. Türkiye'de 15 Temmuz resmi tatil olması nedeniyle ikinci sprint için daha düşük bir puan hedefi belirlenmiştir. İlk sprintte planlanan puana erişilmiştir.
 
   # Günlük Toplantılar (Daily Scrum): 
-  Her gün saat 12.00’de günlük daily toplantılarının yapılmasına karar verilmiştir.Toplantılar Google meet ya da zoom üzerinden yaılmaktadır.
+  Her gün saat 12.00’de günlük daily toplantılarının yapılmasına karar verilmiştir.Toplantılar `Google Meet` ya da `Zoom` üzerinden yapılmaktadır.
 
   ![WhatsApp Image 2024-07-04 at 09 48 14](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/ab35efc3-bf13-4c47-b8da-a61c2106d42b)
   ![daily1](https://github.com/Dsoylular/bootcampGoogle/assets/56278784/10991bf5-8788-4656-aa64-9057e525a26d)
@@ -146,9 +146,9 @@ Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın
 
   Sprint Retrospective:  
 
-  Ekibimizde Emre ve Yakup'a başta ulaşmış olmamıza ve Whatsapp grubumuza da dahil etmemize rağmen herhangi bir görev için gönüllü olmadıkları ve gerek planlanan toplantılar gerekse whatsapp üzerinden dönüş alamadığımız  için ekip Whatsapp grubundan çıkarmaya karar verdik. Yine ulaşım    sağlayamadığımız için kendilerine Whatsapp grubumuz üzerinden kendilerine haber verildi.
+  Ekibimizde Emre ve Yakup'a başta ulaşmış olmamıza ve Whatsapp grubumuza da dahil etmemize rağmen herhangi bir görev için gönüllü olmadıkları ve gerek planlanan toplantılar gerekse whatsapp üzerinden dönüş alamadığımız için ekip Whatsapp grubundan çıkarmaya karar verdik. Yine ulaşım sağlayamadığımız için kendilerine Whatsapp grubumuz üzerinden kendilerine haber verildi.
 
-  3.Sprint için uygulama testlerinin yapılmasına ve eksiklerin tamamlanmasına karar verildi. 
+  3. Sprint için uygulama testlerinin yapılmasına ve eksiklerin tamamlanmasına karar verildi. 
 </details>
 
 
