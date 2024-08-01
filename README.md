@@ -206,6 +206,17 @@ Genel olarak planlandığı gibi 3..sprint tamamlanmıştır. 2.sprintte tamamla
 
 <h1>Kullanılan Teknolojiler ve Versiyonlar</h1>
 
+- Giriş yapma ve authentication için `Firebase Auth` kullanılmış, bu sayede kullanıcıların kişisel bilgilerinin gizliliği sağlanmıştır.
+- Benzer bir şekilde Database olarak `Firebase Database` kullanılmıştır.
+- Uygulama ekran tasarımları için `Figma` kullanılmıştır.
+- Renk şemasının oluşturulması için `Coolors` kullanılmıştır.
+- Iconlar ve non-login sayfa tasarımı için `Canva` kullanılmıştır.
+- `Gemini API`, yapay zeka cevapların oluşturulmasında kullanılmıştır.
+- Proje yönetimi ve takibi için `Trello` kullanılmıştır.
+- Takım içi iletişim için `Google Meets`, `Zoom` ve `Whatsapp` aktif olarak kullanılmıştır.
+
+
 <h2>Flutter Versiyonu</h2>
+
 `Flutter` 3.22.3 •
-`Tools` • `Dart 3.4.4` • DevTools 2.34.3
+`Tools` • `Dart` 3.4.4 • DevTools 2.34.3
