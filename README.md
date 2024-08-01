@@ -38,33 +38,42 @@ https://trello.com/b/8X118Esa/ouabootcamp2024fluttergroup56-sprint1
 Örnek: ChatGPT doesn't just excel in innovative dog care tips & shopping, it also plays a crucial role in helping people through the adoption process and being a safe place where people can ask questions they have about dog adoption without the fear of judgment or harsh reactions from people
   </details>
     
-  <h2>Ürün Birincil Fonksiyonu</h2>
+  ## Ürün Birincil Fonksiyonu
   
   Evcil hayvanları hangi durumlarda veterinere gitmeli sorularının cevabına uygulama sayesinde hızlıca cevap bulabilecek ve veterinere gitmeden bazı sorunlar için çözüm sağlayabilecek.
-  Evcil hayvanlarının durumlarını uygulama üzerinden takip edebilecek ve oluşabilecek bazı rahatsızlıklar için hızlıca çözüm sağlayabilecekler.  
+  Evcil hayvanlarının durumlarını uygulama üzerinden takip edebilecek ve oluşabilecek bazı rahatsızlıklar için önceden ve hızlıca çözüm sağlayabilecekler.  
 
-  <h2>Ürün İkincil Fonksiyonu</h2>
+  ## Ürün İkincil Fonksiyonu</h2>
   
-  Uygulama içindeki blog yazıları sayesinde diğer kullanıcıların yazılarını takip edebilecek belki veterinerlerin yazıları sayelerinde evcil hayvanları ile ilgili daha geniş bilgi sahibi olabilecekler.
+  Uygulama içindeki blog yazıları sayesinde diğer kullanıcıların yazılarını takip edebilecek, veterinerlerin yazıları sayelerinde evcil hayvanları ile ilgili daha geniş bilgi sahibi olabilecekler.
+
 </details>
 
 
 
 <details>
   <summary><h1>Ürün Özellikleri</h1></summary>
-  Evcil hayvan sahipleri hayvanları hakkında uykulu-uykusuz, hareketli-hareketsiz gibi durumlarını takip edebilecekler.  
-  Her evcil hayvan için ayrı bir profil sayfası olacak ve bu profil sayfalarında evcil hayvanlar ile ilgili profil fotoğrafı, isim, hakkında, durum gibi bilgileri kaydedebilecek ve düzenlemeler yapılabilecek.  
-  Kendi profil sayfamızda yine fotoğraf, kişisel bilgiler ve hakkında gibi ayrıntıları kaydedebileceğiz.  
-  Ask Me sayfasında evcil hayvanlarımız hakkında yapay zekaya sorular sorabilecek, bazı durumlar için nasıl bir yol izleyeceğimizi oluşturabilecek veya hangi durumlarda veterinere gitmeliyiz sorularına cevap bulabileceğiz.  
-  Ask Me sayfasındaki sık sorulan sorular kısmında tuvalet, sağlık, beslenme ve genel bazı sık sorulan soruların cevabına hızlıca ulaşabileceğiz.  
-  Journal sayfasında evcil hayvanlarımız hakkında blog yazıları yazabilecek ya da diğer kullanıcıların/veterinerlerin eklemiş olduğu blog yazılarını okuyabileceğiz.
+  -Evcil hayvan sahipleri hayvanları hakkında uykulu-uykusuz, hareketli-hareketsiz gibi durumlarını takip edebilecekler.  
+  
+  -Her evcil hayvan için ayrı bir profil sayfası olacak ve bu profil sayfalarında evcil hayvanlar ile ilgili profil fotoğrafı, isim, hakkında, durum gibi bilgileri kaydedebilecek ve düzenlemeler yapılabilecek.  
+  
+  -Kendi profil sayfamızda yine fotoğraf, kişisel bilgiler ve hakkında gibi ayrıntıları kaydedebileceğiz.  
+  
+  -Ask Me sayfasında evcil hayvanlarımız hakkında yapay zekaya sorular sorabilecek, bazı durumlar için nasıl bir yol izleyeceğimizi oluşturabilecek veya hangi durumlarda veterinere gitmeliyiz sorularına cevap bulabileceğiz.
+  
+  -Ask Me sayfasındaki sık sorulan sorular kısmında tuvalet, sağlık, beslenme ve genel bazı sık sorulan soruların cevabına hızlıca ulaşabileceğiz. İstenirse evcil hayvan eklenerek özel cevaplar da alınabilir.  
+  
+  -Journal sayfasında evcil hayvanlarımız hakkında blog yazıları yazabilecek ya da diğer kullanıcıların/veterinerlerin eklemiş olduğu blog yazılarını okuyabileceğiz.
 </details>
 
 
 
 # Hedef Kitle :
-Öncelikli olarak evcil hayvan sahipleri olmak üzere veterinerler, pet shoplar, hayvan barınakları(barınaktaki hayvanların sağlık durumunu izlemek için kullanılabilir —bu aslında uygulamanın sonraki hedeflerinden biri olabilir)
-Aslında sokakta bir hayvanla karşılaşma ihtimali olan herkes bu uygulamanın hedef kitlesinde bulunmaktadır.
+Uygulamanın hedeflediği iki ana profil vardır.
+
+İlki bireysel evcil hayvan sahipleridir. Bu kitlenin genel olarak takip edeceği hayvan sayısı az olmakla birlikte sağlık ve davranış takibi konusunda oldukça hassaslardır ve profesyonel bilgiye sahip değillerdir. Bununla birlikte hayvanlarıyla aralarındaki duygusal bağ görece daha kuvvetlidir. Bu anlamda yapay zeka destekli `Bana Sor` ve insanların paylaşım yaptığı `Blog` modüllerimiz daha çok bu kitleye yöneliktir. 
+
+İkinci hedef kitlemiz barınaklardır. Bu kitlenin sağlık ve davranış takibi yapması gereken hayvan sayısı oldukça fazladır. Bu kitle daha profesyonel bilgiye sahip olsa dahi çeşitli barınaklarda takip sorunu nedeniyle ortaya çıkan bakımsızlık problemi gözler önündedir. Bu anlamda her hayvan için özel takip sunan ve özel ilgi gerektiren hayvanları bildiren `Evcil Hayvanlarım` modülü daha çok bu kitleye yöneliktir.
 
 
 <p align="center">
